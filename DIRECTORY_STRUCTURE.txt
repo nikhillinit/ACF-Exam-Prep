@@ -1,0 +1,168 @@
+ACF-Exam-Prep/
+│
+├── README.md                          # Project overview & quick start
+├── LICENSE                            # MIT License
+├── package.json                       # Node dependencies & scripts
+├── package-lock.json                  # Dependency lock file
+├── .gitignore                         # Git ignore rules
+├── .env.example                       # Environment template
+├── DIRECTORY_STRUCTURE.txt           # This file
+│
+├── config/                            # Build configuration
+│   ├── webpack.config.js             # Webpack bundler config
+│   └── babel.config.js               # Babel transpiler config
+│
+├── docs/                              # Documentation
+│   ├── SETUP.md                      # Installation & setup guide
+│   ├── USAGE.md                      # Operational instructions
+│   ├── ARCHETYPE_GUIDE.md            # Detailed archetype reference
+│   └── EXCEL_INTEGRATION.md          # Excel template usage guide
+│
+├── public/                            # Static assets (not bundled)
+│   ├── index.html                    # HTML entry point
+│   ├── assets/                       # Images, icons, fonts
+│   └── source-materials/             # Study materials
+│       ├── Corporate_Finance_Templates.xlsx    # 11-sheet workbook
+│       ├── Mock_Solutions.md         # Solution documentation
+│       └── pdfs/                     # Exam PDFs
+│           ├── Fall_2024_Final.pdf   # Actual exam
+│           ├── Fall_2022_Final.pdf   # Past exam
+│           └── Mock_29.pdf           # Practice exam
+│
+├── src/                               # Source code (bundled)
+│   ├── index.js                      # React entry point
+│   ├── App.jsx                       # Main app component
+│   ├── index.css                     # Global styles
+│   │
+│   ├── components/                   # React components
+│   │   ├── reconnaissance/           # Exam analysis tools
+│   │   │   ├── ReconView.jsx        # Main reconnaissance interface
+│   │   │   ├── Scanner.jsx          # Archetype scanner display
+│   │   │   ├── HybridSequencer.jsx  # Hybrid solving sequence
+│   │   │   ├── ArchetypeMapper.jsx  # Resource mapping
+│   │   │   ├── TimeAllocator.jsx    # Time management calculator
+│   │   │   └── ExcelLauncher.jsx    # Excel integration button
+│   │   │
+│   │   ├── practice/                 # Practice mode
+│   │   │   ├── ProblemViewer.jsx    # Problem display & timer
+│   │   │   ├── SolutionCheck.jsx    # Answer verification
+│   │   │   ├── WorkflowGuide.jsx    # 5-step guide overlay
+│   │   │   └── TierFilter.jsx       # Tier 1/2 filter
+│   │   │
+│   │   └── review/                   # Performance tracking
+│   │       ├── PerformanceTracker.jsx    # Metrics dashboard
+│   │       ├── GapAnalysis.jsx      # Weakness identification
+│   │       └── MasteryDashboard.jsx # Progress visualization
+│   │
+│   ├── utils/                        # Utility functions
+│   │   ├── archetypeScanner.js      # Core pattern recognition
+│   │   ├── keywordMatcher.js        # Keyword-to-archetype mapping
+│   │   ├── workflowEngine.js        # 5-step workflow generator
+│   │   │
+│   │   ├── excel/                    # Excel integration
+│   │   │   ├── excelBridge.js       # File I/O handler
+│   │   │   └── formulaValidator.js  # Formula audit tool
+│   │   │
+│   │   ├── archetype/                # Archetype logic
+│   │   │   ├── archetypeDefinitions.js    # Full archetype specs
+│   │   │   └── tierClassifier.js    # Tier 1/2 classification
+│   │   │
+│   │   └── scoring/                  # Performance metrics
+│   │       ├── pointCalculator.js   # Score computation
+│   │       └── timeTracker.js       # Time management
+│   │
+│   ├── hooks/                        # Custom React hooks
+│   │   ├── useArchetypeRecognition.js    # Recognition hook
+│   │   ├── useExamTimer.js          # Timer hook
+│   │   └── useProblemState.js       # Problem state management
+│   │
+│   ├── data/                         # JSON databases
+│   │   ├── archetype-signals.json   # 10 archetypes + 7 themes
+│   │   ├── problems-index.json      # Mock exam catalog
+│   │   ├── keyword-mappings.json    # Keyword database
+│   │   ├── tier-definitions.json    # Tier specifications
+│   │   └── mock-exams-catalog.json  # Exam metadata
+│   │
+│   └── styles/                       # Component-specific styles
+│       └── (Empty - using inline/global styles)
+│
+└── dist/                             # Production build (generated)
+    └── (Created by `npm run build`)
+
+═══════════════════════════════════════════════════════════
+KEY FILE PURPOSES
+═══════════════════════════════════════════════════════════
+
+CONFIGURATION:
+• package.json          → Dependencies, scripts, metadata
+• webpack.config.js     → Bundle configuration
+• babel.config.js       → JSX/ES6+ transpilation
+• .env.example          → Environment template
+
+CORE DATA:
+• archetype-signals.json → Archetype definitions, keywords, 
+                            time allocations, playbook mappings
+• keyword-mappings.json  → Keyword-to-archetype lookup table
+• problems-index.json    → Mock exam catalog with metadata
+• tier-definitions.json  → Tier 1/2 rules, mastery levels
+
+CORE LOGIC:
+• archetypeScanner.js    → Scans text, identifies archetypes
+• keywordMatcher.js      → Matches keywords with confidence
+• workflowEngine.js      → Generates 5-step workflow
+
+MAIN COMPONENTS:
+• ReconView.jsx          → Main reconnaissance interface
+• Scanner.jsx            → Displays scan results
+• HybridSequencer.jsx    → Shows hybrid solving sequence
+• ArchetypeMapper.jsx    → Maps archetypes to resources
+
+STUDY MATERIALS:
+• Corporate_Finance_Templates.xlsx → 11 Excel worksheets
+• Mock_Solutions.md      → Comprehensive solution keys
+• Fall_2024_Final.pdf    → Latest exam
+• pdfs/                  → Archive of past exams
+
+═══════════════════════════════════════════════════════════
+DATA FLOW
+═══════════════════════════════════════════════════════════
+
+1. USER PASTES PROBLEM TEXT
+   ↓
+2. archetypeScanner.js
+   ├→ Extracts keywords using keywordMatcher.js
+   ├→ Scores archetypes using archetype-signals.json
+   ├→ Detects hybrid patterns
+   └→ Returns scan results
+   ↓
+3. ReconView.jsx DISPLAYS:
+   ├→ Scanner.jsx (scan results)
+   ├→ HybridSequencer.jsx (if hybrid)
+   ├→ ArchetypeMapper.jsx (resource mapping)
+   └→ TimeAllocator.jsx (time budget)
+   ↓
+4. USER CLICKS "Open Excel"
+   ↓
+5. ExcelLauncher.jsx
+   └→ Opens Corporate_Finance_Templates.xlsx at correct tab
+   ↓
+6. USER SOLVES PROBLEM
+   ↓
+7. SolutionCheck.jsx VERIFIES
+   └→ Uses pointCalculator.js for scoring
+
+═══════════════════════════════════════════════════════════
+SETUP CHECKLIST
+═══════════════════════════════════════════════════════════
+
+□ Node.js 16+ installed
+□ npm install completed
+□ Corporate_Finance_Templates.xlsx in public/source-materials/
+□ Mock exam PDFs in public/source-materials/pdfs/
+□ .env configured (copy from .env.example)
+□ npm start runs without errors
+□ Reconnaissance accepts text input
+□ Archetype scanner returns results
+□ All 10 archetypes visible in data files
+
+═══════════════════════════════════════════════════════════

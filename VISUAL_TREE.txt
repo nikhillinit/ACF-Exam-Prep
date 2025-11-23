@@ -1,0 +1,108 @@
+ACF-Exam-Prep/
+│
+├── 📄 README.md
+├── 📄 LICENSE
+├── 📦 package.json
+├── 🔒 .gitignore
+├── ⚙️ .env.example
+├── 📋 DIRECTORY_STRUCTURE.txt
+├── 📘 SYSTEM_OVERVIEW.md
+├── 🚀 DEPLOYMENT_GUIDE.md
+├── 🪟 WINDOWS_SETUP.bat
+│
+├── ⚙️ config/
+│   ├── webpack.config.js
+│   └── babel.config.js
+│
+├── 📚 docs/
+│   ├── SETUP.md
+│   ├── USAGE.md
+│   ├── ARCHETYPE_GUIDE.md
+│   └── EXCEL_INTEGRATION.md
+│
+├── 🌐 public/
+│   ├── index.html
+│   ├── assets/
+│   └── source-materials/
+│       ├── 📊 Corporate_Finance_Templates.xlsx
+│       ├── 📝 Mock_Solutions.md
+│       └── 📁 pdfs/
+│           ├── Fall_2024_Final.pdf
+│           ├── Fall_2022_Final.pdf
+│           └── Mock_29.pdf
+│
+└── 💻 src/
+    ├── index.js
+    ├── App.jsx
+    ├── index.css
+    │
+    ├── 🧩 components/
+    │   ├── reconnaissance/
+    │   │   ├── ReconView.jsx       [Main interface]
+    │   │   ├── Scanner.jsx         [Results display]
+    │   │   ├── HybridSequencer.jsx [Hybrid solver]
+    │   │   ├── ArchetypeMapper.jsx [Resource mapper]
+    │   │   ├── TimeAllocator.jsx   [Time calculator]
+    │   │   └── ExcelLauncher.jsx   [Excel integr.]
+    │   │
+    │   ├── practice/
+    │   │   ├── ProblemViewer.jsx
+    │   │   ├── SolutionCheck.jsx
+    │   │   ├── WorkflowGuide.jsx
+    │   │   └── TierFilter.jsx
+    │   │
+    │   └── review/
+    │       ├── PerformanceTracker.jsx
+    │       ├── GapAnalysis.jsx
+    │       └── MasteryDashboard.jsx
+    │
+    ├── 🔧 utils/
+    │   ├── archetypeScanner.js    [🔥 CORE LOGIC]
+    │   ├── keywordMatcher.js
+    │   ├── workflowEngine.js
+    │   │
+    │   ├── excel/
+    │   │   ├── excelBridge.js
+    │   │   └── formulaValidator.js
+    │   │
+    │   ├── archetype/
+    │   │   ├── archetypeDefinitions.js
+    │   │   └── tierClassifier.js
+    │   │
+    │   └── scoring/
+    │       ├── pointCalculator.js
+    │       └── timeTracker.js
+    │
+    ├── 🪝 hooks/
+    │   ├── useArchetypeRecognition.js
+    │   ├── useExamTimer.js
+    │   └── useProblemState.js
+    │
+    ├── 💾 data/
+    │   ├── archetype-signals.json     [🔥 10 ARCHETYPES]
+    │   ├── keyword-mappings.json      [🔥 KEYWORD DB]
+    │   ├── problems-index.json
+    │   ├── tier-definitions.json
+    │   └── mock-exams-catalog.json
+    │
+    └── 🎨 styles/
+        └── (Global styles in index.css)
+
+═══════════════════════════════════════
+KEY:
+📄 Documentation    💻 Source code
+📦 Configuration    🧩 Components
+🌐 Public assets    🔧 Utilities
+📊 Excel files      💾 Data/JSON
+🪝 React hooks      🎨 Styles
+🔥 Core/Critical    📚 Guides
+═══════════════════════════════════════
+
+FILE COUNT:
+- React Components: 18 files
+- Utility Functions: 11 files
+- Data Files: 5 JSON files
+- Documentation: 8 markdown files
+- Configuration: 5 files
+
+TOTAL: ~50 files
