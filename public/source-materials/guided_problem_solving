@@ -1,0 +1,252 @@
+{
+"worked_examples": [
+{
+"id": "archetype-a2-summit-logistics-wealth-change",
+"problem_text": "Summit Logistics is an all-equity firm with 10 million shares outstanding. The firm is considering a financed project that will change the distribution of future asset values and require issuing new equity to outside investors. You are asked to compute the wealth change for old shareholders and interpret whether this is an example of debt overhang or a clean multi-state financing problem.",
+"archetype": "A2-MultiStateProjectAndFinancing",
+"solution_steps": [
+{
+"part": "A",
+"prompt": "How do I know this is an A2 / multi-state project & financing problem?",
+"reasoning": "The stem mentions: (1) multiple states of the world with different asset values, (2) probabilities for each state, (3) issuing new equity to outside investors for cash, and (4) computing wealth change for old shareholders. That combination—states + financing + old vs new shareholders—is exactly the A2 multi-state project & financing template, often with debt overhang as a special case if there is outstanding debt.",
+"calculation": "Archetype triggers:\n- States of the world: asset values in 4 states (e.g., 200, 260, 320, 380).\n- Probabilities: equal probabilities 0.25 in each state.\n- Financing: new equity issued for cash today.\n- Question: wealth change for old shareholders.\n=> Tag as A2: Multi-State Project & Financing (possible A2A: Debt Overhang if there is debt).",
+"sanity_check": "If the question is asking about: (i) old vs new shareholders, (ii) wealth change, and (iii) probability-weighted state payoffs with financing, there is almost always a state table and a k = Cash_raised / V_equity_post step somewhere in the solution."
+},
+{
+"part": "B",
+"prompt": "What information do I need? What’s given and what’s missing?",
+"reasoning": "The question asks for wealth change to old shareholders. To compute that, I need the value of what they own before the transaction and after the transaction.\nBefore: value of existing equity.\nAfter: fraction of the post-issue equity they still own * post-issue equity value.\nTo find post-issue equity value, I need the project’s effect on asset values and the financing terms (how much cash comes in, what fraction is sold).",
+"calculation": "Key objects:\n1. Asset value without project: V_assets,old in each state.\n2. Project payoff in each state (ΔV_project).\n3. New asset values with project: V_assets,new = V_assets,old + ΔV_project.\n4. Cash raised today: C_raise.\n5. Post-issue equity value (today): V_E,post = PV_t0(E[ V_assets,new_one_year ]) + C_raise.\n6. Fraction sold to new investors: k = C_raise / V_E,post.\n7. Wealth of old shareholders:\n   - Before: W_old,before = V_E,old.\n   - After: W_old,after = (1 - k) * V_E,post.\n8. Wealth change: ΔW_old = W_old,after - W_old,before.",
+"sanity_check": "Any time there are old vs new shareholders, you should explicitly write both W_old,before and W_old,after as today-values and then take the difference. Do NOT mix state-contingent one-year values and today’s values in the same line."
+},
+{
+"part": "C",
+"prompt": "What’s my approach if I don’t remember a formula for wealth change?",
+"reasoning": "Instead of memorizing a formula, I rely on balance sheet logic and add–subtract reasoning. The new shareholders contribute cash; everyone (old+new) gets a share of the enlarged equity pie. The total equity pie is: PV of the new asset values plus the incoming cash. The new investors’ share is set by k = Cash_raised / V_E,post. Old shareholders get the residual fraction (1 - k). Compare what they keep to what they had before.",
+"calculation": "Step 1: Compute the current value of assets (without project) as a one-year risky asset.\n- Suppose asset payoffs in one year are:\n  State 1: 200\n  State 2: 260\n  State 3: 320\n  State 4: 380\n- Probabilities: each 0.25; discount rate r_A = 10%.\nE[V_assets,old,1] = 0.25*(200 + 260 + 320 + 380) = 290.\nV_assets,old,0 = 290 / (1 + 0.10) = 263.64.\nWith 10M shares, pre-issue price per share = 263.64 / 10M = 26.36.\nSo V_E,old = 263.64.\n\nStep 2: Add the project to get new asset values.\n- Suppose the project adds {+20, +20, +20, +20} in each state at t=1.\nThen new asset payoffs:\n  220, 280, 340, 400 (still equal probability).\nE[V_assets,new,1] = 0.25*(220 + 280 + 340 + 400) = 310.\nV_assets,new,0 = 310 / 1.10 = 281.82.\n\nStep 3: Incorporate financing.\n- Suppose the firm raises C_raise = 30 at t=0 by issuing new equity.\nEquity value after: V_E,post = V_assets,new,0 + C_raise = 281.82 + 30 = 311.82.\nFraction sold to new investors: k = 30 / 311.82 ≈ 0.0962 (9.62%).",
+"sanity_check": "Post-issue equity value should exceed both the pre-issue equity value and the amount raised, as long as the project has positive NPV. If your V_E,post is smaller than V_E,old, something is wrong with your project arithmetic or discounting."
+},
+{
+"part": "D",
+"prompt": "Build the state table and connect old vs new shareholders’ claims.",
+"reasoning": "The state table is where I keep myself honest. It forces me to reconcile assets, debt (if any), equity, and fractions of equity in each state. For a pure equity firm, equity is just the residual claim on assets. After the issue, old and new equity together must sum to the total equity value in each state.",
+"calculation": "One-year payoffs (after project):\n\nState 1: V_assets,new,1 = 220\nState 2: V_assets,new,1 = 280\nState 3: V_assets,new,1 = 340\nState 4: V_assets,new,1 = 400\n\nDiscounted values at t=0:\nV_assets,new,0 = 281.82 (computed above).\n\nTotal equity at t=0 is V_E,post = 311.82 (assets + 30 cash from new investors).\n\nOwnership:\n- New shareholders’ claim today: C_raise = 30.\n- Fraction k = 30 / 311.82.\n- Old shareholders’ claim today: 311.82 - 30 = 281.82 = V_assets,new,0.\n\nInterpretation: old shareholders keep all the asset value but give up a fraction k of it, because k of equity is owned by new investors. The state table makes it easy to see that all we are really doing is slicing the equity pie.",
+"sanity_check": "In any state, the value of assets must equal the total value of all claims (debt + preferred + common). For a pure equity firm, assets = total equity = equity_old + equity_new in each state. If your state table violates basic balance sheet identity, fix that first."
+},
+{
+"part": "E",
+"prompt": "Compute wealth change for old shareholders and interpret the result.",
+"reasoning": "Now that I have pre- and post-transaction values, I just compare. The key is to compare today-values, not one-year payoffs, and be clear about whose wealth I’m measuring (old shareholders only).",
+"calculation": "Wealth of old shareholders:\n- Before: W_old,before = V_E,old = 263.64.\n- After: W_old,after = (1 - k) * V_E,post.\n  = (1 - 0.0962) * 311.82 ≈ 0.9038 * 311.82 ≈ 281.82.\n\nWealth change:\nΔW_old = 281.82 - 263.64 = +18.18.\n\nInterpretation:\n- The project increases asset value by 18.18 (NPV_project = 281.82 - 263.64).\n- Old shareholders end up capturing that entire NPV here because the new equity issue is fairly priced at 30 (they give away C_raise = 30 and receive equity worth 30 in return).",
+"sanity_check": "If the equity issue is correctly priced and there is no debt, then ΔW_old should equal the project NPV. If you find old shareholders gaining or losing more than the project NPV, the equity issue is mispriced or you’ve double-counted the cash raised."
+},
+{
+"part": "F",
+"prompt": "Connect to debt overhang / agency logic when there IS debt.",
+"reasoning": "The Summit Logistics pattern is often used to illustrate debt overhang: situations where a positive NPV project is rejected because most of the benefit goes to existing debt holders, not equity. The mechanics are the same, but the asset payoff table now includes debt contracts and priority. Equity may refuse to issue new equity if the financing is zero NPV for them but positive NPV for creditors.",
+"calculation": "Debt overhang logic (generic):\n1. Compute project NPV at the asset level: NPV_project > 0.\n2. Add debt to the state table with absolute priority:\n   - Debt gets min(promised, assets) in each state.\n   - Equity gets residual = assets - debt cash flow.\n3. Re-compute equity value with and without the project.\n4. If ΔV_equity < 0 even though NPV_project > 0, equity holders will block the project (debt overhang). \n5. If equity also has to *issue* new equity to finance the project, you then layer in the A2 financing logic (k, C_raise, etc.) on top of the priority structure.",
+"sanity_check": "In a classic A2A (Debt Overhang) question, you should see: (1) outstanding risky debt, (2) a positive NPV project, (3) a decision that depends on whether the old equity is willing to issue new equity or invest inside. If debtholders capture most of the project’s value, equity will rationally refuse the project."
+}
+],
+"key_insights": [
+"Multi-state project & financing problems always boil down to: (1) compute asset value with and without the project, (2) figure out who owns which slice of the equity pie before and after financing, and (3) compare old shareholders’ wealth.",
+"The fraction sold to new equity investors is not arbitrary: k = Cash_raised / V_E,post. This ensures the equity issue is zero-NPV given the market’s beliefs.",
+"When there is no debt and the equity issue is correctly priced, old shareholders’ wealth change equals the project NPV.",
+"Debt overhang arises when there is outstanding risky debt: positive NPV projects can be blocked because much of the benefit accrues to debtholders, not equity."
+],
+"common_mistakes": [
+"Using promised returns (like 9.4%) instead of expected returns when discounting risky multi-state payoffs.",
+"Computing k = Cash_raised / V_assets,new,0 instead of k = Cash_raised / V_E,post (you must include the cash raised itself in the post-issue equity value).",
+"Comparing a one-year equity payoff after the project to a today-value of equity before the project. All wealth comparisons must be in the same time units.",
+"Ignoring the financing leg and assuming old shareholders automatically capture the full project NPV, even when they sell a large fraction of the firm to new investors."
+]
+}
+],
+"decision_trees": [
+{
+"id": "discount-rate-selection-core-tree",
+"stuck_point": "I don’t know what discount rate to use.",
+"archetype": "A3-CAPM-AndDiscountRates",
+"root_question": "What cash flows am I discounting?",
+"branches": [
+{
+"condition": "I am valuing the ENTIRE FIRM (cash flows to all investors: debt + equity).",
+"action": "Use the asset discount rate / WACC (r_A).",
+"subquestions": [
+{
+"question": "Is the firm’s leverage policy (D/E ratio) stable for the horizon I’m valuing?",
+"branches": [
+{
+"condition": "YES, leverage is roughly stable.",
+"action": "Compute WACC using current market-value weights and target leverage:\nWACC = (E / (D + E)) * r_E + (D / (D + E)) * (1 - τ) * r_D.",
+"notes": [
+"Use market values of debt and equity, not book values, for the weights.",
+"Use expected returns (from CAPM or other models), not coupon rates or yields, for r_E and r_D."
+]
+},
+{
+"condition": "NO, leverage is changing dramatically (e.g., LBO, big recap).",
+"action": "Unlever to get an asset beta and re-lever for the appropriate leverage path.",
+"notes": [
+"Step 1: Estimate an asset beta from comparable firms or from the firm’s current β_E and D/E.",
+"Step 2: Use r_A = r_f + β_A * (E[r_M] - r_f) to discount asset cash flows directly.",
+"Step 3: If needed, layer in tax shields separately using an appropriate discount rate for the tax shields."
+]
+}
+]
+}
+]
+},
+{
+"condition": "I am valuing EQUITY cash flows only (dividends + buybacks + net equity repurchases).",
+"action": "Use the equity discount rate r_E.",
+"subquestions": [
+{
+"question": "Is this for the firm’s main equity, or a special security (e.g., preferred, convertible)?",
+"branches": [
+{
+"condition": "Common equity of the firm.",
+"action": "Use CAPM or another asset pricing model to compute r_E:\nr_E = r_f + β_E (E[r_M] - r_f).",
+"notes": [
+"Estimate β_E from a regression of stock excess returns on market excess returns.",
+"Sanity check β_E against business cyclicality: durable / luxury firms should have β_E > 1; groceries and staples often β_E < 1."
+]
+},
+{
+"condition": "Preferred stock or other senior equity-like security.",
+"action": "Treat it like risky debt or a hybrid: estimate its β from payoff structure, or infer from asset β and remaining capital structure.",
+"notes": [
+"Preferred that sometimes misses dividends behaves like risky debt.",
+"Its β will typically lie between β_D and β_E."
+]
+}
+]
+}
+]
+},
+{
+"condition": "I am valuing a PROJECT (capital budgeting).",
+"action": "Use a project-specific asset discount rate based on the project’s risk, not automatically the firm’s WACC.",
+"subquestions": [
+{
+"question": "Is the project’s risk similar to the firm’s existing assets?",
+"branches": [
+{
+"condition": "YES, project risk is similar.",
+"action": "Use the firm’s asset discount rate / WACC as the project discount rate.",
+"notes": [
+"This is valid when the project is "more of the same" (same product line, customers, geography)."
+]
+},
+{
+"condition": "NO, project risk is materially different (new industry, new country, different cyclicality).",
+"action": "Use a pure-play comparable to estimate a project-specific discount rate.",
+"notes": [
+"Step 1: Find a comparable firm whose operations match the project’s risk.\nStep 2: Use their equity β and capital structure to back out β_A,project.\nStep 3: Compute r_A,project via CAPM or similar model.\nStep 4 (optional): If financing is relevant and non-M&M, consider separate valuation of tax shields and financing side effects."
+]
+}
+]
+}
+]
+},
+{
+"condition": "I am valuing TAX SHIELDS or interest-related benefits.",
+"action": "Use the expected return on the tax shield, which is often (but not always) close to the expected return on debt.",
+"subquestions": [
+{
+"question": "Is the debt level fixed in nominal terms, and is the tax rate stable and not correlated with the market?",
+"branches": [
+{
+"condition": "YES, level of debt is fixed (like a bullet bond) and tax rate is stable.",
+"action": "Discount tax shields at the expected return on that debt: r_TS ≈ r_D.",
+"notes": [
+"Classic UST-style formula: NPV_TS ≈ τ * r_D * D / (r_D + p), when debt is risky with default probability p.",
+"If the debt is nearly risk-free, r_TS ≈ r_f and you can discount at the risk-free rate as an approximation."
+]
+},
+{
+"condition": "NO, the firm targets a constant debt ratio, so debt and tax shields move with asset value.",
+"action": "Tax shields inherit asset-like risk. Discount at r_TS ≈ r_A.",
+"notes": [
+"When D/A is held constant, tax savings move one-for-one with asset value; this makes tax shields as risky as the assets.",
+"The value of tax shields becomes: NPV_TS ≈ τ * r_D * D / (r_A - g_TS), where g_TS is the growth rate of expected tax shields net of default."
+]
+}
+]
+}
+]
+}
+]
+}
+],
+"intuition_explanations": [
+{
+"id": "intuition-leverage-increases-equity-beta",
+"title": "Why Does Leverage Increase Equity Beta?",
+"concept": "Relationship between leverage, asset beta, and equity beta.",
+"archetype": "A1-CapitalStructure",
+"analogy": "Equity as a residual claim riding in the back of a leveraged roller coaster.",
+"explanation": [
+"Think of the firm’s assets as a business that earns a risky return r_A. That business can be financed with some combination of debt and equity.",
+"Debt holders get a relatively fixed promised payment (coupons and principal). Equity holders get whatever is left over—good or bad—after paying debt. That 'whatever is left' is the definition of a residual claim.",
+"When the firm does well (assets above the promised debt payment), debt gets its fixed payment and all of the upside goes to equity. A small percentage increase in asset value can translate into a much larger percentage increase in equity value because the debt slice is fixed.",
+"When the firm does poorly (assets close to or below the debt promise), debt still gets paid first. Equity absorbs all of the downside. A modest drop in asset value can translate into a huge negative equity return because debt is senior and equity is last in line.",
+"Mathematically, equity is a levered claim on the assets:\n  r_A = (D / (D + E)) * r_D + (E / (D + E)) * r_E.\nRewriting, you get:\n  r_E = r_A + (D / E) * (r_A - r_D).\nThe term (D / E) * (r_A - r_D) is the leverage kicker: the higher the D/E ratio, the more equity’s return amplifies the difference between asset and debt returns.",
+"The same logic applies to betas because CAPM links expected returns and betas linearly:\n  β_A = (D / (D + E)) * β_D + (E / (D + E)) * β_E.\nRearranging:\n  β_E = β_A + (D / E) * (β_A - β_D).\nIf debt is relatively low-beta (especially if close to risk-free so β_D ≈ 0), then β_E grows almost proportionally with D/E.",
+"Key intuition: leverage doesn’t change the risk of the underlying business (β_A). It just concentrates that same business risk onto a smaller equity base. Like using margin in your brokerage account, you get bigger wins and bigger losses in percentage terms on your equity stake."
+],
+"key_takeaways": [
+"Leverage amplifies equity’s exposure to asset risk because equity is a residual claimant: debt is paid first, equity gets whatever is left.",
+"If asset risk (β_A) is positive and debt is relatively safe (low β_D), increasing D/E makes equity beta rise roughly in proportion to D/E.",
+"Changing leverage does NOT change the operating risk of the business; it reallocates who bears that risk between debtholders and shareholders.",
+"This is why high-leverage firms are much more sensitive to business cycle shocks: their equity betas are often well above 1."
+]
+}
+],
+"common_mistakes_library": [
+{
+"id": "mistake-coupon-vs-expected-return-on-debt",
+"title": "Mistake: Using the Coupon Rate as the Expected Return on Debt",
+"archetype": "A1-CapitalStructure",
+"description": "Confusing the contractual coupon rate with the expected return on risky debt when computing discount rates or tax shields.",
+"why_students_do_this": [
+"The coupon rate is explicitly given in the problem (e.g., 'The bond has a 9.4% coupon'). It’s easy to grab and use without thinking.",
+"Many early time-value-of-money problems equate coupon rate with yield because they involve risk-free or par-priced bonds.",
+"It feels intuitive that 'the bond earns 9.4%' if you see that number repeatedly, even though default risk is present."
+],
+"why_it_is_wrong": [
+"The coupon rate is a PROMISED return conditional on no default. It is not what investors expect to earn in expectation when default is possible.",
+"The expected return on debt must probability-weight the returns in good states (no default) and bad states (default), often using:\n  E[r_D] = (1 - p) * r_promised + p * r_default.",
+"If the bond trades below par or has a non-trivial probability of default, the expected return will be lower than the coupon rate even before thinking about β and CAPM."
+],
+"how_to_spot_it": [
+"The problem explicitly mentions a default probability, recovery rate, or states a 'return in default'.",
+"The bond is trading at a discount or premium to face value (price ≠ face).",
+"You are asked to compute tax shield value or debt β and the solution requires an expected return, not a promised coupon."
+],
+"correct_approach": [
+"Step 1: Use the coupon and price to compute the promised yield to maturity (r_promised).",
+"Step 2: Use the given default probability p and return in default r_default to compute:\n  E[r_D] = (1 - p) * r_promised + p * r_default.",
+"Step 3: Use this E[r_D] when you need the expected return on debt—for example, when discounting tax shields or applying CAPM to debt to find β_D.",
+"Optional: If you need debt β, apply CAPM: E[r_D] = r_f + β_D (E[r_M] - r_f) and solve for β_D using your E[r_D]."
+]
+}
+],
+"conceptual_qa": [
+{
+"id": "qa-tax-shields-debt-rate",
+"question": "Why do we usually discount tax shields at the debt rate rather than the equity rate?",
+"topic": "Valuing Tax Shields",
+"archetype": "A1-CapitalStructure",
+"answer": [
+"Tax shields arise because interest payments are tax-deductible: each dollar of interest paid saves τ dollars in corporate tax (where τ is the corporate tax rate).",
+"These tax savings exist only as long as the firm is paying interest on outstanding debt and has positive taxable income to shield. That means tax shields are tied directly to the existence and risk of the debt, not to equity.",
+"If the firm maintains a fixed nominal amount of debt (a bullet bond or a fixed amortization schedule) and the tax rate is stable and not strongly correlated with the market, then the risk of the tax shield is similar to the risk of the debt itself: the tax shield falls if the firm defaults (because interest isn’t paid), and it is received when the debt is honored.",
+"Under those conditions, the appropriate discount rate for the tax shield is the expected return on that debt, r_D, not the equity rate r_E. Intuitively, someone who buys the debt is implicitly also buying the associated tax shield stream attached to that debt’s interest payments.",
+"Formally, when debt is risky with default probability p, one classic approximation is:\n  NPV(TS) ≈ τ * r_D * D / (r_D + p),\nwhich treats tax shields as a risky bond-like cash flow discounted at a debt-like rate adjusted for default.",
+"However, if the firm targets a constant debt ratio (D/A fixed), then the level of debt and thus the tax shield fluctuate with asset values. In that case, the tax shield has asset-like risk and should be discounted at something closer to r_A, the asset discount rate, not r_D.",
+"Key principle: match the discount rate to the risk of the cash flow, not to who 'likes' or 'benefits from' the cash flow. For tax shields, that risk is usually debt-like when D is fixed in nominal terms and tax policy is stable."
+]
+}
+]
+}
