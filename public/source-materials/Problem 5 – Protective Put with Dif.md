@@ -1081,4 +1081,1033 @@ r is low (cost of delay is small).
 
 Information is high quality (you really do avoid bad states and capture good states).
 
+
 As r rises or info quality falls, the value of waiting shrinks, possibly to zero or negative if conditions are extreme.
+
+---
+
+# 9. Bond Tax Shields – Changing Recovery
+
+## Problem 9 – Same Coupon & Price, Higher Recovery
+
+A firm issues a 4-year bullet bond:
+
+* Face value: $300m
+* Coupon: 7% annually
+* Issue price: 100% of par
+* Corporate tax rate: 25%
+* Risk-free rate: 3%, market risk premium: 6%
+
+Case A (baseline):
+
+* Default probability at maturity: 10%
+* Recovery in default: **40%** of face plus final coupon
+
+Case B:
+
+* Recovery in default increases to **70%** (same default probability).
+
+**Tasks:**
+
+A. In Case A, approximate the expected return on the bond relative to the 7% promised yield.
+B. Describe qualitatively how increasing recovery to 70% in Case B affects:
+
+* Expected return
+* Debt β
+* NPV of tax shields
+
+---
+
+### Solution 9
+
+**A. Case A: Expected return vs promised yield**
+
+* Promised yield = 7% (priced at par).
+* If default only at maturity, expected loss is:
+
+  * Probability of default × (promised payoff – recovery payoff) at maturity.
+* With low recovery (40%), the “bad state” payoff is far from promised, so expected loss is larger.
+
+Approximate logic:
+
+* Promised YTM = 7%
+* Expected return ≈ 7% − “default loss correction”
+* With p_default = 10%, poor recovery, default loss correction might be ~1–1.5% per year ⇒ E[r_D] ≈ 5.5–6%.
+
+(Exact value would require IRR on expected cashflows, but intuition: E[r_D] < 7%.)
+
+**B. Effect of increasing recovery (Case B)**
+
+If recovery increases from 40% → 70%:
+
+* Expected loss in default **shrinks**.
+* For same price and default probability:
+
+  * Expected return **rises** (closer to 7%) because the bad state is less bad.
+  * The bond β **shrinks**:
+
+    * Payoff is less sensitive to the “good vs bad” macrostate; bond is safer.
+* Tax shields: TS = τ × interest each year, discounted at a TS discount rate (often approximated by E[r_D] if shields are debt-like):
+
+  * Higher E[r_D] in Case A (if price adjusts) → changes TS discount rate.
+  * With better recovery, the debt is **less risky**, so TS are **less risky** and can be discounted at a lower rate.
+  * But for a fixed coupon/face/τ, the **present value of TS** increases because:
+
+    * Probability of survival (to get interest) doesn’t change,
+    * But the appropriate discount rate for TS is **lower** and closer to risk-free.
+
+**Intuition:**
+Better recovery makes debt more bond-like and less equity-like: expected return rises (for fixed price), β falls, and TS associated with that debt become safer and more valuable.
+
+---
+
+# 10. Bond TS – Changing Coupon vs Par
+
+## Problem 10 – Discount Bond vs Par Bond
+
+Firm B issues a 5-year bullet bond:
+
+* Face value: $250m
+* Corporate tax rate: 30%
+
+Case A (par):
+
+* Coupon = 6%
+* Price = 100% of par → YTM = 6%
+
+Case B (discount):
+
+* Coupon = 4%
+* Price = 94% of par → promised YTM ≈ 6%
+
+Default risk is negligible in both cases.
+
+**Tasks:**
+
+A. For Case A, compute annual tax shield and TS NPV assuming perpetual refinancing at 6%.
+B. For Case B, compute annual tax shield and compare TS NPV with Case A, assuming YTM 6%.
+C. Intuition: Even if YTM matches, how does changing coupon vs price affect TS?
+
+---
+
+### Solution 10
+
+**A. Case A – Par bond, coupon 6%**
+
+Interest each year = 0.06 × 250 = 15m
+Tax shield each year = τ × interest = 0.30 × 15 = 4.5m
+
+If you assume perpetual refinancing at same terms and discount TS at YTM = 6%:
+
+[
+V_{TS}^{A} = \frac{4.5}{0.06} = 75m
+]
+
+**B. Case B – Discount bond, coupon 4%**
+
+Interest each year = 0.04 × 250 = 10m
+Tax shield each year = 0.30 × 10 = 3m
+
+Even if promised YTM is ~6% (because price < par), the **coupon** is lower.
+
+Perpetual TS approximation:
+
+[
+V_{TS}^{B} = \frac{3}{0.06} = 50m
+]
+
+So TS is **lower** because the **interest expense** (and thus shield) is lower.
+
+**C. Intuition**
+
+* Tax shield depends on **interest paid**, not YTM.
+* Two bonds with same YTM but different coupons:
+
+  * Higher coupon → higher interest → bigger tax shield.
+  * Discount bond (lower coupon, lower price) has smaller annual interest and smaller TS even if required return is the same.
+* Economically: the tax advantage of debt is tied to **the size of interest deductions**, not the market’s required return.
+
+---
+
+# 11. Multi-State Debt – Changing Face Value
+
+## Problem 11 – Debt Face Value and Default Region
+
+A firm’s asset value in one year is:
+
+* State 1 (30%): $100m
+* State 2 (40%): $150m
+* State 3 (30%): $220m
+
+The firm considers issuing zero-coupon debt maturing in one year.
+
+Case A:
+
+* Face value of debt: **F = $140m**
+
+Case B:
+
+* Face value increases to **F = $180m**
+
+**Tasks:**
+
+A. For Case A, compute debt and equity payoff in each state.
+B. Same for Case B.
+C. Intuition: How does raising F change:
+
+* Probability of default
+* Equity’s payoff pattern
+* Equity’s incentive to increase risk?
+
+---
+
+### Solution 11
+
+**Case A (F = 140)**
+
+State 1: V = 100 < 140
+
+* Debt gets 100, equity = 0 (default).
+
+State 2: V = 150 > 140
+
+* Debt gets 140, equity = 10.
+
+State 3: V = 220 > 140
+
+* Debt gets 140, equity = 80.
+
+**Default in State 1 only** (30%).
+
+**Case B (F = 180)**
+
+State 1: V = 100 < 180
+
+* Debt = 100, equity = 0 (default).
+
+State 2: V = 150 < 180
+
+* Debt = 150, equity = 0 (default).
+
+State 3: V = 220 > 180
+
+* Debt = 180, equity = 40.
+
+Now default occurs in States 1 & 2 (70% combined).
+
+**Intuition:**
+
+* Raising F pushes the **default threshold** up; more states end in default.
+* Equity becomes a more out-of-the-money call on the firm’s assets:
+
+  * Equity now only pays off in the best state.
+  * Equity’s payoff is more sensitive to **extreme upside** and zero in more moderate states.
+* Thus, equity has **stronger incentives to increase volatility** (“risk-shifting”), since only very high values rescue them.
+
+---
+
+# 12. Multi-State Project – Changing Project Payoff Skew
+
+## Problem 12 – Debt Overhang with a “Good-in-Bad-States” Project
+
+Same firm as Problem 11, but it already has debt F = 140 (Case A, one-year zero coupon).
+
+Project P costs 30 today and yields in one year:
+
+Case 1 (good-in-good-states):
+
+* State 1: +10
+* State 2: +20
+* State 3: +40
+
+Case 2 (good-in-bad-states):
+
+* State 1: +40
+* State 2: +20
+* State 3: +10
+
+Discount rate = 10%. Old debt outstanding cannot be changed.
+
+**Tasks:**
+
+A. In Case 1, do most of the project’s benefits go to debt or equity?
+B. In Case 2, do most of the project’s benefits go to debt or equity?
+C. Intuition: which pattern is more likely to create **debt overhang** (equity rejecting a positive-NPV project)?
+
+---
+
+### Solution 12 (Qualitative)
+
+We focus on where the **marginal payoff** of the project changes payoffs.
+
+**Case 1 (project pays more in high states)**
+
+* Old default regime: only State 1 is default.
+* Project is small in State 1 (+10), bigger in States 2,3 when debt is already safe.
+* Most of the incremental payoff in States 2,3 flows to **equity** (because debt is already fully paid).
+* So the project’s benefits accrue **mainly to equity**; debt doesn’t gain much.
+
+**Case 2 (project pays more in bad states)**
+
+* Project is large in State 1 (+40), medium in State 2 (+20), small in State 3 (+10).
+* In low asset states, the project’s gains go first to **debt**, reducing default losses.
+* Equity may still be wiped out in bad states, so project’s improvements primarily repair creditor losses, not equity’s payoff.
+
+**Debt overhang intuition:**
+
+* A project whose marginal payoff mostly helps **bad states** where debt is at risk (Case 2) is more prone to **debt overhang**:
+
+  * Total firm NPV may be positive,
+  * But equity sees little incremental payoff after paying debt.
+  * Equity might refuse to fund the project even though it increases total value.
+* A project whose payoff is concentrated in **good states** (Case 1) mostly benefits equity; they are more likely to approve it.
+
+---
+
+# 13. Project Probabilities – Changing Good/Bad Probabilities Under Debt Overhang
+
+## Problem 13 – Probability Shift with Existing Debt
+
+Same as Problem 12 Case 2 (good-in-bad-states project), but now we’ll change probabilities.
+
+Assets still:
+
+* State 1: 100
+* State 2: 150
+* State 3: 220
+
+Debt: F = 140.
+
+Project P (good in bad states):
+
+* State 1: +40
+* State 2: +20
+* State 3: +10
+
+Case A probabilities:
+
+* (0.4, 0.4, 0.2)
+
+Case B probabilities:
+
+* (0.2, 0.4, 0.4)
+
+**Tasks:**
+
+A. In which case is total NPV more likely to be positive?
+B. In which case is **equity** more likely to reject the project (debt overhang)?
+C. Intuition: how does increasing probability of good states change debt vs equity’s claim on project NPV?
+
+---
+
+### Solution 13 (Qualitative)
+
+* The project’s payoff is skewed toward **bad** states (40 in State 1, 20 in State 2, 10 in State 3).
+* Debt is at risk in bad state(s), already safe in the best state.
+
+**Case A (more mass in bad states)**
+
+* 40% chance of State 1, 40% chance of State 2.
+* The project’s biggest payoff (40) happens relatively often in State 1 where debt suffers.
+* So more of the project’s benefit flows to **debt** (repairing default losses).
+* Total NPV may be strongly positive, but equity sees only limited incremental payoff in States 1 & 2.
+
+**Case B (more mass in good states)**
+
+* 20% probability of State 1, 40% for State 2, 40% for State 3.
+* Project’s large payoff in State 1 matters less, more weight is on moderate/good states where debt is safe or nearly safe.
+* So more of the project’s benefit flows to **equity** (or at least not exclusively to debt).
+
+**Answers:**
+
+A. Total NPV is more likely to be **positive in Case A**, because project pays big when firm value is low (classic risk-hedging project) and those bad states are frequent.
+
+B. Equity is more likely to **reject** the project in Case A (classic debt overhang), because:
+
+* That’s where the project helps the **debt holders** most (in bad states).
+* Equity gets less incremental payoff relative to their funding cost.
+
+C. Intuition: shifting probability toward good states (Case B) makes the project’s NPV distribution more equity-friendly, reducing underinvestment risk.
+
+---
+
+# 14. CAPM – Changing Market Risk Premium and Risk-Free Rate
+
+## Problem 14 – WACC and Firm Value Under Different MRP & r_f
+
+Firm E has:
+
+* Asset beta β_A = 1.0
+* No debt (all equity)
+* Expected cashflow next year: CF₁ = $100m, growing at g = 2% perpetually.
+
+**Case A:**
+
+* r_f = 2%, MRP = 8%
+* Discount rate r_A = 2% + 1.0×8% = 10%
+
+**Case B:**
+
+* r_f = 4%, MRP = 4%
+* New discount rate r_A = 4% + 1.0×4% = 8%
+
+**Tasks:**
+
+A. Compute firm value in Case A and Case B.
+B. Intuition: how can firm value rise even if risk-free rates increase from 2% → 4%?
+
+---
+
+### Solution 14
+
+Value using Gordon Growth formula:
+
+[
+V = \frac{CF_1}{r_A − g}
+]
+
+**Case A: r_A = 10%**
+
+[
+V_A = \frac{100}{0.10 − 0.02} = \frac{100}{0.08} = 1250
+]
+
+**Case B: r_A = 8%**
+
+[
+V_B = \frac{100}{0.08 − 0.02} = \frac{100}{0.06} ≈ 1666.7
+]
+
+So value in Case B is **higher** (~1667 vs 1250).
+
+**Intuition:**
+
+* Although r_f rose from 2% to 4%, the **market risk premium fell** (8%→4%), lowering the total risk premium and expected return from 10%→8%.
+* The key is the **total discount rate r_A**: it went **down**, not up, because the fall in MRP more than offset the rise in r_f.
+* Firm value is driven by CF and r − g; if r falls, value rises regardless of what components (r_f vs MRP) changed.
+
+---
+
+# 15. CAPM – Changing β and MRP While Keeping r_f Fixed
+
+## Problem 15 – Same Asset, Different States of the World
+
+A project has:
+
+* β_project = 1.2
+* CF₁ = $50m, growth g = 0% (perpetuity)
+* r_f = 3%
+
+**Case A: MRP = 6%**
+**Case B: MRP = 3%**
+
+**Tasks:**
+
+A. Compute project value in both cases.
+B. Intuition: what does a lower MRP mean for valuation if β is unchanged?
+
+---
+
+### Solution 15
+
+Expected return on project:
+
+* Case A: r_A = 3% + 1.2×6% = 10.2%
+* Case B: r_A = 3% + 1.2×3% = 6.6%
+
+Value = CF₁ / (r − g) = 50 / r (since g=0).
+
+* Case A: V = 50 / 0.102 ≈ 490.2
+* Case B: V = 50 / 0.066 ≈ 757.6
+
+Lower MRP → lower discount rate → **higher project value**.
+
+**Intuition:**
+If markets require less compensation per unit β (lower MRP), all risky cashflows discount at a lower rate, increasing valuations even if β hasn’t changed.
+
+---
+
+# 16. P/CF Multiple – Changing Growth and Discount Rate
+
+## Problem 16 – Two Firms, Different Growth and r
+
+Two firms both have current cashflow CF₁ = $100m.
+
+Firm A:
+
+* Growth g_A = 2%
+* Discount rate r_A = 8%
+
+Firm B:
+
+* Growth g_B = 5%
+* Discount rate r_B = 10%
+
+**Tasks:**
+
+A. Compute P/CF for each if valued as growth perpetuities.
+B. Intuition: can a higher growth but higher risk firm have the same or lower multiple than a lower growth, lower risk firm?
+
+---
+
+### Solution 16
+
+Value = CF₁ / (r − g).
+
+Firm A:
+
+[
+V_A = \frac{100}{0.08 − 0.02} = \frac{100}{0.06} ≈ 1667 → P/CF ≈ 16.7×
+]
+
+Firm B:
+
+[
+V_B = \frac{100}{0.10 − 0.05} = \frac{100}{0.05} = 2000 → P/CF = 20×
+]
+
+In this calibration, the higher growth “wins” enough to give a higher multiple, despite higher risk.
+
+If instead r_B was, say, 12%:
+
+[
+V_B = \frac{100}{0.12 − 0.05} = \frac{100}{0.07} ≈ 1429 → P/CF ≈ 14.3×
+]
+
+Now the higher risk more than offsets higher growth, and B has a **lower multiple**.
+
+**Intuition:**
+Multiples depend on **both** growth and risk: higher growth pulls multiples up, higher required return pushes them down. The net effect depends on which dominates.
+
+---
+
+# 17. Under/Overinvestment – Changing Project Size
+
+## Problem 17 – Project Size Relative to Firm
+
+An all-equity firm has value V = $500m. It has a project with:
+
+* Cost I = 50
+* PV of future cashflows = 60
+
+So NPV = +10.
+
+Case A: Only **one** such project exists.
+Case B: **Ten** identical projects exist (total I=500, PV=600, NPV=+100).
+
+**Tasks:**
+
+A. Which case creates more absolute value?
+B. Which case is more likely to be constrained by **financing frictions** (adverse selection, limits to debt capacity)?
+C. Intuition: how does project scale matter for underinvestment risk?
+
+---
+
+### Solution 17
+
+A.
+
+* Case A: NPV = +10
+* Case B: ten× that ⇒ NPV = +100
+
+B.
+
+* When NPV is small relative to firm value (Case A), the firm can often fund it internally or with modest financing; even with some friction, most value can be captured.
+* When NPV is **large** (Case B), the firm may need to issue substantial equity or debt:
+
+  * If equity is undervalued (adverse selection), PEcking Order says they might refuse.
+  * If debt capacity is limited, they may not be able to borrow enough without major distress risk.
+
+C.
+
+* Larger project scale magnifies **underinvestment risk** under frictions:
+
+  * More NPV is potentially left on the table if the firm cannot or will not finance.
+  * The bigger the wedge between total NPV and NPV to equity under certain financing, the more dramatic the underinvestment problem becomes.
+
+---
+
+# 18. Negative Alpha – Changing Sample Length
+
+## Problem 18 – Alpha Significance and Sample Size
+
+A CAPM regression for stock Z over 12 months yields:
+
+* α̂ = −3% (annualized)
+* Standard error of α̂ ≈ 2%
+
+Case A: Uses 12 months of data.
+Case B: Uses 60 months of data and gets the same point estimate α̂ = −3%, but standard error now ≈ 1%.
+
+**Tasks:**
+
+A. In which case is the negative alpha statistically more credible?
+B. Intuition: why does longer sample length change your confidence, even if the point estimate is unchanged?
+
+---
+
+### Solution 18
+
+A.
+
+* Case A: t-stat ≈ −3 / 2 = −1.5 (not very significant).
+* Case B: t-stat ≈ −3 / 1 = −3 (more strongly significant).
+
+So the negative alpha is more **statistically persuasive** in Case B.
+
+B.
+
+* Longer samples reduce sampling error; standard error of alpha shrinks roughly with √T.
+* A persistent negative alpha over many years is harder to attribute to luck; more likely to reflect real mispricing or missing risk factors.
+* Short samples yield noisy estimates; you’re cautious about reading too much into them.
+
+---
+
+# 19. Market Timing – Changing Degree of Mispricing
+
+## Problem 19 – Issuing Equity When Overvalued by Different Amounts
+
+Firm F is all equity with intrinsic value $100 per share.
+
+Case A:
+
+* Market price P = $110 (10% overvalued).
+
+Case B:
+
+* Market price P = $130 (30% overvalued).
+
+The firm wants to raise $100m to fund a zero-NPV project (just for illustration).
+
+**Tasks:**
+
+A. How many shares must be issued in each case?
+B. How much wealth is transferred from new to old shareholders in each case?
+C. Intuition: how does the degree of mispricing affect the attractiveness of equity issuance?
+
+---
+
+### Solution 19
+
+A. Shares issued:
+
+* Case A: shares = 100 / 110 ≈ 0.909m
+* Case B: shares = 100 / 130 ≈ 0.769m
+
+B. Wealth transfer:
+
+* Intrinsic total value increase from project = 0 (by assumption zero NPV).
+* Old intrinsic equity value pre = V = P_true × shares_outstanding (say 100 × N).
+* After raising 100, firm has 100 of additional cash; intrinsic value becomes 100N + 100.
+
+But new shareholders paid:
+
+* Case A: pay 110 per share for intrinsic 100 → they overpay ~10 per share.
+
+  * Transfer = (#new shares) × (mispricing) ≈ 0.909m × 10 = $9.09m to old shareholders.
+* Case B: overpay 30 per share → transfer ≈ 0.769m × 30 ≈ $23.07m.
+
+C.
+
+* The more overvalued the stock, the **more attractive** it is for existing shareholders to issue equity:
+
+  * They give up fewer intrinsic claims for more cash.
+  * Equity issuance becomes a powerful way to transfer wealth from new investors to old ones, even if projects are mediocre.
+
+---
+
+# 20. Protective Put vs Covered Call – Changing Strike
+
+## Problem 20 – Two Option Strategies, Strike Moved
+
+Two strategies on stock with S₀ = 100:
+
+* **Protective Put:** long stock + long put @K=90 for $5.
+* **Covered Call:** long stock + short call @K=110 for $5.
+
+Assume one-year horizon, S_T in {80, 100, 120} equal prob.
+
+**Tasks:**
+
+A. Compute payoff in each state for the protective put and covered call.
+B. If we change the strike from 90 → 95 (protective put) and 110 → 105 (covered call), how do payoffs change?
+C. Intuition: how does raising put strike (or lowering call strike) change risk/return?
+
+---
+
+### Solution 20 (sketch)
+
+You can compute:
+
+* Protective put (K=90) payoff = stock + put = max(S_T, 90).
+* Covered call (K=110) payoff = stock − call = min(S_T, 110).
+
+When you move K from 90→95 (put):
+
+* Floor moves up from 90 to 95 → **better protection** in bad states.
+* Put becomes more valuable (must cost more); initial outlay rises → **expected net return** falls.
+
+When you move K from 110→105 (call):
+
+* Cap moves down from 110 to 105 → less upside.
+* Call is more valuable (you receive more premium), but your payoff is capped sooner.
+
+**Intuition:**
+
+* Higher put strike = higher floor = less downside, more insurance cost → lower β, lower expected return.
+* Lower call strike = lower cap = you give up more upside, collect more income now → position becomes more bond-like, β and expected return fall.
+
+---
+
+# 21. Maturity Mismatch – Changing Debt Maturity
+
+## Problem 21 – Short vs Long Maturity with Same Coupon
+
+Firm G needs $200m. Two pure strategies:
+
+* Strategy S: Issue 2-year bond, 6% coupon, roll over indefinitely.
+* Strategy L: Issue 10-year bond, 6% coupon, no rollover.
+
+Assume identical tax rate and coupon rate; default risk depends on chance of **not being able to roll**.
+
+**Tasks:**
+
+A. Qualitatively compare:
+
+* Refinancing risk
+* Flexibility
+* Tax shield risk
+  between S and L.
+  B. How would raising the **probability of a credit freeze** (e.g., 2008-type event) change the trade-off?
+
+---
+
+### Solution 21 (qualitative)
+
+* Short maturity (S):
+
+  * Higher **refinancing risk**: you must roll every 2 years; if markets freeze, you may face distress.
+  * More flexibility: you can adjust outstanding debt to changing business conditions.
+  * Tax shields are **more uncertain** because they depend on successful rollovers.
+
+* Long maturity (L):
+
+  * Lower refinancing risk (locked for 10 years).
+  * Less flexibility: stuck with that financing even if firm’s risk profile changes.
+  * Tax shield stream is more secure (subject to operational default, but not rollover).
+
+If probability of credit freeze increases:
+
+* Short debt becomes much riskier (refinancing risk).
+* Long debt becomes relatively more attractive despite lower flexibility.
+
+---
+
+# 22. Dividend Smoothing – Changing Profit Volatility
+
+## Problem 22 – Smoothing in Stable vs Volatile Earnings
+
+Firm H has:
+
+* Stable earnings (Case A): EPS year after year varies between $4.80–$5.20.
+* Volatile earnings (Case B): EPS ranges from $1 to $9.
+
+Both consider a **constant dividend** of $4 per year.
+
+**Tasks:**
+
+A. In which case is smoothing more “natural”?
+B. In which case does a fixed $4 dividend carry more signaling power?
+C. Intuition: how does earnings volatility affect payout policy interpretation?
+
+---
+
+### Solution 22
+
+* Case A (stable):
+
+  * Paying $4 is obviously sustainable and unremarkable; limited signaling content.
+  * Smoothing is almost trivial since earnings rarely move far from $5.
+
+* Case B (volatile):
+
+  * Committing to $4 when EPS can be 1–9 is a strong signal: managers are **confident** that average earnings justify this.
+  * Cutting the dividend down from $4 in bad years is a strong negative signal.
+
+**Intuition:**
+Dividend smoothing is more informative in volatile settings because it requires management to **look through** short-term noise and commit against substantial downside years. The more variable earnings are, the more likely dividend changes or maintenance will be interpreted as signals rather than mechanical.
+
+---
+
+# 23. FX Hedge – Changing Correlation
+
+## Problem 23 – Natural Hedge vs Financial Hedge
+
+An exporter E earns revenues in euros (EUR) but reports in USD.
+
+Case A:
+
+* Its **operating margin** improves when EUR/USD rises (strong euro).
+* It has **no euro-denominated debt**.
+
+Case B:
+
+* It borrows heavily in EUR, and its inputs are in USD.
+
+**Tasks:**
+
+A. In Case A, what is the firm’s unhedged exposure to EUR?
+B. In Case B, how does having EUR debt change its exposure?
+C. Intuition: why might a firm with natural hedge (Case B) need less derivative hedging?
+
+---
+
+### Solution 23
+
+A. Case A:
+
+* Revenues in EUR, costs mostly in USD → strong euro increases USD value of revenue.
+* Firm has a **long EUR exposure**: profits rise when EUR rises.
+
+B. Case B:
+
+* Revenues still in EUR, but debt payments also in EUR.
+* If EUR rises:
+
+  * Revenues ↑ in USD, but interest and principal also ↑ in USD.
+  * A portion of operating exposure is offset by financing exposure.
+
+C. Intuition:
+
+* Case B has a **natural hedge**: revenue and debt service both depend on EUR.
+* A net exposure (difference between revenue and debt flows) is smaller, so the firm may need **less** derivative hedging.
+* In Case A, the firm is unidirectionally exposed to EUR and may benefit from using forwards/options to trim FX risk.
+
+---
+
+# 24. Real Option – Cost of Delay vs NPV Gain
+
+## Problem 24 – High Growth vs High Discount Rate
+
+Project J:
+
+* Invest now: NPV_now = +10.
+* Wait 1 year: if demand high, NPV_H = +40; if low, NPV_L = −10.
+
+Probabilities: 50/50.
+
+**Case A:** discount rate r = 5%.
+**Case B:** discount rate r = 20%.
+
+**Tasks:**
+
+A. In Case A, is the option to wait likely to be valuable?
+B. In Case B, how does the higher discount rate affect value of waiting?
+C. Intuition: when does waiting make sense and when is “invest now” better?
+
+---
+
+### Solution 24 (qualitative)
+
+With low discount rate (5%):
+
+* Cost of delaying a positive NPV_now project is modest.
+* Benefit of waiting is being able to avoid **negative NPV** states (L) and invest only in **H**.
+* Real option value likely **positive**.
+
+With high discount rate (20%):
+
+* Cost of delay is large; future payoffs are heavily discounted.
+* Even if you avoid L, the present value of a high-state payoff shrinks when brought back at 20%.
+* Option to wait may no longer dominate “invest now with NPV=10,” or might be only marginally better.
+
+**Intuition:**
+Waiting is most attractive when:
+
+* Uncertainty is high (big gap between H and L),
+* There’s a meaningful chance of negative NPV states, and
+* The cost of delay (r) is not too high.
+
+---
+
+# 25. Loan Covenants – Severity vs Flexibility
+
+## Problem 25 – Tight vs Loose Covenants
+
+Firm K has two possible covenant packages on its new debt:
+
+* **Tight package:**
+
+  * Dividend payout cap at 20% of earnings
+  * Strict leverage and interest coverage tests
+  * Limited asset sales
+
+* **Loose package:**
+
+  * Minimal dividend restrictions
+  * Weirdly low leverage covenant, rarely binding
+
+**Tasks:**
+
+A. Which package is more attractive to **creditors**, and why?
+B. How can tight covenants **benefit equity** too?
+C. Intuition: when might equity prefer looser covenants despite higher interest rates?
+
+---
+
+### Solution 25 (qualitative)
+
+A.
+
+* Tight covenants protect creditors from asset substitution, dividend tunneling, and over-borrowing.
+* Lower expected losses → lower required yield → better rating. Creditors usually favor **tighter** covenants if priced fairly.
+
+B.
+
+* Tighter covenants can reduce the **cost of debt**, raising firm value.
+* They can also provide discipline against managerial empire-building, benefiting shareholders.
+* In many cases, value created > flexibility lost.
+
+C.
+
+* Equity might prefer looser covenants if:
+
+  * The firm has many growth options and needs flexibility to invest or raise additional capital.
+  * Tighter covenants would block attractive projects or force early renegotiation.
+* It’s a trade-off between **cheaper debt + discipline** vs **freedom to pursue opportunities**.
+
+---
+
+# 26. Payout vs Investment – Thin Margins & High Growth
+
+## Problem 26 – Payout Choice in Marginal Business
+
+Firm L:
+
+* Current earnings: $10m.
+* Positive NPV projects totaling $50m, but only $20m of internal cash.
+* Debt capacity is limited; equity is believed undervalued.
+
+Board considers:
+
+* Paying $5m dividend
+* Retaining all internal cash and no dividend.
+
+**Tasks:**
+
+A. From trade-off + pecking order perspective, which action is better?
+B. Intuition: how do investment needs and perceived mispricing shape payout policy?
+
+---
+
+### Solution 26
+
+A.
+
+* Given the firm has **more positive NPV projects** than internal cash, and equity is believed **undervalued**, paying dividends forces the firm to either:
+
+  * Issue equity at a discount (wealth transfer), or
+  * Skip positive NPV projects (underinvestment).
+* Under trade-off and pecking order, **retaining all cash (no dividend)** is the better choice.
+
+B.
+
+* Investment needs: When good projects are constrained by internal funds, payout should be **lower**, not higher.
+* Perceived mispricing: If equity is undervalued, equity issuance is costly; firms prefer internal cash and debt.
+* Thus, for thin-margin high-growth firms with limited external financing, minimal dividends are often optimal.
+
+---
+
+# 27. Hedging Fuel – Changing Business Cyclicality
+
+## Problem 27 – Fuel Hedge for Cyclical vs Defensive Airline
+
+Two airlines:
+
+* Airline C: highly **cyclical**; demand is strong when economy is strong.
+* Airline D: more **defensive**; demand stable across cycles.
+
+Both use jet fuel as major input and consider hedging fuel prices.
+
+**Tasks:**
+
+A. For Airline C, how does fuel price typically move relative to its revenue?
+B. For Airline D, is that correlation as strong?
+C. Intuition: which airline benefits more from hedging fuel prices and why?
+
+---
+
+### Solution 27
+
+A.
+
+* Airline C: when the economy is strong, travel demand and jet fuel prices both tend to be **high**.
+
+  * So fuel cost spikes occur when revenue is also high → partial natural hedge.
+  * However, margin still at risk if fuel increases more than revenue.
+
+B.
+
+* Airline D: demand is more stable; its revenue is less tied to macro conditions and fuel prices.
+
+  * So spikes in fuel prices do not coincide with proportionally higher revenue.
+  * Fuel cost shocks are more purely negative.
+
+C.
+
+* Airline D likely benefits **more** from hedging fuel prices:
+
+  * It has less natural hedge; high fuel prices directly compress its margins in all states.
+  * Hedging shifts risk from shareholders to counterparties more effectively.
+* For Airline C, hedging may still help, especially if fuel volatility outpaces revenue shifts, but the natural correlation already partially mitigates risk.
+
+---
+
+# 28. Multi-Divisional WACC – Shifting Weight Across Divisions
+
+## Problem 28 – Divisional WACC vs Firm WACC
+
+Conglomerate M has two divisions:
+
+* Division 1 (Utilities): β₁ = 0.4, value weight w₁ = 60%.
+* Division 2 (Tech): β₂ = 1.4, value weight w₂ = 40%.
+* r_f = 3%, MRP = 7%. No debt (all equity).
+
+**Tasks:**
+
+A. Compute firm-wide β and WACC.
+B. Suppose Tech division’s weight grows to 70% and Utilities shrinks to 30%. Compute new β and WACC.
+C. Intuition: what happens if the firm keeps using the **old WACC** to evaluate utility projects after this shift?
+
+---
+
+### Solution 28
+
+A.
+
+Firm β = w₁β₁ + w₂β₂ = 0.6×0.4 + 0.4×1.4 = 0.24 + 0.56 = 0.80
+
+WACC = r_f + β × MRP = 3% + 0.8×7% = 3% + 5.6% = 8.6%
+
+B.
+
+New weights: w₁ = 0.3, w₂ = 0.7.
+
+Firm β_new = 0.3×0.4 + 0.7×1.4 = 0.12 + 0.98 = 1.10
+
+WACC_new = 3% + 1.10×7% = 3% + 7.7% = 10.7%
+
+C.
+
+* If the firm starts to be **dominated by tech**, its true overall risk and WACC go up.
+* If managers keep using the old 8.6% WACC to evaluate **utility** projects:
+
+  * For utility projects, true β ≈ 0.4 → true required return ≈ 3% + 0.4×7% = 5.8%.
+  * Using 8.6% artificially penalizes them; you might **reject good low-risk projects**.
+* More importantly, using the **firm’s average WACC** for all projects in this evolving mix will:
+
+  * Overvalue risky tech-like projects (β≈1.4) if WACC is below their required return.
+  * Undervalue safe utility-like projects if WACC is above their required return.
+* This is why divisional WACCs are crucial in multi-division firms.
+
+---
