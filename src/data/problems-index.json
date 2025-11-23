@@ -1,0 +1,101 @@
+{
+  "mockExams": [
+    {
+      "id": "MF_F24",
+      "name": "Fall 2024 Final",
+      "path": "./public/source-materials/pdfs/Fall_2024_Final.pdf",
+      "totalPoints": 240,
+      "timeLimit": 180,
+      "questions": [
+        {
+          "number": "Q1",
+          "title": "HAL Corporation",
+          "archetypes": ["A1"],
+          "tier": 1,
+          "points": 60,
+          "suggestedTime": 36,
+          "hasExcel": true,
+          "excelTabs": ["1_Capital_Structure"]
+        },
+        {
+          "number": "Q2",
+          "title": "Conceptual Questions",
+          "archetypes": ["T1", "T2", "T5"],
+          "tier": 1,
+          "points": 40,
+          "suggestedTime": 24,
+          "hasExcel": false,
+          "conceptualThemes": ["Information vs Mechanics", "Risk vs Return"]
+        },
+        {
+          "number": "Q3",
+          "title": "Element Fresh",
+          "archetypes": ["A2A", "A3"],
+          "tier": 1,
+          "points": 80,
+          "suggestedTime": 48,
+          "hasExcel": true,
+          "isHybrid": true,
+          "excelTabs": ["2_Multi_State_Project", "3_CAPM_Discount_Rates"]
+        },
+        {
+          "number": "Q4",
+          "title": "Ataraxis Options",
+          "archetypes": ["A10"],
+          "tier": 2,
+          "points": 60,
+          "suggestedTime": 36,
+          "hasExcel": false
+        }
+      ]
+    },
+    {
+      "id": "MF_29",
+      "name": "Mock Final 29",
+      "path": "./public/source-materials/pdfs/Mock_29.pdf",
+      "totalPoints": 240,
+      "timeLimit": 180,
+      "questions": [
+        {
+          "number": "Q1",
+          "title": "Capital Structure Analysis",
+          "archetypes": ["A1"],
+          "tier": 1,
+          "points": 60,
+          "suggestedTime": 36,
+          "hasExcel": true
+        }
+      ]
+    }
+  ],
+  "practiceProblems": [
+    {
+      "id": "PP_CS_01",
+      "name": "Basic Capital Structure",
+      "archetype": "A1",
+      "difficulty": "EASY",
+      "points": 20,
+      "timeLimit": 12,
+      "hasExcel": true
+    },
+    {
+      "id": "PP_DO_01",
+      "name": "Simple Debt Overhang",
+      "archetype": "A2A",
+      "difficulty": "MEDIUM",
+      "points": 25,
+      "timeLimit": 15,
+      "hasExcel": true
+    }
+  ],
+  "conceptualDrills": [
+    {
+      "id": "CD_T1_01",
+      "theme": "T1",
+      "question": "Does dividend policy affect firm value? Explain using M&M and signaling.",
+      "difficulty": "MEDIUM",
+      "suggestedTime": 5,
+      "bulletPoints": 4
+    }
+  ]
+}

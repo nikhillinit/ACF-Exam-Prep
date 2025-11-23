@@ -1,0 +1,96 @@
+{
+  "keywordToArchetype": {
+    "debt": ["A1", "A2A", "A4"],
+    "default": ["A1", "A4"],
+    "coupon": ["A1"],
+    "YTM": ["A1"],
+    "tax shield": ["A1"],
+    "amortizing": ["A1"],
+    "recovery": ["A1", "A4"],
+    "multi-state": ["A2A", "A2B"],
+    "existing debt": ["A2A"],
+    "underinvestment": ["A2A"],
+    "wealth transfer": ["A2A", "A2B", "A4"],
+    "asymmetric information": ["A2B"],
+    "equity issue": ["A2B"],
+    "pecking order": ["A2B"],
+    "Myers-Majluf": ["A2B"],
+    "beta": ["A3"],
+    "unlever": ["A3"],
+    "relever": ["A3"],
+    "discount rate": ["A3"],
+    "WACC": ["A3"],
+    "cost of capital": ["A3"],
+    "senior": ["A4"],
+    "junior": ["A4"],
+    "waterfall": ["A4"],
+    "priority": ["A4"],
+    "bankruptcy": ["A4"],
+    "dividend": ["A5"],
+    "repurchase": ["A5"],
+    "payout": ["A5"],
+    "hedge": ["A6"],
+    "derivatives": ["A6"],
+    "futures": ["A6"],
+    "collar": ["A6"],
+    "cap": ["A6"],
+    "floor": ["A6"],
+    "P/E": ["A7"],
+    "EV/EBITDA": ["A7"],
+    "comparable": ["A7"],
+    "option to expand": ["A8"],
+    "option to abandon": ["A8"],
+    "real option": ["A8"],
+    "diversification": ["A9"],
+    "correlation": ["A9"],
+    "call option": ["A10"],
+    "put option": ["A10"],
+    "strike price": ["A10"],
+    "volatility": ["A10"]
+  },
+  "strongSignals": [
+    {
+      "keywords": ["default", "coupon", "YTM"],
+      "archetype": "A1",
+      "confidence": 0.95
+    },
+    {
+      "keywords": ["multi-state", "existing debt"],
+      "archetype": "A2A",
+      "confidence": 0.90
+    },
+    {
+      "keywords": ["asymmetric information", "equity issue"],
+      "archetype": "A2B",
+      "confidence": 0.90
+    },
+    {
+      "keywords": ["beta", "unlever", "WACC"],
+      "archetype": "A3",
+      "confidence": 0.95
+    },
+    {
+      "keywords": ["senior", "junior", "waterfall"],
+      "archetype": "A4",
+      "confidence": 0.95
+    },
+    {
+      "keywords": ["dividend", "repurchase"],
+      "archetype": "A5",
+      "confidence": 0.90
+    },
+    {
+      "keywords": ["hedge", "collar", "cap"],
+      "archetype": "A6",
+      "confidence": 0.90
+    }
+  ],
+  "hybridIndicators": [
+    "First, find the discount rate using CAPM",
+    "existing debt",
+    "multi-tranche",
+    "Consider both",
+    "requires two steps",
+    "first...then"
+  ]
+}

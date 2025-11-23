@@ -1,0 +1,325 @@
+{
+  "archetypes": [
+    {
+      "id": "A1",
+      "name": "Capital Structure",
+      "tier": 1,
+      "priority": "HIGH",
+      "keywords": [
+        "debt",
+        "default",
+        "coupon",
+        "YTM",
+        "yield to maturity",
+        "tax shield",
+        "amortizing",
+        "recovery",
+        "promised yield",
+        "expected return on debt",
+        "bond pricing"
+      ],
+      "excelTab": "1_Capital_Structure",
+      "playbook_slides": [3, 4, 5],
+      "timeAllocation": 12,
+      "pointValue": "15-25"
+    },
+    {
+      "id": "A2A",
+      "name": "Debt Overhang",
+      "tier": 1,
+      "priority": "HIGH",
+      "keywords": [
+        "multi-state",
+        "existing debt",
+        "underinvestment",
+        "wealth transfer",
+        "project NPV",
+        "equity holders",
+        "debt holders",
+        "states of nature"
+      ],
+      "excelTab": "2_Multi_State_Project",
+      "playbook_slides": [6, 7],
+      "timeAllocation": 15,
+      "pointValue": "20-30"
+    },
+    {
+      "id": "A2B",
+      "name": "Adverse Selection",
+      "tier": 1,
+      "priority": "HIGH",
+      "keywords": [
+        "asymmetric information",
+        "equity issue",
+        "pecking order",
+        "Myers-Majluf",
+        "underpricing",
+        "signaling",
+        "market perception"
+      ],
+      "excelTab": "2_Multi_State_Project",
+      "playbook_slides": [8, 9],
+      "timeAllocation": 15,
+      "pointValue": "20-30"
+    },
+    {
+      "id": "A3",
+      "name": "CAPM & Discount Rates",
+      "tier": 1,
+      "priority": "HIGH",
+      "keywords": [
+        "beta",
+        "unlever",
+        "relever",
+        "discount rate",
+        "WACC",
+        "cost of capital",
+        "risk-free rate",
+        "market premium",
+        "equity beta",
+        "asset beta"
+      ],
+      "excelTab": "3_CAPM_Discount_Rates",
+      "playbook_slides": [10, 11],
+      "timeAllocation": 10,
+      "pointValue": "15-20"
+    },
+    {
+      "id": "A4",
+      "name": "Distress & Priority",
+      "tier": 1,
+      "priority": "HIGH",
+      "keywords": [
+        "senior",
+        "junior",
+        "waterfall",
+        "priority",
+        "bankruptcy",
+        "liquidation",
+        "absolute priority rule",
+        "debt covenants"
+      ],
+      "excelTab": "4_Distress_Risk_Shift",
+      "playbook_slides": [12, 13],
+      "timeAllocation": 12,
+      "pointValue": "15-25"
+    },
+    {
+      "id": "A5",
+      "name": "Payout Policy",
+      "tier": 1,
+      "priority": "HIGH",
+      "keywords": [
+        "dividend",
+        "repurchase",
+        "payout",
+        "signaling",
+        "M&M",
+        "irrelevance",
+        "tax treatment"
+      ],
+      "excelTab": "6_Payout_Policy",
+      "playbook_slides": [14, 15],
+      "timeAllocation": 10,
+      "pointValue": "10-20"
+    },
+    {
+      "id": "A6",
+      "name": "Risk Management",
+      "tier": 1,
+      "priority": "HIGH",
+      "keywords": [
+        "hedge",
+        "derivatives",
+        "futures",
+        "options",
+        "collar",
+        "cap",
+        "floor",
+        "swap",
+        "risk exposure"
+      ],
+      "excelTab": "7_Risk_Management",
+      "playbook_slides": [16, 17],
+      "timeAllocation": 12,
+      "pointValue": "15-25"
+    },
+    {
+      "id": "A7",
+      "name": "Valuation Multiples",
+      "tier": 2,
+      "priority": "MEDIUM",
+      "keywords": [
+        "P/E",
+        "EV/EBITDA",
+        "comparable",
+        "trading multiples",
+        "valuation"
+      ],
+      "excelTab": null,
+      "playbook_slides": [18],
+      "timeAllocation": 8,
+      "pointValue": "5-15"
+    },
+    {
+      "id": "A8",
+      "name": "Real Options",
+      "tier": 2,
+      "priority": "MEDIUM",
+      "keywords": [
+        "option to expand",
+        "option to abandon",
+        "flexibility",
+        "real option value"
+      ],
+      "excelTab": null,
+      "playbook_slides": [19],
+      "timeAllocation": 10,
+      "pointValue": "10-20"
+    },
+    {
+      "id": "A9",
+      "name": "Diversification",
+      "tier": 2,
+      "priority": "LOW",
+      "keywords": [
+        "portfolio",
+        "diversification",
+        "correlation",
+        "systematic risk",
+        "unsystematic risk"
+      ],
+      "excelTab": null,
+      "playbook_slides": [20],
+      "timeAllocation": 8,
+      "pointValue": "5-10"
+    },
+    {
+      "id": "A10",
+      "name": "Options Theory",
+      "tier": 2,
+      "priority": "MEDIUM",
+      "keywords": [
+        "call option",
+        "put option",
+        "strike price",
+        "option pricing",
+        "volatility",
+        "moneyness"
+      ],
+      "excelTab": null,
+      "playbook_slides": [21, 22],
+      "timeAllocation": 12,
+      "pointValue": "10-20"
+    }
+  ],
+  "conceptualThemes": [
+    {
+      "id": "T1",
+      "name": "Information vs Mechanics",
+      "description": "M&M perfect markets vs real-world signaling effects",
+      "applicableArchetypes": ["A2B", "A5"],
+      "keyPrinciples": [
+        "Mechanical equivalence under perfect information",
+        "Information asymmetry creates value/cost",
+        "Costly signaling separates types"
+      ]
+    },
+    {
+      "id": "T2",
+      "name": "Risk vs Return",
+      "description": "How leverage and hedging affect expected returns and volatility",
+      "applicableArchetypes": ["A1", "A3", "A6"],
+      "keyPrinciples": [
+        "Higher leverage increases equity risk",
+        "Hedging reduces volatility but may reduce returns",
+        "Risk-return tradeoff in capital structure"
+      ]
+    },
+    {
+      "id": "T3",
+      "name": "Value Creation vs Transfer",
+      "description": "Distinguishing NPV creation from wealth transfers between claimants",
+      "applicableArchetypes": ["A2A", "A2B", "A4"],
+      "keyPrinciples": [
+        "Positive NPV creates value for all",
+        "Wealth transfers don't create value",
+        "Zero-sum games in redistribution"
+      ]
+    },
+    {
+      "id": "T4",
+      "name": "Incentive Conflicts",
+      "description": "Equity-debt agency problems and risk-shifting",
+      "applicableArchetypes": ["A2A", "A4"],
+      "keyPrinciples": [
+        "Equity has option-like payoffs",
+        "Highly leveraged firms prefer volatility",
+        "Debt covenants mitigate conflicts"
+      ]
+    },
+    {
+      "id": "T5",
+      "name": "Economic vs Financial Distress",
+      "description": "Distinguishing cash flow problems from capital structure issues",
+      "applicableArchetypes": ["A1", "A4"],
+      "keyPrinciples": [
+        "Economic distress: bad projects/operations",
+        "Financial distress: can't meet obligations",
+        "Financial distress can be solved by restructuring"
+      ]
+    },
+    {
+      "id": "T6",
+      "name": "Project Risk ≠ Firm Risk",
+      "description": "Projects should be discounted at appropriate project-specific rates",
+      "applicableArchetypes": ["A3"],
+      "keyPrinciples": [
+        "Use project beta, not firm beta",
+        "Unlever firm beta if leverage differs",
+        "Match discount rate to project risk"
+      ]
+    },
+    {
+      "id": "T7",
+      "name": "Asymmetric Information Effects",
+      "description": "How information gaps affect financing and investment decisions",
+      "applicableArchetypes": ["A2B", "A5"],
+      "keyPrinciples": [
+        "Pecking order: internal > debt > equity",
+        "Adverse selection in equity markets",
+        "Signaling via costly actions"
+      ]
+    }
+  ],
+  "hybridPatterns": [
+    {
+      "combination": ["A1", "A4"],
+      "name": "Capital Structure with Priority",
+      "frequency": "HIGH",
+      "description": "Multi-tranche debt with default and waterfall analysis",
+      "solvingSequence": ["A1-pricing", "A4-waterfall", "A1-expected-returns"]
+    },
+    {
+      "combination": ["A2B", "A3"],
+      "name": "Adverse Selection with CAPM",
+      "frequency": "MEDIUM",
+      "description": "Asymmetric info problem requiring correct discount rate",
+      "solvingSequence": ["A3-discount-rate", "A2B-NPV-analysis", "A2B-wealth-transfer"]
+    },
+    {
+      "combination": ["A3", "A2A"],
+      "name": "CAPM with Debt Overhang",
+      "frequency": "MEDIUM",
+      "description": "Project NPV with underinvestment considerations",
+      "solvingSequence": ["A3-discount-rate", "A2A-multi-state", "A2A-wealth-effect"]
+    },
+    {
+      "combination": ["A1", "A5"],
+      "name": "Capital Structure with Payout",
+      "frequency": "LOW",
+      "description": "Debt valuation combined with dividend/repurchase policy",
+      "solvingSequence": ["A1-debt-value", "A5-payout-choice", "combined-effects"]
+    }
+  ]
+}

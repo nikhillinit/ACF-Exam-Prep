@@ -1,0 +1,97 @@
+{
+  "tiers": {
+    "1": {
+      "priority": "HIGH",
+      "examWeight": 0.80,
+      "description": "Core quantitative archetypes - 80% of exam points",
+      "masteryTarget": 0.95,
+      "archetypes": ["A1", "A2A", "A2B", "A3", "A4", "A5", "A6"],
+      "studyTimeAllocation": 0.80
+    },
+    "2": {
+      "priority": "MEDIUM",
+      "examWeight": 0.20,
+      "description": "Conceptual and specialized archetypes",
+      "masteryTarget": 0.85,
+      "archetypes": ["A7", "A8", "A9", "A10"],
+      "studyTimeAllocation": 0.20
+    }
+  },
+  "masteryLevels": {
+    "NOVICE": {
+      "recognitionTime": ">60s",
+      "accuracy": "<70%",
+      "description": "Still learning archetype patterns"
+    },
+    "DEVELOPING": {
+      "recognitionTime": "30-60s",
+      "accuracy": "70-85%",
+      "description": "Can identify archetypes but execution inconsistent"
+    },
+    "PROFICIENT": {
+      "recognitionTime": "<30s",
+      "accuracy": "85-95%",
+      "description": "Fast recognition, reliable execution"
+    },
+    "EXPERT": {
+      "recognitionTime": "<20s",
+      "accuracy": ">95%",
+      "description": "Instant pattern matching, handles hybrids fluently"
+    }
+  },
+  "workflowSteps": [
+    {
+      "step": 1,
+      "name": "IDENTIFY",
+      "description": "Scan keywords → Match archetype → Note tier + hybrid",
+      "timeAllocation": "30s",
+      "checkpoints": [
+        "Keywords highlighted?",
+        "Archetype determined?",
+        "Hybrid components listed?"
+      ]
+    },
+    {
+      "step": 2,
+      "name": "EXTRACT",
+      "description": "What's the core question? → Write margin note",
+      "timeAllocation": "30s",
+      "checkpoints": [
+        "Core question restated?",
+        "All parts identified?"
+      ]
+    },
+    {
+      "step": 3,
+      "name": "MAP",
+      "description": "Quant (Excel?) or Conceptual (Playbook + 3-5 bullets)?",
+      "timeAllocation": "30s",
+      "checkpoints": [
+        "Resource identified?",
+        "Assumptions verified?"
+      ]
+    },
+    {
+      "step": 4,
+      "name": "EXECUTE",
+      "description": "Follow archetype recipe → Solve in stages if hybrid",
+      "timeAllocation": "Variable",
+      "checkpoints": [
+        "Following template?",
+        "Intermediate checks passing?"
+      ]
+    },
+    {
+      "step": 5,
+      "name": "CHECK",
+      "description": "Sign + magnitude + theory link + implications",
+      "timeAllocation": "1-2min",
+      "checkpoints": [
+        "Sign check passed?",
+        "Magnitude reasonable?",
+        "Theory linked?",
+        "Implications stated?"
+      ]
+    }
+  ]
+}
