@@ -1,0 +1,620 @@
+SET 1 – Option Portfolio with Changed Strike and Current Price
+Problem 1 – Changing the Strike Price
+
+You hold the following portfolio on stock X:
+
+Long 1 call on X with strike K = 110
+
+Short 1 put on X with strike K = 90
+
+Both options expire in 1 year
+
+Current stock price S₀ = 100
+
+Call premium paid today: $12
+
+Put premium received today: $5
+
+A. Draw and/or describe the net payoff at expiration as a function of the stock price 
+𝑆
+𝑇
+S
+T
+	​
+
+. Identify key breakpoints and slopes.
+
+B. How does the payoff shape differ if the call strike were K = 120 instead of 110, holding everything else fixed?
+
+C. Intuition: Does raising the call strike make the portfolio riskier, safer, or neither? How does that relate to β and expected return?
+
+Solution 1
+A. Net payoff with K_call = 110, K_put = 90
+
+Let’s break it into pieces.
+
+Long 1 call at K=110: payoff at T = max(S_T − 110, 0)
+
+Short 1 put at K=90: payoff at T = −max(90 − S_T, 0)
+
+Case 1: 
+𝑆
+𝑇
+≤
+90
+S
+T
+	​
+
+≤90
+
+Call: 0
+
+Put: −(90 − S_T) = S_T − 90
+
+Net payoff = S_T − 90
+
+This is a line with slope +1, starting at −90 when S_T=0 and reaching 0 at S_T=90.
+
+Case 2: 
+90
+<
+𝑆
+𝑇
+<
+110
+90<S
+T
+	​
+
+<110
+
+Call: 0
+
+Put: −0
+
+Net payoff = 0
+
+Flat line: payoff is 0 between S_T=90 and S_T=110.
+
+Case 3: 
+𝑆
+𝑇
+≥
+110
+S
+T
+	​
+
+≥110
+
+Call: S_T − 110
+
+Put: 0
+
+Net payoff = S_T − 110
+
+Line with slope +1, equals 0 at S_T=110, increasing beyond that.
+
+Shape:
+
+For 
+𝑆
+𝑇
+≤
+90
+S
+T
+	​
+
+≤90: slope +1, line from ~−90 at 0 to 0 at 90
+
+Between 90 and 110: flat at 0
+
+For 
+𝑆
+𝑇
+≥
+110
+S
+T
+	​
+
+≥110: slope +1, starting at 0 at 110
+
+That’s a “flat plateau” between 90 and 110, with up-sloping lines on both sides.
+
+If you subtract the initial net cost (call cost 12 − put premium 5 = net cost 7), the profit is:
+
+Profit = payoff − 7
+
+So between 90–110 profit = −7; below 90 & above 110, profit slopes upward.
+
+B. Changing the call strike from 110 → 120
+
+Now suppose the call strike is K_call = 120, put still at 90.
+
+Call payoff: max(S_T − 120, 0)
+Put payoff: −max(90 − S_T, 0)
+
+Breakpoints are now at 90 and 120.
+
+Case 1: 
+𝑆
+𝑇
+≤
+90
+S
+T
+	​
+
+≤90
+
+Net payoff = S_T − 90 (same as before).
+
+Case 2: 
+90
+<
+𝑆
+𝑇
+<
+120
+90<S
+T
+	​
+
+<120
+
+Call: 0
+
+Put: 0
+
+Net payoff = 0
+
+Plateau region extends from 90 to 120 now, not 90 to 110.
+
+Case 3: 
+𝑆
+𝑇
+≥
+120
+S
+T
+	​
+
+≥120
+
+Net payoff = S_T − 120 (instead of S_T − 110 previously).
+
+So differences vs original:
+
+The flat region is wider (90 to 120 instead of 90 to 110).
+
+The kink where upside begins moves from 110 to 120.
+
+For a given high S_T (e.g., S_T = 150), net payoff is now lower:
+
+Before: 150 − 110 = 40
+
+Now: 150 − 120 = 30
+
+So good states are less good: you capture upside later and get less of it for a given S_T.
+
+C. Intuition: strike up → risk down
+
+Raising the call strike from 110 → 120:
+
+Moves your “upside” region to the right → you have less upside for moderate increases in stock price.
+
+Makes the payoff more “flat” over a wider range of S_T (90 to 120).
+
+For a given distribution of S_T, expected payoff (and expected return) falls, and β falls (less sensitivity to market-driven stock movements).
+
+Intuitively:
+
+The call is further out-of-the-money initially; you’re taking less levered exposure to the upside.
+
+The portfolio is less risky (lower β, lower expected excess return) because the payoff is zero over a wider range and grows more slowly beyond the call strike.
+
+SET 2 – Option Portfolio When Future Stock Prices Are More Volatile
+Problem 2 – Changing the Distribution (70/130 vs 80/120)
+
+Consider the portfolio from Solution 1A (K_call=110, K_put=90). Assume:
+
+Risk-free rate is 2%.
+
+Call + put portfolio initial cost is net $7 (as before).
+
+Market is fairly priced so expected return matters.
+
+Case A (original): future stock price is 80 or 120 with equal probability 50% each.
+
+Case B (more volatile): future stock price is 70 or 130 with equal probability 50% each.
+
+A. Compute the expected payoff and expected rate of return on the option portfolio in Case A (80/120).
+
+B. Repeat for Case B (70/130).
+
+C. Compare the expected returns and explain the intuition: how does higher underlying volatility affect the option portfolio’s expected return (and β)?
+
+Solution 2
+
+We use the payoff function from Set 1A:
+
+For S_T ≤ 90: payoff = S_T − 90
+
+90 < S_T < 110: payoff = 0
+
+S_T ≥ 110: payoff = S_T − 110
+
+Net cost = 7 → expected profit = E[payoff] − 7, expected return = profit / 7 (ignoring risk-free rate for simplicity of notation).
+
+A. Case A – S_T ∈ {80, 120}
+
+State 1: S_T = 80
+
+80 ≤ 90 → payoff = 80 − 90 = −10
+
+State 2: S_T = 120
+
+≥110 → payoff = 120 − 110 = 10
+
+Each state 50% probability:
+
+Expected payoff = 0.5(−10) + 0.5(10) = 0
+
+Expected profit = 0 − 7 = −7
+
+Expected return = −7 / 7 = −100%
+
+So under this toy distribution, the portfolio has zero expected payoff but negative expected return relative to its cost; you’re paying $7 for something that breaks even in payoff terms.
+
+(If this were a realistic, fairly priced derivative, the initial cost would be set so expected profit is closer to the risk-free return; here the numbers are stylized.)
+
+B. Case B – S_T ∈ {70, 130}
+
+State 1: S_T = 70
+
+70 ≤ 90 → payoff = 70 − 90 = −20
+
+State 2: S_T = 130
+
+≥110 → payoff = 130 − 110 = 20
+
+Expected payoff:
+
+E[payoff] = 0.5(−20) + 0.5(20) = 0 (same as before)
+
+But magnitude of good and bad outcomes doubled:
+
+Good state payoff: +20 vs +10
+
+Bad state payoff: −20 vs −10
+
+Yet expected payoff is still 0.
+
+Expected profit (again ignoring discounting of initial cost):
+
+E[profit] = 0 − 7 = −7
+
+Expected return = −7 / 7 = −100% (same as before).
+
+So numerically we made payoffs more extreme, but kept the distribution symmetric; expected payoff remains 0 and expected return remains −100% under this stylized setup.
+
+C. Intuition: volatility ↑ → option value ↑ (for same price), β ↑
+
+In a realistic setting with market-determined option prices, when underlying volatility rises:
+
+For a given initial option price, expected payoff (in a risk-neutral sense) and option value typically increase (call and put become more valuable; you’re long volatility in this type of portfolio).
+
+If prices adjust so that the option is fairly priced, the initial cost would rise to keep expected return consistent with CAPM; at a fixed old price, higher volatility would mean a higher expected payoff.
+
+Even in this toy symmetric example:
+
+Your payoff is more sensitive to underlying stock moves (−20/20 instead of −10/10).
+
+The portfolio’s beta goes up: in boom states you earn more; in bust states you lose more → stronger comovement with the market.
+
+Intuition: your position is more leveraged to underlying risk; with correctly priced options, higher volatility would be reflected in a higher initial cost for the same expected payoff.
+
+So:
+
+Raising dispersion from (80,120) to (70,130) increases risk/β and (if price didn’t adjust) would increase expected return because you have more upside in really good states; in a proper market, higher price would offset that so expected return per unit β matches CAPM.
+
+SET 3 – Real Options: Coffee Café with Changed Cashflows
+
+Recall the real options lecture:
+
+Coffee café project in Chicago. Two possible “preference types”:
+
+Berkeley-like: high coffee demand, expected cashflow = 22K.
+
+Cleveland-like: low demand, expected cashflow = 12K.
+
+Assumed some probabilities (e.g., p_B, p_C) and discount rate.
+
+You computed:
+
+Value without additional information (invest now).
+
+Value with perfect market research (invest only in good state).
+
+Value of information = difference.
+
+Now we’ll tweak the cashflows and show what happens.
+
+Problem 3 – Changing the Cashflows
+
+Assume:
+
+Discount rate: r = 10% (one-year horizon for simplicity).
+
+Two possible types for Chicago:
+
+Type B (Berkeley): one-year NPV of café = +30K (higher than before).
+
+Type C (Cleveland): one-year NPV of café = −10K (worse than before).
+
+Prior probabilities: P(B) = 60%, P(C) = 40%.
+
+You must decide today whether to build the café or not. Alternatively, you can pay a consultant to perfectly reveal type (B vs C), then decide.
+
+A. What is the NPV of investing now without information? (Invest today; pay cost, then receive state-dependent NPV.)
+
+B. What is the value of the project with perfect information (you can invest only if B)?
+
+C. What is the value of information from perfect research?
+
+D. Intuition: how does changing cashflows (higher upside and lower downside vs original 22/12) affect:
+
+NPV without info
+
+NPV with info
+
+Value of information?
+
+Solution 3
+
+We treat the NPV numbers (+30K and −10K) as already discounted one-year NPVs relative to cost. That is, if you build today, expected payoff in each state (considering all future years and discounting) is:
+
+B: +30K
+
+C: −10K
+
+If that bothers you, think of them as PV at t=0; we’re not re-discounting further.
+
+A. NPV of investing now (no info)
+
+If you invest now, you’re stuck with B or C:
+
+Expected NPV (no info) = P(B) * NPV_B + P(C) * NPV_C
+= 0.6 × 30 + 0.4 × (−10)
+= 18 − 4
+= +14K
+
+So NPV_no_info = +14K. Good project even without research.
+
+B. Value with perfect information (invest only if B)
+
+With perfect research:
+
+If B (60%): you invest and get +30K.
+
+If C (40%): you do not invest, NPV = 0.
+
+Expected NPV with info:
+
+NPV_with_info = 0.6 × 30 + 0.4 × 0 = 18K
+
+So NPV_with_info = +18K.
+
+C. Value of information
+
+Value of info = NPV_with_info − NPV_no_info
+= 18K − 14K = +4K
+
+So paying anything less than 4K for perfect info would be positive-NPV (ignoring the cost of delay; we’re not discounting time here for simplicity).
+
+D. Intuition: how did changing cashflows change the values?
+
+Compare to the original lecture numbers (where NPV_B and NPV_C were closer, e.g., 22 and 12 or 32.3 and −27.8 in some versions):
+
+Higher upside in B (+30K instead of +22) and lower (more negative) downside in C (−10K instead of, say, +12):
+
+In our new numbers, B is more attractive; C is worse than before (negative vs small positive).
+
+This increases the value of being able to avoid C, so it increases the NPV with info relative to no info.
+
+NPV_no_info:
+
+If the prior probability of good state is high (60%) and B is very good (+30), that pulls NPV_no_info up.
+
+If C is negative but relatively modest (−10), the average NPV remains positive (+14).
+
+NPV_with_info:
+
+With info, you get all of the upside in B and avoid the negative C entirely. That’s always going to be at least as big as NPV_no_info, but the gap depends on:
+
+Size of negative NPV in bad states,
+
+Probability of bad states.
+
+Value of information:
+
+Magnitude of VOI depends on both how bad bad states are and how likely they are.
+
+Here, by making C negative (instead of just smaller positive) we’ve made it more important to avoid the wrong project → VOI rises relative to a world where both states had positive NPV but different levels.
+
+Key takeaway:
+
+If you increase the dispersion between “good” and “bad” outcomes (higher upside in B and more negative downside in C), both NPV_no_info and NPV_with_info can change, but:
+
+NPV_with_info always benefits from being able to avoid negative C.
+
+Value of information tends to grow when:
+
+Bad states are truly bad (negative or more negative), and
+
+Those bad states have non-trivial probability.
+
+SET 4 – CAPM & Regression: Changing Beta, Correlation, and Variance
+Problem 4 – Schumpeter-Style Regression Twist
+
+A fund is currently 50% in T-bills and 50% in the market index. It is considering adding a new stock Y.
+
+You know:
+
+Expected excess return on the market: 8%.
+
+Risk-free rate: 4%.
+
+The regression of Y’s excess returns on the market’s excess returns yields:
+
+Case A:
+
+β_Y = 1.2, R² = 0.80
+
+Case B (new regression with changed data):
+
+β_Y = 0.8, R² = 0.20
+
+Assume that covariance with the market or correlation changes accordingly.
+
+A. Under CAPM, what is the expected return of stock Y in Case A vs Case B?
+
+B. How does the required return change, and what does that say about the stock’s risk?
+
+C. Intuition: what does lowering β from 1.2 to 0.8 and R² from 0.80 to 0.20 mean for:
+
+Systematic vs idiosyncratic risk
+
+The stock’s role in a well-diversified portfolio?
+
+Solution 4
+A. CAPM expected returns
+
+CAPM:
+
+𝐸
+[
+𝑅
+𝑌
+]
+=
+𝑟
+𝑓
++
+𝛽
+𝑌
+×
+MRP
+E[R
+Y
+	​
+
+]=r
+f
+	​
+
++β
+Y
+	​
+
+×MRP
+
+Given r_f = 4%, MRP = 8%:
+
+Case A: β_Y = 1.2
+
+𝐸
+[
+𝑅
+𝑌
+]
+=
+4
+%
++
+1.2
+×
+8
+%
+=
+4
+%
++
+9.6
+%
+=
+13.6
+%
+E[R
+Y
+	​
+
+]=4%+1.2×8%=4%+9.6%=13.6%
+
+Case B: β_Y = 0.8
+
+𝐸
+[
+𝑅
+𝑌
+]
+=
+4
+%
++
+0.8
+×
+8
+%
+=
+4
+%
++
+6.4
+%
+=
+10.4
+%
+E[R
+Y
+	​
+
+]=4%+0.8×8%=4%+6.4%=10.4%
+B. Required return & risk change
+
+In Case A, Y is riskier than the market (β>1) in systematic terms. It needs a higher expected return (13.6%) to compensate.
+
+In Case B, Y is less risky in systematic terms (β<1). Required return is lower (10.4%).
+
+So changing β from 1.2 to 0.8:
+
+Lowers the stock’s market-related risk.
+
+Lowers its required return / discount rate.
+
+C. Intuition: β and R² changes
+
+Lower β from 1.2 → 0.8:
+
+Means Y’s average sensitivity to market moves is lower; when the market goes up/down, Y moves less on average.
+
+Lower R² from 0.80 → 0.20:
+
+Means only 20% of the variance of Y’s returns is explained by the market; 80% is idiosyncratic.
+
+For a well-diversified investor:
+
+Systematic risk (β) is what matters for expected return; idiosyncratic risk (1 − R² portion) is diversifiable and doesn’t earn a premium.
+
+Case A: high β and high R² → a classic “high systematic risk” stock; expected return must be high.
+
+Case B: lower β and low R² → a stock with modest systematic risk and lots of idiosyncratic noise; lower required return and potentially useful for diversification.
+
+So by changing the regression numbers, you’ve changed:
+
+The discount rate you’d use in NPV calculations.
+
+The interpretation of Y’s risk: from “aggressive market stock” in Case A to “mildly pro-cyclical, noisy stock” in Case B.
