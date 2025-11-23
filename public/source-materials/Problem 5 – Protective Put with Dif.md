@@ -2111,3 +2111,688 @@ C.
 * This is why divisional WACCs are crucial in multi-division firms.
 
 ---
+
+
+# 29. Callable vs Non-Callable Bond – Changing Call Feature
+
+## Problem 29 – Effect of Callability on Yield and Tax Shields
+
+A firm issues a **10-year, 6% coupon bond**, face $300m, corporate tax rate 25%.
+
+Case A: **Non-callable**
+
+* Price at issue: 100% of par → YTM = 6%.
+
+Case B: **Callable at par after Year 5**
+
+* Price at issue: investors now demand 98% of par to compensate for call risk.
+
+Assume no default risk (compare only callability).
+
+**Tasks:**
+
+A. In Case A, compute annual tax shield and its PV if the bond is held to maturity (discount TS at 6%).
+B. In Case B, assuming the firm will call if interest rates drop and refinance at 4% after Year 5, describe qualitatively how:
+
+* YTM at issue changes
+* Expected PV of tax shields changes
+  C. Intuition: why do callable bonds typically offer higher promised yields and potentially lower tax shield value?
+
+---
+
+### Solution 29
+
+**A. Non-callable tax shields**
+
+Interest each year = 6% × 300 = 18m
+Tax shield each year = 0.25 × 18 = 4.5m
+
+If discount at 6% and treat as 10-year annuity:
+
+[
+V_{TS}^{A} = 4.5 \times \left(\frac{1 - (1.06)^{-10}}{0.06}\right) \approx 4.5 \times 7.3601 \approx 33.1m
+]
+
+**B. Call risk (Case B)**
+
+Because the bond is callable:
+
+* Investors know that if interest rates fall, the firm will call and refinance at a lower rate.
+* This **caps the benefit** of lower rates for investors (they lose the high coupons in that scenario).
+* To compensate, they demand a **lower price** (98%) → **higher YTM** than 6% at issue.
+
+Tax shields:
+
+* For Years 1–5: same 6% coupon → TS = 4.5m each year.
+* After Year 5: if rates drop and firm calls, coupon drops from 6% to 4% on new debt:
+
+  * Interest after call: 0.04 × 300 = 12 → TS = 0.25 × 12 = 3m per year.
+
+PV of TS in callable case is **lower** than holding the 6% bond for full 10 years, because:
+
+* In good interest rate scenarios (where rates fall), the firm uses the call to reduce interest (and TS).
+* TS in years 6–10 are only 3m instead of 4.5m.
+* Discount rate for TS may also change (4% vs 6%), but the amount per year is smaller.
+
+**C. Intuition**
+
+* Callable bonds offer **higher promised yields** to compensate investors for the risk that the issuer will refinance when it’s advantageous to the issuer (bad for investor).
+* From the firm’s perspective, a call option lets it **reduce interest payments in good states**, which also **reduces tax shields** in those states.
+* So callability can reduce the **expected PV of tax shields**, especially when rates are likely to fall and the issuer calls.
+
+---
+
+# 30. Senior vs Junior New Debt – Changing Priority
+
+## Problem 30 – New Secured vs Unsecured Debt with Existing Bonds
+
+Firm X already has **$200m unsecured bonds** outstanding.
+
+It wants to raise **$100m** for a project by issuing new debt. It can:
+
+* Option 1: Issue **new senior secured debt** (priority above existing bonds).
+* Option 2: Issue **new unsecured debt** at equal priority with existing bonds.
+
+One-year maturity. If total firm value at maturity is:
+
+* State 1 (30%): 200
+* State 2 (50%): 350
+* State 3 (20%): 500
+
+**Tasks:**
+
+A. Under Option 1 (new senior 100 + existing unsecured 200), describe the payoff waterfall across states.
+B. Under Option 2 (all unsecured 300), describe the payoff waterfall.
+C. Intuition: how does moving the new debt from unsecured to **senior secured** change:
+
+* Existing unsecured bond value (wealth transfer)
+* Equity’s incentives?
+
+---
+
+### Solution 30
+
+### A. Option 1 – Senior 100, unsecured 200
+
+State 1: V = 200
+
+* Senior (100) is paid first → gets 100.
+* Remaining = 100 for unsecured + equity.
+* Unsecured claims total 200 → they share the 100 pro rata. If pre-project, there was only 200 existing unsecured, they get 100; new equity is 0.
+* Equity = 0.
+
+State 2: V = 350
+
+* Senior: 100 fully paid.
+* Remaining = 250 for unsecured + equity.
+* Unsecured (existing 200) get full 200.
+* Equity = 50.
+
+State 3: V = 500
+
+* Senior: 100
+* Unsecured: 200
+* Equity: 200
+
+### B. Option 2 – All unsecured (300 total)
+
+Now there is no super-senior:
+
+State 1: V = 200
+
+* Total unsecured claims = 300 (existing 200 + new 100).
+* They share 200 pro rata:
+
+  * Existing get (200/300)×200 ≈ 133.3
+  * New get (100/300)×200 ≈ 66.7
+* Equity = 0.
+
+State 2: V = 350
+
+* Unsecured share 350:
+
+  * Existing: (200/300)×350 ≈ 233.3
+  * New: (100/300)×350 ≈ 116.7
+* Equity = 0.
+
+State 3: V = 500
+
+* Total unsecured = 300; they get full 300: 200 to existing, 100 to new.
+* Equity = 200.
+
+### C. Intuition
+
+* Making new debt **senior** (Option 1) concentrates more **downside protection** in that new debt.
+
+  * Existing unsecured bonds lose value because they have to wait behind the new senior.
+  * Equity may actually gain in “Normal/Strong” states if the project is good, but existing bondholders bear more of the risk.
+* **Wealth transfer:**
+
+  * Senior secured debt creates a transfer from **existing unsecured** to **new lenders and/or equity**, because old bondholders are now pushed further down in the waterfall.
+* Equity’s incentives:
+
+  * Equity often favors issuing new **senior** debt when it transfers risk to existing creditors (like a “seniority flip”).
+  * This may reduce the cost of new debt but hurt existing creditors → they will demand covenants or higher rates ex-ante to prevent this.
+
+---
+
+# 31. Real Option to Expand – Changing Expansion Payoff
+
+## Problem 31 – Option to Expand with Different Multipliers
+
+A firm can build a small plant now for $50m with PV of cashflows = $60m (NPV_now = +10).
+
+If demand turns out high in one year, it can **expand** by investing an additional amount:
+
+* Expansion cost: $40m at t=1.
+* Expansion PV (if done at t=1) = Case A: $70m; Case B: $120m.
+
+Probability of high demand (H) next year: 50%; low demand (L): 50%. Discount rate: 10%.
+
+**Tasks:**
+
+A. In both cases, compute the **NPV of expansion** if high demand is realized.
+B. What is the **value today** of the expansion option in each case?
+C. Intuition: how does higher expansion payoff change the value of the small plant + option combo?
+
+---
+
+### Solution 31
+
+**Baseline small plant NPV (ignoring expansion):** +10 (60 − 50).
+
+### A. Expansion NPV in high-demand state
+
+Case A:
+
+* Cost = 40; PV of expansion cashflows = 70.
+* NPV_H^A = 70 − 40 = +30.
+
+Case B:
+
+* Cost = 40; PV_expansion = 120.
+* NPV_H^B = 120 − 40 = +80.
+
+### B. Present value of expansion option
+
+Option gives you the **right but not obligation** to invest 40 if high demand occurs.
+
+Under risk-neutral-ish (just simple expected value with discount):
+
+* Probability(H) = 0.5; in L you do not expand (NPV_L=0).
+
+Case A option value:
+
+[
+V_{\text{expansion}}^A = \frac{0.5 × 30 + 0.5 × 0}{1.1} = \frac{15}{1.1} ≈ 13.6
+]
+
+Case B:
+
+[
+V_{\text{expansion}}^B = \frac{0.5 × 80 + 0.5 × 0}{1.1} = \frac{40}{1.1} ≈ 36.4
+]
+
+So expansion option is worth about 13.6m in Case A and 36.4m in Case B.
+
+### C. Intuition
+
+* Larger expansion payoff (Case B) makes the **option to expand** much more valuable.
+
+* Adding that to the base small plant NPV:
+
+  * Case A: total NPV ≈ 10 + 13.6 = 23.6
+  * Case B: total NPV ≈ 10 + 36.4 = 46.4
+
+* Even if small plant alone is only mildly attractive (NPV=+10), the presence of a **highly profitable expansion contingency** can make the combined strategy very valuable.
+
+* Thus, real options lead you to **prefer flexible initial designs** when future expansion is highly profitable.
+
+---
+
+# 32. Coffee Café – Changing Probabilities and Discount Rate
+
+## Problem 32 – Revised Coffee Café Example
+
+A coffee café project in Chicago can be:
+
+* Berkeley-like: PV = $40K
+* Cleveland-like: PV = $0K (just break-even; NPV=0)
+
+Prior probabilities:
+
+* P(B) = 40%
+* P(C) = 60%
+
+Discount rate: r = 5%. Investment cost today: $25K.
+
+**Case 1: No information**
+**Case 2: Perfect info next year**, but you must delay investment by 1 year (build in t=1).
+
+**Tasks:**
+
+A. Compute NPV if you **invest now** (no info).
+B. Compute NPV if you **wait, learn type, and invest only if Berkeley**, building at t=1.
+C. Compute **value of information** (VOI).
+D. Intuition: how do higher discount rate and different probabilities vs the original example affect VOI?
+
+---
+
+### Solution 32
+
+### A. NPV if invest now
+
+Expected PV of café:
+
+[
+E[PV] = 0.4×40 + 0.6×0 = 16
+]
+
+NPV_now = 16 − 25 = **−9K** (negative).
+
+### B. NPV if wait, then invest selectively
+
+If wait to t=1:
+
+* If B: build then; cost 25 paid at t=1.
+
+  * PV at t=1 = 40 (still). NPV at t=1 = 40 − 25 = 15.
+  * PV at t=0 = 15 / 1.05 ≈ 14.29.
+* If C: do not build, NPV = 0.
+
+Expected NPV:
+
+[
+NPV_{\text{wait}} = 0.4×14.29 + 0.6×0 ≈ 5.72
+]
+
+### C. Value of information
+
+VOI = NPV_wait − NPV_now = 5.72 − (−9) ≈ **+14.72K**.
+
+So information is very valuable: it turns a negative-NPV project into a positive NPV waiting strategy.
+
+### D. Intuition
+
+Relative to a simpler example:
+
+* Discount rate is modest (5%), so delay cost is not huge.
+* The **bad state** is quite common (60%) and is zero NPV; the bad outcome is “no gain,” but if we built blindly in C we’d lose because we paid 25 for 0 PV; that’s why invest-now NPV is negative.
+* Perfect info allows us to **avoid building in C** and only build in B, transforming a negative unconditional NPV into a positive conditional NPV.
+* VOI is large because:
+
+  * The unconditional project is negative NPV if we commit now.
+  * Info changes our decision in a significant fraction of states.
+
+---
+
+# 33. Recap – Changing D/E and Maintaining Asset Beta
+
+## Problem 33 – Recapitalization with Fixed Asset Risk
+
+Firm R has:
+
+* Asset beta β_A = 0.9
+* Current capital structure: D/E = 0.5 (i.e., 33% debt, 67% equity).
+* Risk-free rate 3%, market risk premium 7%.
+* Currently, debt beta is approx 0.2.
+
+Case A (current):
+
+* D/V = 1/3, E/V = 2/3.
+
+Case B:
+
+* Recap to D/E = 1.0 (50% debt, 50% equity).
+* Assume D/V = 0.5, E/V = 0.5.
+* Assume debt beta rises to 0.3.
+
+**Tasks:**
+
+A. Compute equity β and cost of equity in Case A.
+B. Compute equity β and cost of equity in Case B.
+C. Intuition: how does raising leverage while holding asset beta fixed affect r_E and WACC?
+
+---
+
+### Solution 33
+
+### A. Case A – β_E current
+
+Asset beta = weighted avg:
+
+[
+β_A = \frac{D}{V}β_D + \frac{E}{V}β_E
+]
+
+Plugging:
+
+* β_A = 0.9, D/V = 1/3, E/V = 2/3, β_D = 0.2.
+
+[
+0.9 = \frac{1}{3}×0.2 + \frac{2}{3}×β_E
+]
+
+[
+0.9 = 0.0667 + \frac{2}{3}β_E
+]
+
+[
+0.9 − 0.0667 ≈ 0.8333 = \frac{2}{3}β_E
+]
+
+[
+β_E ≈ 0.8333 × \frac{3}{2} = 1.25
+]
+
+Cost of equity:
+
+[
+r_E = 3% + 1.25 × 7% = 3% + 8.75% = 11.75%
+]
+
+### B. Case B – Recap, new β_E
+
+Now D/V = 0.5, E/V = 0.5, β_D = 0.3.
+
+Same formula:
+
+[
+0.9 = 0.5×0.3 + 0.5×β_E
+]
+
+[
+0.9 = 0.15 + 0.5β_E
+]
+
+[
+0.75 = 0.5β_E \Rightarrow β_E = 1.5
+]
+
+New r_E:
+
+[
+r_E = 3% + 1.5 × 7% = 3% + 10.5% = 13.5%
+]
+
+### C. Intuition
+
+* Raising leverage (D/V from 1/3 to 1/2) while holding β_A fixed:
+
+  * Increases β_E from 1.25 → 1.5.
+  * Equity is riskier because equity is a smaller slice of a fixed β_A asset pool.
+* WACC = D/V r_D + E/V r_E:
+
+  * r_D also rises (β_D from 0.2→0.3), but debt is still cheaper than equity.
+  * With taxes, WACC may fall or rise depending on tax shield vs distress cost assumptions. Under MM without distress, WACC is unchanged.
+* Key takeaway: you cannot infer value change from r_E alone. Need to consider WACC and frictions.
+
+---
+
+# 34. Payout & Taxes – Dividend vs Repurchase Under Different Tax Regimes
+
+## Problem 34 – Tax-Driven Payout Policy
+
+Firm S has $100m of excess cash. It can:
+
+* Pay a **special dividend** of $100m; or
+* **Repurchase shares** worth $100m.
+
+Two tax regimes:
+
+**Regime 1 (Tax-dividend-unfriendly):**
+
+* Dividend tax τ_d = 30%
+* Capital gains tax τ_cg = 15%
+
+**Regime 2 (Tax-neutral):**
+
+* τ_d = τ_cg = 20%
+
+Firm’s stock is fairly priced.
+
+**Tasks:**
+
+A. In Regime 1, which payout method is more tax-efficient for shareholders?
+B. In Regime 2, does payout method matter from a pure tax point of view?
+C. Intuition: how does tax regime interact with payout policy in MM-like world?
+
+---
+
+### Solution 34
+
+A.
+
+* Regime 1: dividends taxed more heavily than capital gains.
+* If the firm pays a cash **dividend**, each shareholder receives $X and loses 30% in tax.
+* If it **repurchases shares**, selling shareholders realize capital gains taxed at 15%, while nonsellers defer capital gains until they sell.
+* Therefore, repurchases are generally **more tax-efficient** than dividends in Regime 1.
+
+B.
+
+* Regime 2: τ_d = τ_cg = 20%.
+* Now tax bite is similar whether value comes as dividend or capital gain.
+* In pure tax arithmetic, payout method is roughly **neutral**.
+
+C.
+
+* In MM with no taxes, payout is irrelevant.
+* Once we add **personal taxes**, payout form matters:
+
+  * If dividends are taxed more, firms tilt toward **repurchases**.
+  * If tax treatment is equal, payout form is closer to irrelevant.
+* In practice, regime matters; this is one reason we see repurchases more heavily used in certain markets.
+
+---
+
+# 35. Convertible Debt – Changing Conversion Ratio
+
+## Problem 35 – Conversion Ratio and Equity Dilution
+
+Firm T issues convertible bonds:
+
+* Face value: $100m
+* Maturity: 5 years
+* Conversion option: each $1,000 bond can convert into:
+
+  * Case A: 20 shares
+  * Case B: 40 shares
+
+There are currently 10m shares outstanding; stock price is currently $30.
+
+At maturity, suppose the firm’s equity value is such that stock price is $50 (above conversion threshold).
+
+**Tasks:**
+
+A. In Case A, how many new shares would be issued on conversion, and what fraction of the firm would bondholders own?
+B. In Case B, same questions.
+C. Intuition: how does a higher conversion ratio change:
+
+* Equity dilution
+* Cost of debt
+* Equity risk in boom states?
+
+---
+
+### Solution 35
+
+Number of bonds:
+
+* Total face = 100m; each bond = 1,000 → 100,000 bonds.
+
+A. Case A (20 shares per bond):
+
+* Total new shares = 100,000 × 20 = 2m shares.
+* Old shares = 10m.
+* Post-conversion total = 12m shares.
+* Bondholders’ ownership = 2m / 12m = **1/6 ≈ 16.7%**.
+
+B. Case B (40 shares per bond):
+
+* New shares = 100,000 × 40 = 4m.
+* Total shares = 10m + 4m = 14m.
+* Bondholders’ ownership = 4/14 ≈ 28.6%.
+
+C. Intuition:
+
+* Higher conversion ratio → more equity transferred to bondholders in high-value states → **more dilution** for old equity.
+* Because conversion is valuable to bondholders, they accept a **lower coupon** on the bond:
+
+  * Cost of debt is lower ex-ante.
+* In boom states (stock price high), equity’s payoff is shared more with former bondholders; equity’s upside is reduced, which can mitigate excessive risk-taking and align incentives somewhat.
+
+---
+
+# 36. Partial vs Full Hedge – Changing Hedge Ratio
+
+## Problem 36 – Degree of Hedging
+
+A firm has exposure to commodity X:
+
+* It will **buy 1m units** of X in a year.
+* X’s price in a year, P₁, is random: mean $10, stdev $4.
+
+It considers:
+
+* Strategy 1: no hedge.
+* Strategy 2: **full hedge** using 1m units of futures at $10.
+* Strategy 3: **half hedge** using 0.5m units of futures.
+
+Assume futures are fairly priced.
+
+**Tasks:**
+
+A. Which strategy leaves the firm’s **cost of X** most volatile?
+B. Which strategy eliminates price risk for X completely?
+C. Intuition: in practice, why might a firm choose a **partial hedge**?
+
+---
+
+### Solution 36
+
+A.
+
+* No hedge: cost = 1m × P₁ → fully exposed to volatility.
+* So Strategy 1 has **maximum volatility**.
+
+B.
+
+* Full hedge (Strategy 2):
+
+  * Pay fixed $10 per unit on futures; any spot price move is offset by futures gains/losses.
+  * Net cost per unit ~$10; price risk is essentially **zero**.
+* Half hedge (Strategy 3):
+
+  * Only half the exposure is hedged; still some volatility remains.
+
+C.
+
+Why partial hedge?
+
+* If:
+
+  * Correlation between X prices and revenue is not perfect (natural partial hedge).
+  * Manager wants to retain some upside from favorable price moves.
+  * Hedge accounting or margin/collateral requirements make full hedge expensive.
+
+* Partial hedging can be a compromise: reduce distress risk and underinvestment without fully capping beneficial volatility.
+
+---
+
+# 37. Maintenance vs Incurrence Covenants – Changing Frequency
+
+## Problem 37 – Restriction Check Frequency
+
+Loan A includes a **maintenance covenant**:
+
+* Leverage ratio must be below 2.0× at each **quarter-end**.
+
+Loan B includes an **incurrence covenant**:
+
+* Leverage ratio must be below 2.0× only when **new debt is incurred**.
+
+**Tasks:**
+
+A. Which covenant type (maintenance vs incurrence) is more restrictive day-to-day?
+B. Which one gives equity/management more flexibility between test dates?
+C. Intuition: why might term loans from banks use maintenance covenants while bonds use incurrence covenants?
+
+---
+
+### Solution 37
+
+A.
+
+* Maintenance covenant (Loan A) is more restrictive:
+
+  * The firm must meet leverage test **every quarter**; persistent monitoring.
+  * Violations can trigger renegotiation, waivers, or default.
+
+B.
+
+* Incurrence covenants (Loan B) give more flexibility:
+
+  * Firm can temporarily exceed leverage thresholds as long as it doesn’t issue new debt or trigger specific covenant events.
+  * Less continuous monitoring.
+
+C.
+
+* Banks typically hold concentrated exposures and engage in relationship lending; they want **frequent monitoring** (maintenance covenants).
+* Bondholders are more dispersed and prefer simpler, less intrusive covenants; incurrence covenants are easier to monitor and enforce.
+* Maintenance covenants can reduce risk and lower interest rates but may be too rigid for bond markets.
+
+---
+
+# 38. Project Finance vs Corporate Finance – Changing Project Size & Risk
+
+## Problem 38 – When to Use Project Finance
+
+A company can undertake a large infrastructure project:
+
+* Investment: $500m.
+* Stand-alone project β_proj ≈ 1.8 (higher than core firm β).
+* If financed on **corporate balance sheet**, project cashflows and risks fully mix with the firm.
+
+Alternatively, it can:
+
+* Create a **Project Finance SPV** with non-recourse debt backed only by project cashflows and limited sponsor equity.
+
+Case A: Project is **large relative to the firm** (project value ≈ existing firm value).
+Case B: Project is **small relative to the firm** (project value ≈ 5% of firm).
+
+**Tasks:**
+
+A. Qualitatively, in which case is project finance more attractive and why?
+B. How do size and risk interplay in the project vs corporate finance choice?
+
+---
+
+### Solution 38
+
+A.
+
+* Case A (large project, high β_proj):
+
+  * Putting it on the corporate balance sheet significantly changes firm’s overall risk and can strain its debt capacity.
+  * Project finance SPV isolates the risk; lenders look to project cashflows and collateral, not the parent’s entire balance sheet.
+  * Non-recourse structure can protect the parent from large downside outcomes → **project finance more attractive** here.
+
+* Case B (small project, high β_proj but only 5% of firm):
+
+  * The project’s risk is diversified at the firm level; its impact on firm β and capacity is modest.
+  * Project finance overhead (structuring, covenants, multiple parties) may not be worth it.
+  * Corporate finance might be simpler and cheaper.
+
+B.
+
+* Large, risky projects with distinct cashflows and high political/contract risk often suit **project finance**:
+
+  * Risk is concentrated and carved out.
+  * Creditors rely on project-level contracts and collateral.
+* Smaller or less risky projects are often financed corporately:
+
+  * Firm can absorb risk internally; overhead of SPV is not justified.
+  * Risk is shared across the firm’s diversified asset base.
+
+---
+
