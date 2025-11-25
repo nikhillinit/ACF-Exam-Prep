@@ -1,0 +1,12 @@
+import React from 'react';
+
+const ProblemViewer = () => {
+  return (
+    <div>
+      <h2>Problem Viewer</h2>
+      <p>This is a placeholder for the Problem Viewer. Content coming soon!</p>
+    </div>
+  );
+};
+
+export default ProblemViewer;

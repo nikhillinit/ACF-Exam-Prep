@@ -4,6 +4,7 @@ import HybridSequencer from './HybridSequencer';
 import ArchetypeMapper from './ArchetypeMapper';
 import TimeAllocator from './TimeAllocator';
 import { scanForArchetypes } from '../../utils/archetypeScanner';
+import { detectDeviations } from '../../utils/deviationDetectionEngine';
 
 // Complete example problem with solution
 const EXAMPLE_PROBLEM = `HAL Corporation is considering issuing debt to finance a new project. The company is evaluating two debt structures:
@@ -78,9 +79,23 @@ const ReconView = () => {
 
   const handleScan = () => {
     if (!problemText.trim()) return;
-    
-    const results = scanForArchetypes(problemText);
-    setScanResults(results);
+
+    // Scan for archetypes
+    const archetypeResults = scanForArchetypes(problemText);
+
+    // NEW: Detect deviations dynamically
+    const deviationResults = detectDeviations(problemText, {
+      archetypes: archetypeResults.archetypes?.[0]?.code
+    });
+
+    // Combine results
+    const combinedResults = {
+      ...archetypeResults,
+      deviations: deviationResults.deviations,
+      deviationMetadata: deviationResults.metadata
+    };
+
+    setScanResults(combinedResults);
     setShowWorkflow(true);
   };
 

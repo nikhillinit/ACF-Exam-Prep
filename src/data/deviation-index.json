@@ -1,0 +1,749 @@
+{
+  "metadata": {
+    "schema_version": "1.0",
+    "build_timestamp": "2025-11-25T13:01:23.069Z",
+    "source_registry": "deviation-registry.json",
+    "total_deviations": 9,
+    "total_keywords": 53,
+    "total_archetypes": 9,
+    "valid_patterns": 49,
+    "invalid_patterns": 0
+  },
+  "keyword_index": {
+    "annual default probability": {
+      "deviations": [
+        "DEV-1.1.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    },
+    "constant hazard rate": {
+      "deviations": [
+        "DEV-1.1.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    },
+    "probability of default each year": {
+      "deviations": [
+        "DEV-1.1.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    },
+    "conditional default": {
+      "deviations": [
+        "DEV-1.1.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "survival probability": {
+      "deviations": [
+        "DEV-1.1.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "hazard rate model": {
+      "deviations": [
+        "DEV-1.1.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    },
+    "amortizing": {
+      "deviations": [
+        "DEV-1.2.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "equal annual payments": {
+      "deviations": [
+        "DEV-1.2.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    },
+    "principal repayment schedule": {
+      "deviations": [
+        "DEV-1.2.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    },
+    "declining principal balance": {
+      "deviations": [
+        "DEV-1.2.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    },
+    "amortization schedule": {
+      "deviations": [
+        "DEV-1.2.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "debt overhang": {
+      "deviations": [
+        "DEV-2.1.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "underinvestment": {
+      "deviations": [
+        "DEV-2.1.1"
+      ],
+      "weight": 1,
+      "frequency": 1
+    },
+    "existing debt": {
+      "deviations": [
+        "DEV-2.1.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "equity refuses to invest": {
+      "deviations": [
+        "DEV-2.1.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    },
+    "risky debt outstanding": {
+      "deviations": [
+        "DEV-2.1.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    },
+    "transfer to creditors": {
+      "deviations": [
+        "DEV-2.1.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    },
+    "asset substitution": {
+      "deviations": [
+        "DEV-2.2.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "risk shifting": {
+      "deviations": [
+        "DEV-2.2.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "increase project risk": {
+      "deviations": [
+        "DEV-2.2.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    },
+    "swap for riskier": {
+      "deviations": [
+        "DEV-2.2.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    },
+    "equity gains from volatility": {
+      "deviations": [
+        "DEV-2.2.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    },
+    "multi-stage": {
+      "deviations": [
+        "DEV-3.1.1"
+      ],
+      "weight": 1,
+      "frequency": 1
+    },
+    "sequential investment": {
+      "deviations": [
+        "DEV-3.1.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "option to expand": {
+      "deviations": [
+        "DEV-3.1.1",
+        "DEV-5.1.1"
+      ],
+      "weight": 2.5,
+      "frequency": 2
+    },
+    "option to abandon": {
+      "deviations": [
+        "DEV-3.1.1",
+        "DEV-5.1.1"
+      ],
+      "weight": 2.5,
+      "frequency": 2
+    },
+    "decision tree": {
+      "deviations": [
+        "DEV-3.1.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "backward induction": {
+      "deviations": [
+        "DEV-3.1.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "unlever beta": {
+      "deviations": [
+        "DEV-4.1.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "relever beta": {
+      "deviations": [
+        "DEV-4.1.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "asset beta": {
+      "deviations": [
+        "DEV-4.1.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "different leverage": {
+      "deviations": [
+        "DEV-4.1.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "comparable firm": {
+      "deviations": [
+        "DEV-4.1.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "capital structure adjustment": {
+      "deviations": [
+        "DEV-4.1.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    },
+    "adjusted present value": {
+      "deviations": [
+        "DEV-4.2.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    },
+    "apv": {
+      "deviations": [
+        "DEV-4.2.1"
+      ],
+      "weight": 1,
+      "frequency": 1
+    },
+    "changing leverage": {
+      "deviations": [
+        "DEV-4.2.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "non-constant debt": {
+      "deviations": [
+        "DEV-4.2.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "value of tax shield": {
+      "deviations": [
+        "DEV-4.2.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    },
+    "unlevered value": {
+      "deviations": [
+        "DEV-4.2.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "option to wait": {
+      "deviations": [
+        "DEV-5.1.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    },
+    "flexibility value": {
+      "deviations": [
+        "DEV-5.1.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "real option": {
+      "deviations": [
+        "DEV-5.1.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "black-scholes": {
+      "deviations": [
+        "DEV-5.1.1"
+      ],
+      "weight": 1,
+      "frequency": 1
+    },
+    "binomial model": {
+      "deviations": [
+        "DEV-5.1.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "free cash flow": {
+      "deviations": [
+        "DEV-6.1.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    },
+    "fcff": {
+      "deviations": [
+        "DEV-6.1.1"
+      ],
+      "weight": 1,
+      "frequency": 1
+    },
+    "working capital": {
+      "deviations": [
+        "DEV-6.1.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "capital expenditure": {
+      "deviations": [
+        "DEV-6.1.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "capex": {
+      "deviations": [
+        "DEV-6.1.1"
+      ],
+      "weight": 1,
+      "frequency": 1
+    },
+    "non-cash charges": {
+      "deviations": [
+        "DEV-6.1.1"
+      ],
+      "weight": 2,
+      "frequency": 1
+    },
+    "depreciation": {
+      "deviations": [
+        "DEV-6.1.1"
+      ],
+      "weight": 1,
+      "frequency": 1
+    },
+    "change in nwc": {
+      "deviations": [
+        "DEV-6.1.1"
+      ],
+      "weight": 2.5,
+      "frequency": 1
+    }
+  },
+  "archetype_index": {
+    "A1": [
+      "DEV-1.1.1",
+      "DEV-1.2.1",
+      "DEV-4.1.1",
+      "DEV-4.2.1"
+    ],
+    "B1": [
+      "DEV-1.1.1",
+      "DEV-6.1.1"
+    ],
+    "A3": [
+      "DEV-1.2.1",
+      "DEV-4.2.1"
+    ],
+    "A2": [
+      "DEV-2.1.1",
+      "DEV-2.2.1",
+      "DEV-3.1.1"
+    ],
+    "A2A": [
+      "DEV-2.1.1",
+      "DEV-3.1.1"
+    ],
+    "A2B": [
+      "DEV-2.2.1"
+    ],
+    "C1": [
+      "DEV-3.1.1",
+      "DEV-5.1.1"
+    ],
+    "B2": [
+      "DEV-4.1.1",
+      "DEV-6.1.1"
+    ],
+    "C2": [
+      "DEV-5.1.1"
+    ]
+  },
+  "category_index": {
+    "Default Modeling": [
+      "DEV-1.1.1"
+    ],
+    "Debt Structuring": [
+      "DEV-1.2.1"
+    ],
+    "Agency Costs": [
+      "DEV-2.1.1",
+      "DEV-2.2.1"
+    ],
+    "Dynamic Programming": [
+      "DEV-3.1.1"
+    ],
+    "Cost of Capital": [
+      "DEV-4.1.1"
+    ],
+    "Valuation Method": [
+      "DEV-4.2.1"
+    ],
+    "Real Options": [
+      "DEV-5.1.1"
+    ],
+    "Cash Flow Analysis": [
+      "DEV-6.1.1"
+    ]
+  },
+  "compiled_patterns": [
+    {
+      "code": "DEV-1.1.1",
+      "pattern": "/(annual|yearly)\\s+default\\s+probability/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-1.1.1",
+      "pattern": "/hazard\\s+rate/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-1.1.1",
+      "pattern": "/conditional\\s+default/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-1.1.1",
+      "pattern": "/survival\\s+probability/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-1.1.1",
+      "pattern": "/probability\\s+of\\s+default\\s+(each|per)\\s+year/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-1.2.1",
+      "pattern": "/amortiz(ing|ation)/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-1.2.1",
+      "pattern": "/equal\\s+annual\\s+payments/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-1.2.1",
+      "pattern": "/principal\\s+(repayment|reduction)\\s+schedule/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-1.2.1",
+      "pattern": "/declining\\s+(principal|balance)/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-2.1.1",
+      "pattern": "/debt\\s+overhang/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-2.1.1",
+      "pattern": "/underinvestment/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-2.1.1",
+      "pattern": "/equity\\s+(refuses|rejects)\\s+to\\s+invest/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-2.1.1",
+      "pattern": "/(old|existing)\\s+debt(holders)?/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-2.1.1",
+      "pattern": "/transfer\\s+to\\s+(creditors|debtholders)/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-2.2.1",
+      "pattern": "/asset\\s+substitution/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-2.2.1",
+      "pattern": "/risk\\s+shift(ing)?/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-2.2.1",
+      "pattern": "/(increase|raise|boost)\\s+(project\\s+)?risk/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-2.2.1",
+      "pattern": "/swap\\s+for\\s+riskier/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-2.2.1",
+      "pattern": "/volatility\\s+(benefit|transfer)/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-3.1.1",
+      "pattern": "/multi[- ]stage/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-3.1.1",
+      "pattern": "/sequential\\s+investment/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-3.1.1",
+      "pattern": "/option\\s+to\\s+(expand|abandon|wait)/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-3.1.1",
+      "pattern": "/decision\\s+tree/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-3.1.1",
+      "pattern": "/backward\\s+induction/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-3.1.1",
+      "pattern": "/stage\\s+\\d+/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-4.1.1",
+      "pattern": "/(un)?lever(ed|ing)?\\s+beta/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-4.1.1",
+      "pattern": "/asset\\s+beta/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-4.1.1",
+      "pattern": "/different\\s+(leverage|capital\\s+structure)/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-4.1.1",
+      "pattern": "/comparable\\s+firm/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-4.1.1",
+      "pattern": "/β[_]?[AE]/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-4.2.1",
+      "pattern": "/APV/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-4.2.1",
+      "pattern": "/adjusted\\s+present\\s+value/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-4.2.1",
+      "pattern": "/changing\\s+(leverage|debt)/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-4.2.1",
+      "pattern": "/non[- ]constant\\s+debt/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-4.2.1",
+      "pattern": "/(separate|value)\\s+(of\\s+)?tax\\s+shield/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-4.2.1",
+      "pattern": "/unlevered\\s+(firm\\s+)?value/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-5.1.1",
+      "pattern": "/option\\s+to\\s+(wait|expand|abandon|delay)/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-5.1.1",
+      "pattern": "/flexibility\\s+value/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-5.1.1",
+      "pattern": "/real\\s+option/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-5.1.1",
+      "pattern": "/Black[- ]Scholes/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-5.1.1",
+      "pattern": "/binomial\\s+(tree|model)/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-5.1.1",
+      "pattern": "/exercise\\s+price/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-6.1.1",
+      "pattern": "/free\\s+cash\\s+flow/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-6.1.1",
+      "pattern": "/FCF(F|E)?/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-6.1.1",
+      "pattern": "/working\\s+capital/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-6.1.1",
+      "pattern": "/ΔNW?C/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-6.1.1",
+      "pattern": "/cap(ital)?\\s+ex(p|penditure)/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-6.1.1",
+      "pattern": "/non[- ]cash\\s+charge/i",
+      "flags": "i",
+      "valid": true
+    },
+    {
+      "code": "DEV-6.1.1",
+      "pattern": "/add\\s+back\\s+depreciation/i",
+      "flags": "i",
+      "valid": true
+    }
+  ]
+}

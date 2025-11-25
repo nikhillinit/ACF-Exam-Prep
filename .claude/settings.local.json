@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(superpowers:using-superpowers)",
+      "Skill(superpowers:brainstorming)",
+      "Bash(node -e:*)",
+      "Bash(node -p:*)",
+      "Bash(node process_deviations.js:*)",
+      "Bash(node process_batch1.js:*)",
+      "Bash(node process_batch3.js:*)",
+      "Bash(node process_batch2.js:*)",
+      "Bash(node process_batch4.js:*)",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(node list_deviations.js:*)",
+      "Bash(node analyze_batch3.js:*)",
+      "Bash(del process_batch3.js analyze_batch3.js)",
+      "Bash(node report_batch1.js:*)",
+      "Bash(del process_batch1.js report_batch1.js)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git rm:*)",
+      "Bash(node:*)",
+      "Bash(npm test:*)",
+      "Bash(dir \"C:\\Users\\nikhi\\ACF-Exam-Prep\\src\\data\" /b)",
+      "Bash(npm start)",
+      "Bash(timeout 10 bash:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

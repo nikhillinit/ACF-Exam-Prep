@@ -1,0 +1,710 @@
+{
+  "worked_examples": [
+    {
+      "id": "a1-bond-default-expected-return-and-beta",
+      "problem_text": "Firm L issues a 1-year coupon bond with face value $100 and an 8% annual coupon. The bond currently trades at $96. There is a 10% probability the firm defaults at maturity. In default, investors receive a recovery payment of $40 (no coupon). The risk-free rate is 3% and the market risk premium is 5%. You are asked to (1) compute the promised yield to maturity ignoring default, (2) compute the expected return on the bond considering default, and (3) infer the bond\u2019s beta using CAPM.",
+      "archetype": "A1-CapitalStructure",
+      "solution_steps": [
+        {
+          "part": "Step 1 - Reconnaissance",
+          "prompt": "What kind of problem is this?",
+          "reasoning": "The problem gives a specific bond price, promised payments (coupon + face), and a default probability with recovery in default. It also asks for promised YTM, expected return, and debt beta via CAPM. That combination of bond pricing, default, tax shields / betas is the classic A1: Capital Structure, Taxes, and Default setting.",
+          "calculation": "Signals:\n- Coupon bond with face value and current price.\n- Explicit default probability and recovery.\n- Need to compute expected return on debt and \u03b2_D.\n=> Tag as A1 (Capital Structure & Default Risk).",
+          "sanity_check": "Any time you see a risky bond with price, default probability, and recovery, you should think: (1) promised YTM, (2) expected return E[r_D], and (3) possibly debt beta \u03b2_D using CAPM."
+        },
+        {
+          "part": "Step 2 - What Do I Need?",
+          "prompt": "List the target outputs and required inputs.",
+          "reasoning": "We must compute: (i) promised YTM ignoring default, (ii) expected return including default, and (iii) debt beta via CAPM. For the promised YTM, we only need price and promised payoff in one year. For expected return, we need the payoff in default vs no default and the default probability. For \u03b2_D, we need E[r_D], r_f, and the market risk premium.",
+          "calculation": "Given:\n- Price today: P_0 = 96.\n- Face value: F = 100.\n- Coupon: C = 8.\n- Good state payoff (no default): 108.\n- Default payoff: 40.\n- Default probability: p_default = 0.10.\n- No-default probability: 0.90.\n- r_f = 3%.\n- Market risk premium = 5%.",
+          "sanity_check": "Before doing any math, make sure you clearly separate: (a) promised payoff (108) vs (b) actual default payoff (40). Promised YTM ignores default; expected return must use both payoffs with their probabilities."
+        },
+        {
+          "part": "Step 3 - Promised YTM (Ignore Default)",
+          "prompt": "Compute the promised yield to maturity ignoring default risk.",
+          "reasoning": "Promised YTM is the IRR you would earn if you actually received the full promised payoff. With a 1-year bond, that\u2019s simply (promised payoff / price) \u2212 1. We treat the bond as risk-free for this step.",
+          "calculation": "Promised payoff in 1 year (no default): 108.\nPrice today: 96.\nPromised YTM:\n r_promised = 108 / 96 \u2212 1 = 12.5%.\nSo the promised yield ignoring default is 12.5%.",
+          "sanity_check": "The bond trades below par (96 < 100), so the promised yield should be above the coupon rate (8%). A 12.5% promised YTM is consistent with a discount bond."
+        },
+        {
+          "part": "Step 4 - Expected Return on Debt",
+          "prompt": "Incorporate default to find the expected return E[r_D].",
+          "reasoning": "Expected return must weight the returns in the good state (no default) and bad state (default) by their probabilities. Returns are always computed as (payoff \u2212 price)/price.",
+          "calculation": "Return if no default:\n r_good = 108 / 96 \u2212 1 = 0.125 = 12.5%.\n\nReturn in default:\n r_default = 40 / 96 \u2212 1 = \u22120.5833 (\u2248 \u221258.33%).\n\nExpected return:\n E[r_D] = 0.90 * r_good + 0.10 * r_default\n \u2248 0.90 * 0.125 + 0.10 * (\u22120.5833)\n = 0.1125 \u2212 0.0583\n \u2248 0.0542 = 5.42%.\nSo the expected return on the bond is about 5.4%.",
+          "sanity_check": "The expected return must lie between the good and default returns (12.5% and \u221258.3%), and given a 10% default probability, it should be much closer to 12.5%. A value around 5\u20136% is plausible and, importantly, above the risk-free rate of 3% (so this debt has positive beta)."
+        },
+        {
+          "part": "Step 5 - Debt Beta from CAPM",
+          "prompt": "Use CAPM to infer the bond\u2019s beta.",
+          "reasoning": "CAPM links expected return and beta: E[r_D] = r_f + \u03b2_D * (E[r_M] \u2212 r_f). We know E[r_D], r_f, and the market risk premium, so we can solve for \u03b2_D. This step shows how default risk turns a bond into a risky asset with positive beta.",
+          "calculation": "CAPM for debt:\n E[r_D] = r_f + \u03b2_D * MRP.\nWe have:\n E[r_D] \u2248 5.42%, r_f = 3%, MRP = 5%.\nSolve for \u03b2_D:\n \u03b2_D = (E[r_D] \u2212 r_f) / MRP\n \u2248 (0.0542 \u2212 0.03) / 0.05\n \u2248 0.0242 / 0.05\n \u2248 0.483.\nSo the debt beta is about 0.48.",
+          "sanity_check": "0.48 is less than 1, so debt is safer than the market portfolio, but clearly riskier than a risk-free bond (\u03b2 = 0). That matches intuition: default risk makes debt risky but usually not as risky as equity."
+        },
+        {
+          "part": "Step 6 - Interpretation & Common Pitfalls",
+          "prompt": "Interpret the result and connect to capital structure intuition.",
+          "reasoning": "We\u2019ve seen that risky debt can have a sizable risk premium and positive beta. This matters for WACC and APV: you can\u2019t just treat all debt as risk-free. Also, the gap between promised and expected returns highlights why you must distinguish coupon rates from expected returns.",
+          "calculation": "Key numbers:\n- Promised YTM: 12.5%.\n- Expected return: ~5.4%.\n- Debt beta: ~0.48.\n\nIntuition:\n- The promised yield looks huge (12.5%), but once you factor in default, the expected return shrinks dramatically.\n- The bond still earns more than the risk-free rate, which is why \u03b2_D is positive.\n- If you used 12.5% as the expected return, you\u2019d vastly overstate the risk premium and \u03b2_D.",
+          "sanity_check": "If you ever find \u03b2_D > \u03b2_E or negative \u03b2_D in a standard corporate bond context, re-check whether you accidentally used the coupon rate or the promised YTM instead of the expected return."
+        }
+      ],
+      "key_insights": [
+        "Promised yield and expected return are different objects; default risk drives a wedge between them.",
+        "Risky corporate debt typically has a positive beta; treating all debt as risk-free can severely mis-measure WACC.",
+        "When default probability is small but not trivial, the expected return can be much closer to the risk-free rate than the coupon suggests."
+      ],
+      "common_mistakes": [
+        "Plugging the coupon rate or promised YTM directly into CAPM instead of the expected return.",
+        "Ignoring the default state entirely and treating a clearly risky bond as risk-free.",
+        "Computing returns using payoff/face instead of payoff/price."
+      ]
+    },
+    {
+      "id": "a1-tax-shield-risky-debt",
+      "problem_text": "Firm R has permanent risky debt with face value $200 and an expected return of 4%. The corporate tax rate is 25%. The probability of default each year is 1% and, if the firm defaults, it permanently loses all future interest tax shields. The firm wants to estimate the present value of its interest tax shields for this debt. You are asked to compute the approximate PV of tax shields and explain why the discount rate should be close to the debt\u2019s expected return.",
+      "archetype": "A1-CapitalStructure",
+      "solution_steps": [
+        {
+          "part": "Step 1 - Reconnaissance",
+          "prompt": "How do I know this is a tax shield valuation problem?",
+          "reasoning": "The stem highlights permanent debt, an explicit tax rate, and default risk that can wipe out future tax savings. It asks for the present value of interest tax shields. This is a classic A1 tax shield valuation under risky debt.",
+          "calculation": "Signals:\n- Permanent debt (or long-lived debt), not just a one-off loan.\n- Explicit corporate tax rate \u03c4.\n- Default probability and loss of future tax shields.\n- Question is 'what is the PV of tax shields?'\n=> A1: Capital Structure & Tax Shields with Risky Debt.",
+          "sanity_check": "Whenever you see 'value the tax shield' plus default probability, you\u2019re almost certainly in an APV / tax shield sub-problem of A1."
+        },
+        {
+          "part": "Step 2 - What Do I Need?",
+          "prompt": "Identify the cash flows and discount rate for tax shields.",
+          "reasoning": "Tax shields are \u03c4 times interest payments. If debt is fixed and interest is stable, tax shield cash flows resemble a bond: they exist in all non-default years and vanish in default. Their risk is closely tied to debt, so the discount rate should be similar to r_D.",
+          "calculation": "Given:\n- Debt face value (and assumed market value for simplicity): D = 200.\n- Expected return on debt: r_D = 4%.\n- Corporate tax rate: \u03c4 = 25%.\n- Default probability per year: p = 1%.\n\nApprox formula for risky perpetual tax shield (UST-style approximation):\n PV(TS) \u2248 \u03c4 * r_D * D / (r_D + p).\nInputs:\n- \u03c4 * r_D * D = 0.25 * 0.04 * 200 = 2.0.\n- Denominator: r_D + p = 0.04 + 0.01 = 0.05.",
+          "sanity_check": "Before plugging in, check units: \u03c4 * r_D * D is an annual cash flow (here, $2 per year). The denominator r_D + p is a discount rate plus hazard rate; units match. The resulting PV should be a finite, positive number on the order of a few tens of dollars given D=200."
+        },
+        {
+          "part": "Step 3 - Compute the PV of Tax Shields",
+          "prompt": "Apply the approximation formula.",
+          "reasoning": "The approximation treats tax shields as a risky bond-like cash flow whose risk arises both from discounting at r_D and from the possibility that the tax shield disappears in default at rate p. This yields a simple closed form PV.",
+          "calculation": "Using:\n PV(TS) \u2248 \u03c4 * r_D * D / (r_D + p)\nwe get:\n PV(TS) \u2248 2.0 / 0.05 = 40.\nSo the approximate present value of the interest tax shields is $40.",
+          "sanity_check": "As a rough benchmark, if the debt were risk-free (p = 0), the PV would be \u03c4 * D = 0.25 * 200 = 50 for a perpetuity of interest at 4%. With default risk (p = 1%), it drops below 50. A value of 40 is consistent: some tax shields are lost in default."
+        },
+        {
+          "part": "Step 4 - Why Discount at the Debt Rate?",
+          "prompt": "Explain why the tax shield\u2019s discount rate looks like r_D + p rather than r_E.",
+          "reasoning": "Tax shields exist only when interest is paid. Interest is legally tied to the debt contract. If the firm defaults on debt, it also stops generating those tax shields. The payoff pattern of tax shields therefore tracks the bond\u2019s cash flows, not equity\u2019s.",
+          "calculation": "Logic:\n- Each year, interest = r_D * D (approx, for level debt).\n- Tax shield each year = \u03c4 * r_D * D as long as the firm pays interest.\n- The firm pays interest as long as the debt is alive and the firm is not in default.\n- Default wipes out both debt payments and tax shields.\n- This makes the tax shield have similar timing and default risk as the debt coupon itself.\nTherefore:\n- Investors who buy the debt are effectively 'long' both interest payments and the associated tax shields.\n- The natural discount rate for tax shields is the debt-like rate, not the equity rate.",
+          "sanity_check": "If you tried to discount tax shields at r_E (which might be 10\u201315%), you would severely undervalue them in this fixed-debt setting. That would contradict the idea that tax shields are a major benefit of using debt financing."
+        },
+        {
+          "part": "Step 5 - Interpretation",
+          "prompt": "Connect the PV of tax shields to levered firm value.",
+          "reasoning": "In APV, the value of the levered firm equals the unlevered firm value plus the PV of tax shields minus the PV of distress and other costs. The $40 we computed is the gross benefit side of the leverage tradeoff for this particular debt.",
+          "calculation": "If:\n- V_U is the unlevered firm value (no debt),\n- PV(TS) = 40,\n- PV(distress costs) =, say, 15,\nthen the levered firm value would be:\n V_L \u2248 V_U + 40 \u2212 15 = V_U + 25.\nSo leverage adds about $25 of value on net, given this debt level.",
+          "sanity_check": "If someone claimed that adding this debt created 'no value' under taxes, you could point to the non-zero PV(TS) of $40 as the tax benefit channel. The real question becomes whether distress and other costs erode that $40 by more or less than $40."
+        }
+      ],
+      "key_insights": [
+        "Tax shields should be discounted at a rate that matches their risk profile, which is typically debt-like when debt is fixed.",
+        "Default risk lowers the PV of tax shields relative to the simple \u03c4D approximation.",
+        "APV separates the operating value of the firm from financial side effects like tax shields and distress costs."
+      ],
+      "common_mistakes": [
+        "Discounting tax shields at the equity cost of capital in a fixed-debt setting.",
+        "Applying \u03c4D without adjusting for default risk when the problem clearly states a nontrivial default probability.",
+        "Forgetting that if interest stops in default, tax shields stop too."
+      ]
+    },
+    {
+      "id": "a1-apv-tax-shields-and-distress",
+      "problem_text": "Firm S is currently unlevered and has a value of $500 million based on the present value of its operating cash flows. It is considering issuing $200 million of permanent debt with an expected return of 6% to repurchase equity. The corporate tax rate is 25%. Issuing debt also creates expected present value distress costs estimated at $20 million. You are asked to compute the levered firm value using APV and interpret whether adding this debt level is value-creating.",
+      "archetype": "A1-CapitalStructure",
+      "solution_steps": [
+        {
+          "part": "Step 1 - Reconnaissance",
+          "prompt": "Why is this an APV / leverage tradeoff problem?",
+          "reasoning": "The question gives an unlevered firm value, a proposed level of permanent debt, a tax rate, and explicit expected distress costs. It asks for the levered firm value and whether leverage adds value. This is exactly the Modigliani\u2013Miller with taxes + tradeoff framing used in APV-style capital structure questions.",
+          "calculation": "Signals:\n- V_U given directly.\n- New permanent debt level D.\n- Corporate tax rate \u03c4.\n- PV of expected distress or financial distress costs.\n- Question: 'Is this debt level value-creating?'\n=> A1: Capital Structure with Taxes and Financial Distress, APV framework.",
+          "sanity_check": "If you see V_U plus explicit tax shield and distress cost data, you should almost reflexively think: APV = V_U + PV(TS) \u2212 PV(distress) \u00b1 other side effects."
+        },
+        {
+          "part": "Step 2 - What Do I Need?",
+          "prompt": "Clarify the components of APV.",
+          "reasoning": "APV decomposes value into (1) value of the firm as if unlevered (V_U), plus (2) value added by financing (e.g., tax shields), minus (3) financing-related costs (e.g., distress, issuance, agency costs). We\u2019re given all three components or enough data to compute them.",
+          "calculation": "APV formula:\n V_L = V_U + PV(TS) \u2212 PV(distress) \u2212 PV(other costs) + PV(other benefits).\nHere:\n- V_U = 500.\n- D = 200 (assume equal to market value for simplicity).\n- r_D = 6%.\n- \u03c4 = 25%.\n- PV(distress) = 20.\n- No other major side effects given.\nWe must compute PV(TS). For permanent, risk-free or low-risk debt, a common approximation is:\n PV(TS) \u2248 \u03c4 * D = 0.25 * 200 = 50.",
+          "sanity_check": "Before plugging in numbers, make sure you are not double-counting any cost or benefit. Distress costs belong outside V_U; V_U should reflect an all-equity financed firm with no distress from leverage."
+        },
+        {
+          "part": "Step 3 - Compute Levered Firm Value",
+          "prompt": "Apply the APV formula.",
+          "reasoning": "Given V_U and simple approximations for tax shields and distress costs, APV becomes a straightforward algebra problem.",
+          "calculation": "Step 1: Compute PV(TS):\n PV(TS) \u2248 \u03c4 * D = 0.25 * 200 = 50.\n\nStep 2: Plug into APV:\n V_L = V_U + PV(TS) \u2212 PV(distress)\n = 500 + 50 \u2212 20\n = 530.\nSo the levered firm value is $530 million.",
+          "sanity_check": "Leverage should increase firm value when tax shields dominate distress costs. Here, tax shields add 50 while distress subtracts 20, so net gain 30. A levered value of 530 > 500 is consistent with that story."
+        },
+        {
+          "part": "Step 4 - Interpret Economic Tradeoff",
+          "prompt": "What does this say about the optimality of this debt level?",
+          "reasoning": "The APV calculation shows that true firm value (to all claimholders) increases by 30 due to this financing choice. That doesn\u2019t prove this is the globally optimal debt level, but it does show that moving from zero debt to this level is value-creating.",
+          "calculation": "Value impact:\n- Net benefit of leverage = 530 \u2212 500 = 30.\n- Gross benefit from tax shields = 50.\n- Gross cost from distress = 20.\n\nInterpretation:\n- The firm has room to lever up from zero; the marginal benefit of the first $200 of debt exceeds the marginal distress cost.\n- At higher debt levels, distress costs may accelerate and eventually offset tax shield benefits, giving the familiar hump-shaped firm value vs. leverage curve.",
+          "sanity_check": "If APV said V_L < V_U for this level of D, then the marginal costs of debt would already exceed tax benefits at relatively low leverage. That would be unusual unless the firm has extremely high distress costs or tax shields are low-value (e.g., low \u03c4 or non-profitable firm)."
+        },
+        {
+          "part": "Step 5 - Equity Value After Levering",
+          "prompt": "How does this translate into equity value if the firm issues debt to repurchase equity?",
+          "reasoning": "Equity is a residual claim: E = V_L \u2212 D. After issuing debt to repurchase equity, the number of shares shrinks, raising price per share. But total equity value can increase or decrease depending on the net value of leverage.",
+          "calculation": "After leveraging:\n- V_L = 530.\n- Debt D = 200.\n=> Equity value E_L = 530 \u2212 200 = 330.\n\nBefore leveraging:\n- V_U = 500, no debt.\n=> Equity value E_U = 500.\n\nChange in equity value:\n- \u0394E = 330 \u2212 500 = \u2212170.\nBut remember: the firm is using $200 of new debt to pay out cash to shareholders. Old shareholders receive $200 in cash (via repurchase) plus hold equity worth 330.\nTotal wealth of old shareholders: 200 + 330 = 530 vs 500 before.\n=> Old shareholders gain 30, consistent with the increase in total firm value.",
+          "sanity_check": "Do not interpret E_L alone in isolation; you must also account for the cash distributed. Old shareholders\u2019 wealth should track the change in firm value if the transaction is fairly priced."
+        }
+      ],
+      "key_insights": [
+        "APV decomposes value into operating value plus financing side effects.",
+        "Tax shields and distress costs are the key opposing forces in the static tradeoff theory.",
+        "Even if post-transaction equity value is lower, old shareholders can gain via cash distributions when leverage is value-creating."
+      ],
+      "common_mistakes": [
+        "Forgetting to subtract distress costs in APV and thus overvaluing levered firm value.",
+        "Using \u03c4 * r_D * D / r_D instead of the simpler \u03c4 * D for low-risk, fixed debt (overcomplicating when the exam clearly wants \u03c4 * D).",
+        "Ignoring the cash distribution when evaluating whether shareholders benefit from a recapitalization."
+      ]
+    },
+    {
+      "id": "a3-unlever-relever-beta",
+      "problem_text": "Project P is in a new line of business for Firm T. To estimate an appropriate discount rate, T identifies a pure-play comparable firm C that operates only in the project\u2019s business. Firm C has an equity beta of 1.5 and a market-value debt-to-equity ratio of 0.25. Assume C\u2019s debt is nearly risk-free (\u03b2_D \u2248 0). Firm T plans to finance Project P with a target debt-to-equity ratio of 0.5. The risk-free rate is 3% and the market risk premium is 5%. You are asked to (1) estimate the asset beta for the project, (2) re-lever it at T\u2019s target D/E, and (3) compute both the project\u2019s asset and equity discount rates.",
+      "archetype": "A3-CAPM",
+      "solution_steps": [
+        {
+          "part": "Step 1 - Reconnaissance",
+          "prompt": "Why is this a CAPM / discount rate choice problem?",
+          "reasoning": "The problem is about choosing a discount rate for a project with different risk than the firm\u2019s existing assets. It mentions pure-play comparables, equity betas, leverage, and target D/E. That\u2019s the classic A3 pattern: unlevering and relevering betas to get project-specific discount rates.",
+          "calculation": "Signals:\n- Comparable firm C with \u03b2_E and D/E.\n- Target D/E for the project\u2019s financing.\n- Need to find asset beta \u03b2_A and equity beta \u03b2_E,project.\n- CAPM inputs r_f and market risk premium given.\n=> Archetype A3: CAPM & Discount Rates for Projects.",
+          "sanity_check": "Whenever you see 'pure-play comparable' plus 'unlever and re-lever', you are in the CAPM / project discount rate archetype."
+        },
+        {
+          "part": "Step 2 - Unlever the Comparable\u2019s Beta",
+          "prompt": "Compute the asset beta for firm C.",
+          "reasoning": "Firm C\u2019s equity beta reflects both business risk and financial leverage. To isolate the business risk of the project, we first compute C\u2019s asset beta, which corresponds to the beta of the project\u2019s operating assets.",
+          "calculation": "With \u03b2_D \u2248 0, the standard relationship is:\n \u03b2_A = (E / (D + E)) * \u03b2_E + (D / (D + E)) * \u03b2_D.\nSince \u03b2_D \u2248 0, this simplifies to:\n \u03b2_A \u2248 (E / (D + E)) * \u03b2_E.\nGiven D/E = 0.25, we have:\n E / (D + E) = 1 / (1 + 0.25) = 0.8.\nSo:\n \u03b2_A \u2248 0.8 * 1.5 = 1.2.\nThus, the project\u2019s asset beta is 1.2.",
+          "sanity_check": "Asset beta should lie between the debt and equity betas. With \u03b2_D \u2248 0 and \u03b2_E = 1.5, a \u03b2_A of 1.2 is plausible and between 0 and 1.5."
+        },
+        {
+          "part": "Step 3 - Re-lever at Firm T\u2019s Target D/E",
+          "prompt": "Compute the project\u2019s equity beta at the target leverage.",
+          "reasoning": "Firm T wants to finance the project at D/E = 0.5. Keeping the asset beta fixed (the business risk of the project), we need to re-lever \u03b2_A to determine \u03b2_E under the new capital structure.",
+          "calculation": "Again with \u03b2_D \u2248 0, the relationship becomes:\n \u03b2_E \u2248 \u03b2_A * (1 + D/E).\nHere:\n- \u03b2_A = 1.2.\n- D/E = 0.5.\nThus:\n \u03b2_E,project \u2248 1.2 * (1 + 0.5) = 1.2 * 1.5 = 1.8.\nSo the project\u2019s equity beta at Firm T\u2019s target leverage is 1.8.",
+          "sanity_check": "More leverage should raise equity beta above \u03b2_A. With D/E = 0.5, equity beta of 1.8 > 1.2 is expected. It\u2019s also higher than the comparable\u2019s equity beta (1.5) because T uses more leverage (0.5 > 0.25)."
+        },
+        {
+          "part": "Step 4 - Compute Discount Rates using CAPM",
+          "prompt": "Use CAPM to get r_A and r_E for the project.",
+          "reasoning": "We now have \u03b2_A and \u03b2_E for the project under T\u2019s targeted leverage. CAPM gives the corresponding expected returns, which we can use as discount rates for asset cash flows vs equity cash flows.",
+          "calculation": "Given:\n- r_f = 3%.\n- MRP = 5%.\n\nAsset discount rate:\n r_A = r_f + \u03b2_A * MRP\n = 3% + 1.2 * 5%\n = 3% + 6%\n = 9%.\n\nEquity discount rate:\n r_E = r_f + \u03b2_E,project * MRP\n = 3% + 1.8 * 5%\n = 3% + 9%\n = 12%.\nThus, we discount project asset cash flows at about 9% and equity cash flows at about 12%.",
+          "sanity_check": "Equity should earn a higher expected return than the underlying assets because of leverage. So 12% > 9% is consistent. Both should exceed the risk-free rate, reflecting positive exposure to market risk."
+        },
+        {
+          "part": "Step 5 - Interpretation",
+          "prompt": "Explain how this helps with project valuation.",
+          "reasoning": "The point of the exercise is to match risk to discount rate. We used a pure-play firm to find the project\u2019s business risk and then adjusted for the financing choice. This ensures we\u2019re not mistakenly using the firm\u2019s existing WACC for a project with very different risk.",
+          "calculation": "If Firm T\u2019s main business has \u03b2_A,core = 0.8 and WACC = 7%, but this new line of business has \u03b2_A,project = 1.2 with asset discount rate 9%, then using T\u2019s 7% WACC to evaluate the project would systematically over-accept risky projects.\n\nCorrect approach:\n- Use 9% to discount the project\u2019s free cash flows to all investors.\n- Then decide whether to fund it with D/E = 0.5 to achieve the 12% required return for equity implied by CAPM.",
+          "sanity_check": "If the exam question asks 'Which WACC should you use?', always check whether the project risk is like the firm\u2019s existing assets or like a different comparable. Using the wrong WACC is one of the most heavily tested conceptual mistakes."
+        }
+      ],
+      "key_insights": [
+        "Unlevering and re-levering betas is the core tool for project-specific discount rates under CAPM.",
+        "Asset beta captures business risk; equity beta adds financial leverage on top.",
+        "Using the firm\u2019s overall WACC for a project with different risk is generally incorrect and can bias investment decisions."
+      ],
+      "common_mistakes": [
+        "Using the firm\u2019s existing WACC even when the project is clearly in a different industry.",
+        "Forgetting to convert D/E into E/(D+E) and D/(D+E) when computing \u03b2_A.",
+        "Treating \u03b2_E of the comparable as if it were directly applicable to the project without adjusting for different leverage."
+      ]
+    },
+    {
+      "id": "a3-capm-discount-rate-selection",
+      "problem_text": "Firm Q is evaluating a new project. The firm\u2019s equity beta is 1.1, its market-value debt-to-equity ratio is 0.4, and its debt is approximately risk-free. The risk-free rate is 4% and the market risk premium is 6%. The project\u2019s risk is very similar to the firm\u2019s existing operations. Q\u2019s CFO is unsure whether to discount the project\u2019s free cash flows at (a) the equity cost of capital, (b) the asset discount rate, or (c) the after-tax WACC. You are asked to (1) compute these three rates and (2) explain which is appropriate for valuing project free cash flows.",
+      "archetype": "A3-CAPM",
+      "solution_steps": [
+        {
+          "part": "Step 1 - Reconnaissance",
+          "prompt": "What decision are we making here?",
+          "reasoning": "This is a 'which discount rate goes where?' question. The firm\u2019s risk and leverage are given, along with CAPM inputs. The question is which rate to apply to project free cash flows. That is squarely in the A3 realm of CAPM and discount rate selection.",
+          "calculation": "Signals:\n- Firm-level \u03b2_E and D/E.\n- Debt is risk-free.\n- Project risk matches firm risk.\n- Confusion about using r_E vs r_A vs WACC.\n=> A3: CAPM & choosing discount rates.",
+          "sanity_check": "These questions are conceptually simple but easy to miss: the correct rate depends on whether you are discounting cash flows to equity or to all capital providers."
+        },
+        {
+          "part": "Step 2 - Compute Equity Cost of Capital",
+          "prompt": "Use CAPM to get r_E.",
+          "reasoning": "The equity cost of capital is the expected return on the firm\u2019s shares, used to discount cash flows that accrue only to equity holders (e.g., dividends or free cash flow to equity).",
+          "calculation": "Given:\n- \u03b2_E = 1.1.\n- r_f = 4%.\n- MRP = 6%.\nCAPM:\n r_E = r_f + \u03b2_E * MRP\n = 4% + 1.1 * 6%\n = 4% + 6.6%\n = 10.6%.\nSo the equity cost of capital is 10.6%.",
+          "sanity_check": "Equity should have a higher expected return than the risk-free rate. With \u03b2_E > 1, 10.6% is reasonable given a 6% market risk premium."
+        },
+        {
+          "part": "Step 3 - Compute Asset Discount Rate",
+          "prompt": "Back out the asset beta and r_A.",
+          "reasoning": "Since debt is risk-free, the asset beta is a weighted average of \u03b2_E and \u03b2_D = 0. That gives us the asset discount rate r_A under CAPM, which applies to free cash flows to all investors when the firm is all-equity financed.",
+          "calculation": "Given D/E = 0.4, we have:\n- E/(D+E) = 1 / (1 + 0.4) = 1 / 1.4 \u2248 0.7143.\n- D/(D+E) = 0.4 / 1.4 \u2248 0.2857.\nAsset beta:\n \u03b2_A = (E/(D+E)) * \u03b2_E + (D/(D+E)) * \u03b2_D\n \u2248 0.7143 * 1.1 + 0.2857 * 0\n \u2248 0.7857.\nAsset discount rate:\n r_A = r_f + \u03b2_A * MRP\n = 4% + 0.7857 * 6%\n \u2248 4% + 4.71%\n \u2248 8.71%.",
+          "sanity_check": "Asset beta must be less than equity beta (because assets are a mix of risky equity and safer debt). So \u03b2_A \u2248 0.79 < 1.1 is sensible. The asset return (8.71%) is below the equity return (10.6%), as expected."
+        },
+        {
+          "part": "Step 4 - Compute After-Tax WACC",
+          "prompt": "Use r_E and r_D to compute WACC.",
+          "reasoning": "The WACC is the discount rate for free cash flows to the firm when the capital structure is expected to remain approximately constant. It is the weighted average of the costs of equity and after-tax debt.",
+          "calculation": "Assume debt is risk-free, so r_D \u2248 r_f = 4%. Suppose the corporate tax rate is 25%.\nWeights:\n- E/(D+E) \u2248 0.7143.\n- D/(D+E) \u2248 0.2857.\nThen:\n WACC = (E/(D+E)) * r_E + (D/(D+E)) * (1 \u2212 \u03c4) * r_D\n \u2248 0.7143 * 10.6% + 0.2857 * 0.75 * 4%\n \u2248 7.57% + 0.86%\n \u2248 8.43%.\nSo the WACC is about 8.4%.",
+          "sanity_check": "With tax-deductible interest, WACC should be below the asset return r_A (because of tax shields). Here 8.43% < 8.71%, which makes sense."
+        },
+        {
+          "part": "Step 5 - Which Rate for Project Free Cash Flows?",
+          "prompt": "Decide which rate is appropriate and explain why.",
+          "reasoning": "Free cash flows to the firm (FCFF) are cash flows available to all capital providers (debt and equity). When the project risk is the same as the firm-wide risk and the capital structure is expected to stay stable, the standard approach is to discount FCFF at the WACC.",
+          "calculation": "Given:\n- Project risk \u2248 firm risk.\n- Firm plans to maintain similar D/E.\n- We are given free cash flows to all investors.\nThen:\n- Use WACC \u2248 8.4% to discount project FCFF.\n\nr_E \u2248 10.6% would be appropriate only if we were discounting cash flows that accrue solely to equity holders (e.g., free cash flow to equity).\n\nr_A \u2248 8.7% is what we would use in an APV approach where we separate the unlevered project value and then add tax shields explicitly.",
+          "sanity_check": "A common exam trick is to get you to use r_E for FCFF or WACC for equity cash flows. Always ask: 'Whose cash flows am I discounting?' and 'Is capital structure assumed constant?'"
+        }
+      ],
+      "key_insights": [
+        "r_E, r_A, and WACC each have a specific role depending on whose cash flows you are discounting and how leverage behaves.",
+        "For FCFF with roughly constant leverage, WACC is the right discount rate.",
+        "For project valuation with explicit APV, r_A is used for operating cash flows and debt-like rates are used for tax shields."
+      ],
+      "common_mistakes": [
+        "Automatically using r_E as the discount rate for all projects regardless of the cash flow definition.",
+        "Ignoring taxes when computing WACC (forgetting the (1 \u2212 \u03c4) on r_D).",
+        "Using book-value weights instead of market-value weights when computing WACC."
+      ]
+    },
+    {
+      "id": "a2a-debt-overhang-positive-npv-rejected",
+      "problem_text": "Firm D has risky debt outstanding with face value $120 due in 1 year. The firm\u2019s assets will be worth either $160 (good state) or $80 (bad state) in 1 year, each with probability 0.5. The required return on the firm\u2019s assets is 10%. Firm D\u2019s equity holders are considering a new project that costs $20 today and will increase asset value by $40 in both states next year (to $200 or $120). The project must be financed by issuing new equity at a fair price. You are asked to (1) compute the project\u2019s NPV at the asset level, (2) compute current values of debt and equity with and without the project, and (3) determine whether old equity holders want to take the project and explain how this illustrates debt overhang.",
+      "archetype": "A2A-DebtOverhang",
+      "solution_steps": [
+        {
+          "part": "Step 1 - Reconnaissance",
+          "prompt": "Why is this a debt overhang / multi-state financing problem?",
+          "reasoning": "The problem describes risky debt with specific payoffs in good and bad states, and a new project financed by new equity. It asks who benefits and whether equity wants to invest even though the project is positive NPV at the firm level. That is the textbook A2A debt overhang pattern.",
+          "calculation": "Signals:\n- Two states of the world with asset values.\n- Outstanding risky debt with fixed face value and absolute priority.\n- New project that must be financed by equity issuance.\n- Question is about equity\u2019s incentive to invest in a positive NPV project.\n=> Archetype A2A: Multi-state Project & Existing Debt (Debt Overhang).",
+          "sanity_check": "If a question asks whether equity will invest in a positive NPV project when there is existing risky debt, your debt overhang antenna should go off immediately."
+        },
+        {
+          "part": "Step 2 - Asset-Level NPV of the Project",
+          "prompt": "Evaluate the project as if financed by risk-free capital with no existing claims.",
+          "reasoning": "The firm-level NPV ignores who gets the project\u2019s cash flows; it simply compares the present value of the incremental asset payoffs to the project cost.",
+          "calculation": "Without project, asset payoffs at t=1:\n- Good: 160.\n- Bad: 80.\nExpected payoff = 0.5 * 160 + 0.5 * 80 = 120.\nPresent value without project:\n V_assets,0 = 120 / 1.10 = 109.09.\n\nWith project, asset payoffs become:\n- Good: 160 + 40 = 200.\n- Bad: 80 + 40 = 120.\nExpected payoff = 0.5 * 200 + 0.5 * 120 = 160.\nPresent value with project (before deducting cost):\n V_assets,0^project = 160 / 1.10 = 145.45.\n\nProject NPV at asset level:\n NPV_project = 145.45 \u2212 109.09 \u2212 20 \u2248 16.36.\nSo the project is positive NPV for the firm.",
+          "sanity_check": "The expected payoff increases by 40 in each state, so the expected increase in payoff is 40. Discounting at 10% gives about 36.36 of PV gain. Subtracting the 20 cost yields roughly 16.36, so the project is clearly positive NPV."
+        },
+        {
+          "part": "Step 3 - Value of Debt and Equity Without the Project",
+          "prompt": "Compute current values of debt and equity given the existing capital structure.",
+          "reasoning": "We first need the status quo values before adding the project. Debt gets paid first up to its face value; equity gets the residual. Values are discounted at the 10% asset required return for these risky claims.",
+          "calculation": "Without project, t=1 payoffs:\n- Good state (V = 160): Debt gets 120, equity gets 160 \u2212 120 = 40.\n- Bad state (V = 80): Debt gets 80 (firm liquidated), equity gets 0.\n\nDebt value:\n P_D0 = [0.5 * 120 + 0.5 * 80] / 1.10\n = (60 + 40) / 1.10\n = 100 / 1.10\n \u2248 90.91.\nEquity value:\n P_E0 = [0.5 * 40 + 0.5 * 0] / 1.10\n = 20 / 1.10\n \u2248 18.18.\nTotal firm value:\n 90.91 + 18.18 = 109.09 (matches asset PV above).",
+          "sanity_check": "Firm value from claims (debt + equity) should match the unlevered asset PV (109.09). If not, you misallocated payoffs or mis-discounted something."
+        },
+        {
+          "part": "Step 4 - Value of Debt and Equity With the Project (Before Financing Cost)",
+          "prompt": "Recompute values if the project were implemented, ignoring who pays for it.",
+          "reasoning": "We treat the project as if the firm magically adds the project\u2019s payoff stream without worrying yet about the financing cost. This isolates who benefits from the extra cash flows under the existing priority structure.",
+          "calculation": "With project, t=1 payoffs:\n- Good: V = 200.\n- Bad: V = 120.\nDebt (face 120) payoffs:\n- Good: 120.\n- Bad: 120.\n=> Debt is now risk-free.\n\nDebt value:\n P_D1 = [0.5 * 120 + 0.5 * 120] / 1.10\n = 120 / 1.10\n \u2248 109.09.\n\nEquity payoffs:\n- Good: 200 \u2212 120 = 80.\n- Bad: 120 \u2212 120 = 0.\nEquity value:\n P_E1 = [0.5 * 80 + 0.5 * 0] / 1.10\n = 40 / 1.10\n \u2248 36.36.\n\nTotal firm value before subtracting cost:\n 109.09 + 36.36 = 145.45 (matches asset PV with project).",
+          "sanity_check": "Debt becomes risk-free because in both states assets \u2265 120. Its value rising from ~90.91 to ~109.09 indicates a big gain for debtholders. Equity\u2019s value also rises from ~18.18 to ~36.36 if we ignore the cost of the project for a moment."
+        },
+        {
+          "part": "Step 5 - Equity-Financed Project and Old Equity\u2019s Wealth",
+          "prompt": "Account for the financing cost via new equity issuance.",
+          "reasoning": "The project costs 20 today. If new equity is issued at a fair price, new investors pay 20 and receive claims worth 20. Old equity\u2019s wealth is the residual: new equity value minus what new investors paid.",
+          "calculation": "With project, total equity value P_E1 \u2248 36.36. New investors contribute 20, so they must receive shares worth 20, leaving:\n Wealth of old equity after = P_E1 \u2212 20 \u2248 36.36 \u2212 20 = 16.36.\n\nWealth of old equity before project:\n P_E0 \u2248 18.18.\n\nChange in old equity wealth:\n \u0394W_old \u2248 16.36 \u2212 18.18 \u2248 \u22121.82.\nSo old equity holders lose about 1.82 even though the project has positive NPV for the firm.",
+          "sanity_check": "This is the key overhang result: firm-level NPV \u2248 +16.36, but old equity loses wealth \u2248 \u22121.82 if they fund it. This type of sign flip is what you are looking for in a debt overhang question."
+        },
+        {
+          "part": "Step 6 - Interpretation: Debt Overhang",
+          "prompt": "Explain why equity rationally rejects the project.",
+          "reasoning": "The project makes the firm more valuable overall, but the majority of the gain accrues to debtholders as their risky claim becomes risk-free. Equity has to pay for the project but captures only a fraction of the benefit. Rational equity will refuse to invest.",
+          "calculation": "Gains from project:\n- Firm value increases by \u2248 16.36.\n- Debt value increases by \u2248 109.09 \u2212 90.91 = 18.18.\n- Equity value before financing cost increases by \u2248 36.36 \u2212 18.18 = 18.18.\nHowever, equity must raise 20 to fund the project, and new investors get a fairly priced claim.\n=> Old equity net gain \u2248 18.18 \u2212 20 \u2248 \u22121.82.\n\nDebtholders enjoy a large benefit (their claim becomes risk-free) without paying for the project.",
+          "sanity_check": "In debt overhang, any project where equity\u2019s net gain is negative will be blocked, even if NPV > 0. The exam\u2019s conceptual takeaway: capital structure can distort investment decisions when existing debt is risky."
+        }
+      ],
+      "key_insights": [
+        "Debt overhang occurs when positive NPV projects largely benefit existing debtholders rather than equity.",
+        "Equity\u2019s decision depends on its own wealth change, not on firm-wide NPV.",
+        "Risky debt becoming safer can be a massive wealth transfer from equity to debt."
+      ],
+      "common_mistakes": [
+        "Comparing project NPV at the firm level to equity\u2019s incentives without computing equity\u2019s own wealth change.",
+        "Ignoring the equity issuance step and assuming equity gets the full project benefit.",
+        "Forgetting to revalue risky debt after the project; this hides the wealth transfer."
+      ]
+    },
+    {
+      "id": "a2a-wealth-transfer-without-overhang",
+      "problem_text": "Consider the same Firm D as before but now assume the project cost is fully subsidized by the government (the firm pays $0 today) and still adds $40 to asset value in each state next year. There is no new equity issuance. You are asked to (1) compute new values of debt and equity, (2) identify how the project\u2019s gains are split between debtholders and shareholders, and (3) explain why, in this case, equity will accept the project (no overhang) even though some value flows to debt.",
+      "archetype": "A2A-DebtOverhang",
+      "solution_steps": [
+        {
+          "part": "Step 1 - Reconnaissance",
+          "prompt": "What\u2019s different from the overhang case?",
+          "reasoning": "The asset payoff structure is unchanged: the project still adds 40 in each state. But now the firm does not need to raise new equity to fund it; the cost is covered by a subsidy. This changes who pays for the project and thus how the wealth change is allocated.",
+          "calculation": "Same states and debt:\n- Without project: V = 160 or 80; D = 120.\n- With project: V = 200 or 120.\nBut cost today = 0 (government subsidy).\n=> We expect both debt and equity to benefit, but no one has to pay upfront.",
+          "sanity_check": "Removing the financing burden from equity should eliminate the overhang; equity should now accept any positive NPV project since it is effectively a free lunch for shareholders."
+        },
+        {
+          "part": "Step 2 - Values Without Project",
+          "prompt": "Recall baseline debt and equity values.",
+          "reasoning": "We reuse the baseline from the previous example as our starting point.",
+          "calculation": "From earlier:\n- Debt value P_D0 \u2248 90.91.\n- Equity value P_E0 \u2248 18.18.\n- Firm value V_0 = 109.09.",
+          "sanity_check": "These numbers should match the earlier computation; consistency is key when problems build on previous parts."
+        },
+        {
+          "part": "Step 3 - Values With Project (Cost = 0)",
+          "prompt": "Recompute values if the project is adopted for free.",
+          "reasoning": "The payoffs with the project are identical to the overhang case, except we do not subtract any cost today. So we reuse the revalued claims from before but without equity having to fund 20.",
+          "calculation": "With project, from earlier:\n- Debt value P_D1 \u2248 109.09.\n- Equity value P_E1 \u2248 36.36.\n- Firm value V_1 \u2248 145.45.\nNo one pays for the project today.\n\nChanges in value:\n- \u0394P_D = 109.09 \u2212 90.91 = +18.18.\n- \u0394P_E = 36.36 \u2212 18.18 = +18.18.\n- Total gain = 36.36, which is the asset-level NPV (since cost = 0).",
+          "sanity_check": "The firm\u2019s total value increased by roughly 36.36, reflecting the PV of the extra 40 in expected payoff. Because cost = 0, this is pure gain."
+        },
+        {
+          "part": "Step 4 - Equity\u2019s Incentive",
+          "prompt": "Does equity want this project?",
+          "reasoning": "Equity cares about its own wealth change. Here, equity\u2019s value rises by 18.18 at no cost. Even though debt also gains, equity doesn\u2019t need to sacrifice to create that gain.",
+          "calculation": "Equity\u2019s wealth change:\n \u0394P_E \u2248 +18.18.\nCost to equity: 0.\nTherefore, equity unambiguously benefits.\n\nDebt also benefits, but this does not harm equity because the government subsidizes the project.",
+          "sanity_check": "Overhang arises when equity must pay for a project that benefits others more than it benefits equity. If a third party pays for the project, the distortion disappears."
+        },
+        {
+          "part": "Step 5 - Interpretation: Wealth Transfers vs Overhang",
+          "prompt": "Distinguish between a mere wealth transfer and true overhang.",
+          "reasoning": "In both the overhang and subsidized cases, the project transfers value to debt holders by making their claim safer. In the overhang case, equity must also pay for the project, and its net gain can be negative. Without that payment, equity is happy to accept a project even if debt also gains.",
+          "calculation": "Key comparison:\n- Overhang case: equity pays 20 and gains only 18.18 \u2192 net \u22121.82.\n- Subsidized case: equity pays 0 and gains 18.18 \u2192 net +18.18.\n\nIn both cases, debt gains 18.18. The difference is who finances the project.",
+          "sanity_check": "On exams, be precise: not every wealth transfer from equity to debt creates overhang. Overhang is about incentives to invest, which depend on who pays for the project and who receives the incremental cash flows."
+        }
+      ],
+      "key_insights": [
+        "Wealth transfers to debtholders can exist without creating debt overhang.",
+        "Overhang requires that equity\u2019s net gain from the project (after financing it) is negative or small, even when firm-level NPV is positive.",
+        "External subsidies or government support can neutralize overhang by relieving equity of the financing burden."
+      ],
+      "common_mistakes": [
+        "Labeling any improvement in debt value as 'overhang' even when equity clearly benefits.",
+        "Forgetting that incentives depend on net gains after accounting for who pays.",
+        "Ignoring the role of external financing (subsidies, government guarantees) in mitigating capital structure distortions."
+      ]
+    },
+    {
+      "id": "a4-liquidation-waterfall-priority",
+      "problem_text": "Firm X is being liquidated. Its assets are sold for $120 million in cash. The capital structure consists of (1) a secured bank loan with face value $60 million, (2) unsecured bonds with face value $50 million, (3) mezzanine debt with face value $20 million, and (4) common equity. Assume absolute priority: the bank loan is paid first, then the unsecured bonds, then mezzanine, then equity. You are asked to (1) compute the recovery to each class, (2) compute the recovery rates as a percentage of face value, and (3) explain how priority affects risk for each layer.",
+      "archetype": "A4-PriorityAndRiskShifting",
+      "solution_steps": [
+        {
+          "part": "Step 1 - Reconnaissance",
+          "prompt": "Why is this a priority / waterfall problem?",
+          "reasoning": "We have a fixed asset value at liquidation and multiple layers of claims with specified seniority. The question asks how the cash is split across tranches. That is the classic A4 priority and waterfall setup.",
+          "calculation": "Signals:\n- Asset value in liquidation explicitly given.\n- Multiple tranches: secured, unsecured, mezz, equity.\n- Absolute priority rule spelled out.\n- Need to compute recoveries and recovery rates.\n=> Archetype A4: Distress, Priority, and Hybrid Claims.",
+          "sanity_check": "Any time you see 'Firm in bankruptcy' plus an ordered list of claims and cash to distribute, think A4 waterfall."
+        },
+        {
+          "part": "Step 2 - Allocate Cash by Priority",
+          "prompt": "Apply the absolute priority rule.",
+          "reasoning": "We start from the top of the capital structure and pay each tranche up to its face value, as long as there is cash left. Any remaining cash flows to the next tranche down, and so on.",
+          "calculation": "Total cash available: 120.\n\n1) Secured bank loan (face 60):\n Pay min(60, 120) = 60.\n Remaining cash: 120 \u2212 60 = 60.\n\n2) Unsecured bonds (face 50):\n Pay min(50, 60) = 50.\n Remaining cash: 60 \u2212 50 = 10.\n\n3) Mezzanine debt (face 20):\n Pay min(20, 10) = 10.\n Remaining cash: 10 \u2212 10 = 0.\n\n4) Equity:\n Equity gets the residual, which is 0.",
+          "sanity_check": "The sum of recoveries should equal the total asset value: 60 + 50 + 10 + 0 = 120."
+        },
+        {
+          "part": "Step 3 - Compute Recovery Rates",
+          "prompt": "Express recoveries as percentages of face value.",
+          "reasoning": "Recovery rates are often used to estimate expected returns and credit loss severity. They tell us which layer bears most of the loss.",
+          "calculation": "Recovery rates:\n- Secured bank loan: 60 / 60 = 100%.\n- Unsecured bonds: 50 / 50 = 100%.\n- Mezzanine debt: 10 / 20 = 50%.\n- Equity: 0 / (residual claim) = 0%.\n\nLoss rates:\n- Mezzanine loses 50% of principal.\n- Equity loses 100% of its residual claim.",
+          "sanity_check": "Senior secured debt typically has the highest recovery rate; junior debt and equity bear the brunt of losses. That\u2019s exactly what we see here."
+        },
+        {
+          "part": "Step 4 - Interpret Priority and Risk",
+          "prompt": "Explain what this says about risk and expected returns.",
+          "reasoning": "Higher priority means lower loss severity in distress and thus lower credit risk. Investors in junior tranches require higher promised yields to compensate for higher expected losses.",
+          "calculation": "Implications:\n- Secured bank lenders are virtually risk-free in this scenario (100% recovery). They should earn a low spread over the risk-free rate.\n- Unsecured bondholders also recover fully here but will be more exposed in worse states of the world.\n- Mezzanine investors suffer a 50% loss; they require a high promised return to compensate for such outcomes.\n- Equity is wiped out; it bears the residual risk and hence demands the highest ex-ante expected return.",
+          "sanity_check": "If an exam gives you a waterfall where junior tranches recover more than senior ones, they are either testing your ability to spot a mistake or there is some specific contractual twist (e.g., structural subordination vs. security). In plain priority problems, senior claims should never recover less than junior ones."
+        },
+        {
+          "part": "Step 5 - Connection to Capital Structure Design",
+          "prompt": "Relate waterfall outcomes to optimal capital structure.",
+          "reasoning": "Understanding how different tranches fare in distress helps explain why firms choose layered capital structures. It also ties back to agency problems like risk-shifting and underinvestment.",
+          "calculation": "Design tradeoffs:\n- Senior secured debt lowers cost of capital but may encourage equity to take more risk (risk-shifting), because downside is absorbed by creditors.\n- Mezzanine and equity absorb losses and thus discipline risk-taking but are expensive.\n\nIn this example:\n- If X added more mezzanine rather than senior debt, the marginal cost of distress for the mezz tranche could be very high.\n- Equity might prefer risky strategies that push value into good states at the expense of mezz or unsecured creditors.",
+          "sanity_check": "On conceptual parts, you can always tie waterfall outcomes back to why senior creditors care about covenants and why equity may favor risk-shifting when there is a lot of safe senior debt ahead of them."
+        }
+      ],
+      "key_insights": [
+        "Absolute priority determines who gets paid in distress; senior claims get paid first.",
+        "Recovery rates decrease as you move down the capital structure from secured debt to equity.",
+        "Waterfall analysis underpins the pricing and risk of each security class."
+      ],
+      "common_mistakes": [
+        "Paying everyone a pro-rata share of the asset value instead of using strict priority.",
+        "Forgetting to cap each tranche\u2019s recovery at face value.",
+        "Failing to check that total distributed equals the asset value."
+      ]
+    },
+    {
+      "id": "a4-risk-shifting-senior-vs-junior",
+      "problem_text": "Firm Y has debt with face value $120 due in 1 year. It must choose between two mutually exclusive projects: Safe and Risky. Both require the same investment today and are financed entirely with existing capital (no new securities). Project Safe yields asset values of $160 (good) or $120 (bad) with equal probability. Project Risky yields $200 (good) or $40 (bad) with equal probability. The required return on assets is 10%. You are asked to (1) compute firm value and equity value under each project, (2) determine which project is better for the firm as a whole, and (3) explain why equity holders may prefer a project that reduces firm value (risk-shifting).",
+      "archetype": "A4-PriorityAndRiskShifting",
+      "solution_steps": [
+        {
+          "part": "Step 1 - Reconnaissance",
+          "prompt": "Why is this a risk-shifting problem?",
+          "reasoning": "The firm already has debt in place and must choose between a safer project and a riskier one with different payoff distributions but similar funding needs. The question asks who benefits under each project. That is the standard A4 risk-shifting / asset-substitution pattern.",
+          "calculation": "Signals:\n- Existing fixed debt with priority.\n- Two alternative asset payoff distributions with same initial cost.\n- Equity vs total firm value comparison.\n=> Archetype A4: Distress, Priority, and Risk-Shifting.",
+          "sanity_check": "Whenever you see 'choose a riskier project' after debt is already issued, think about whether equity gains at creditors\u2019 expense."
+        },
+        {
+          "part": "Step 2 - Firm and Equity Values under Project Safe",
+          "prompt": "Compute firm value and equity value for the safer project.",
+          "reasoning": "Firm value is the PV of expected asset payoffs discounted at the asset required return. Equity value is the PV of equity\u2019s residual payoffs after debt is paid.",
+          "calculation": "Project Safe asset payoffs at t=1:\n- Good: 160.\n- Bad: 120.\nExpected payoff = 0.5 * 160 + 0.5 * 120 = 140.\nFirm value:\n V_safe = 140 / 1.10 \u2248 127.27.\n\nDebt payoffs (face 120):\n- Good: 120.\n- Bad: 120.\n=> Debt is risk-free here.\nDebt value:\n P_D_safe = 120 / 1.10 \u2248 109.09.\n\nEquity payoffs:\n- Good: 160 \u2212 120 = 40.\n- Bad: 120 \u2212 120 = 0.\nEquity value:\n P_E_safe = [0.5 * 40 + 0.5 * 0] / 1.10 = 20 / 1.10 \u2248 18.18.",
+          "sanity_check": "Firm value should equal debt + equity: 127.27 \u2248 109.09 + 18.18."
+        },
+        {
+          "part": "Step 3 - Firm and Equity Values under Project Risky",
+          "prompt": "Compute firm value and equity value for the riskier project.",
+          "reasoning": "Same approach: compute firm value from expected payoffs, and equity value as the residual after paying debt.",
+          "calculation": "Project Risky asset payoffs at t=1:\n- Good: 200.\n- Bad: 40.\nExpected payoff = 0.5 * 200 + 0.5 * 40 = 120.\nFirm value:\n V_risky = 120 / 1.10 \u2248 109.09.\n\nDebt payoffs:\n- Good: 120.\n- Bad: min(40, 120) = 40.\nDebt value:\n P_D_risky = [0.5 * 120 + 0.5 * 40] / 1.10\n = (60 + 20) / 1.10\n = 80 / 1.10 \u2248 72.73.\n\nEquity payoffs:\n- Good: 200 \u2212 120 = 80.\n- Bad: max(40 \u2212 120, 0) = 0.\nEquity value:\n P_E_risky = [0.5 * 80 + 0.5 * 0] / 1.10\n = 40 / 1.10 \u2248 36.36.",
+          "sanity_check": "Again, firm value \u2248 debt + equity: 109.09 \u2248 72.73 + 36.36."
+        },
+        {
+          "part": "Step 4 - Compare Firm vs Equity Preferences",
+          "prompt": "Which project is better for the firm? Which do equity holders prefer?",
+          "reasoning": "We must distinguish firm-wide value (total claims) from equity\u2019s value. Risk-shifting occurs when equity prefers a project that reduces total firm value but increases equity value.",
+          "calculation": "Firm values:\n- V_safe \u2248 127.27.\n- V_risky \u2248 109.09.\n=> The safe project is better for the firm (higher total value).\n\nEquity values:\n- P_E_safe \u2248 18.18.\n- P_E_risky \u2248 36.36.\n=> Equity prefers the risky project (higher equity value).\n\nDebt values:\n- P_D_safe \u2248 109.09.\n- P_D_risky \u2248 72.73.\n=> Creditors heavily prefer the safe project.",
+          "sanity_check": "This is the classic pattern: risky project lowers firm value but doubles equity value, with creditors absorbing the downside."
+        },
+        {
+          "part": "Step 5 - Interpretation: Risk-Shifting",
+          "prompt": "Explain the mechanism of risk-shifting.",
+          "reasoning": "With limited liability and fixed face value debt, equity captures upside beyond the debt face but does not bear the full downside (creditors share it). This asymmetry can make equity favor riskier projects that reduce total firm value.",
+          "calculation": "Mechanism:\n- Under the safe project, equity has a small upside (40 in the good state) and no downside in the bad state; creditors are fully protected.\n- Under the risky project, equity doubles its upside (80 in the good state) but is still wiped out in the bad state, which was largely the case under the safe project too.\n- The extra downside of 80 vs 120 in the bad state falls entirely on creditors (40 recovery vs 120), not on equity.\n\nResult:\n- Equity\u2019s expected payoff increases (and so does P_E), even though the expected asset payoff and overall firm value fall.",
+          "sanity_check": "On exams, when you see equity choosing a project with lower firm value but higher equity value, you should immediately label this risk-shifting or asset substitution."
+        }
+      ],
+      "key_insights": [
+        "Risk-shifting arises because equity\u2019s payoff is convex: limited downside but unlimited upside.",
+        "Creditors bear much of the downside when projects become riskier, so equity may rationally favor those projects.",
+        "This agency problem explains why debt contracts often include covenants restricting risk-taking."
+      ],
+      "common_mistakes": [
+        "Conflating 'best for equity' with 'best for the firm' when there is substantial debt.",
+        "Ignoring priority, which hides that creditors absorb much of the downside in the risky project.",
+        "Failing to compute both firm value and equity value before labeling a situation as risk-shifting."
+      ]
+    },
+    {
+      "id": "archetype-a2-summit-logistics-wealth-change",
+      "problem_text": "Summit Logistics is an all-equity firm with 10 million shares outstanding. The firm is considering a financed project that will change the distribution of future asset values and require issuing new equity to outside investors. You are asked to compute the wealth change for old shareholders and interpret whether this is an example of debt overhang or a clean multi-state financing problem.",
+      "archetype": "A2-MultiStateProjectAndFinancing",
+      "solution_steps": [
+        {
+          "part": "A",
+          "prompt": "How do I know this is an A2 / multi-state project & financing problem?",
+          "reasoning": "The stem mentions: (1) multiple states of the world with different asset values, (2) probabilities for each state, (3) issuing new equity to outside investors for cash, and (4) computing wealth change for old shareholders. That combination\u2014states + financing + old vs new shareholders\u2014is exactly the A2 multi-state project & financing template, often with debt overhang as a special case if there is outstanding debt.",
+          "calculation": "Archetype triggers:\n- States of the world: asset values in 4 states (e.g., 200, 260, 320, 380).\n- Probabilities: equal probabilities 0.25 in each state.\n- Financing: new equity issued for cash today.\n- Question: wealth change for old shareholders.\n=> Tag as A2: Multi-State Project & Financing (possible A2A: Debt Overhang if there is debt).",
+          "sanity_check": "If the question is asking about: (i) old vs new shareholders, (ii) wealth change, and (iii) probability-weighted state payoffs with financing, there is almost always a state table and a k = Cash_raised / V_equity_post step somewhere in the solution."
+        },
+        {
+          "part": "B",
+          "prompt": "What information do I need? What\u2019s given and what\u2019s missing?",
+          "reasoning": "The question asks for wealth change to old shareholders. To compute that, I need the value of what they own before the transaction and after the transaction.\nBefore: value of existing equity.\nAfter: fraction of the post-issue equity they still own * post-issue equity value.\nTo find post-issue equity value, I need the project\u2019s effect on asset values and the financing terms (how much cash comes in, what fraction is sold).",
+          "calculation": "Key objects:\n1. Asset value without project: V_assets,old in each state.\n2. Project payoff in each state (\u0394V_project).\n3. New asset values with project: V_assets,new = V_assets,old + \u0394V_project.\n4. Cash raised today: C_raise.\n5. Post-issue equity value (today): V_E,post = PV_t0(E[ V_assets,new_one_year ]) + C_raise.\n6. Fraction sold to new investors: k = C_raise / V_E,post.\n7. Wealth of old shareholders:\n   - Before: W_old,before = V_E,old.\n   - After: W_old,after = (1 - k) * V_E,post.\n8. Wealth change: \u0394W_old = W_old,after - W_old,before.",
+          "sanity_check": "Any time there are old vs new shareholders, you should explicitly write both W_old,before and W_old,after as today-values and then take the difference. Do NOT mix state-contingent one-year values and today\u2019s values in the same line."
+        },
+        {
+          "part": "C",
+          "prompt": "What\u2019s my approach if I don\u2019t remember a formula for wealth change?",
+          "reasoning": "Instead of memorizing a formula, I rely on balance sheet logic and add\u2013subtract reasoning. The new shareholders contribute cash; everyone (old+new) gets a share of the enlarged equity pie. The total equity pie is: PV of the new asset values plus the incoming cash. The new investors\u2019 share is set by k = Cash_raised / V_E,post. Old shareholders get the residual fraction (1 - k). Compare what they keep to what they had before.",
+          "calculation": "Step 1: Compute the current value of assets (without project) as a one-year risky asset.\n- Suppose asset payoffs in one year are:\n  State 1: 200\n  State 2: 260\n  State 3: 320\n  State 4: 380\n- Probabilities: each 0.25; discount rate r_A = 10%.\nE[V_assets,old,1] = 0.25*(200 + 260 + 320 + 380) = 290.\nV_assets,old,0 = 290 / (1 + 0.10) = 263.64.\nWith 10M shares, pre-issue price per share = 263.64 / 10M = 26.36.\nSo V_E,old = 263.64.\n\nStep 2: Add the project to get new asset values.\n- Suppose the project adds {+20, +20, +20, +20} in each state at t=1.\nThen new asset payoffs:\n  220, 280, 340, 400 (still equal probability).\nE[V_assets,new,1] = 0.25*(220 + 280 + 340 + 400) = 310.\nV_assets,new,0 = 310 / 1.10 = 281.82.\n\nStep 3: Incorporate financing.\n- Suppose the firm raises C_raise = 30 at t=0 by issuing new equity.\nEquity value after: V_E,post = V_assets,new,0 + C_raise = 281.82 + 30 = 311.82.\nFraction sold to new investors: k = 30 / 311.82 \u2248 0.0962 (9.62%).",
+          "sanity_check": "Post-issue equity value should exceed both the pre-issue equity value and the amount raised, as long as the project has positive NPV. If your V_E,post is smaller than V_E,old, something is wrong with your project arithmetic or discounting."
+        },
+        {
+          "part": "D",
+          "prompt": "Build the state table and connect old vs new shareholders\u2019 claims.",
+          "reasoning": "The state table is where I keep myself honest. It forces me to reconcile assets, debt (if any), equity, and fractions of equity in each state. For a pure equity firm, equity is just the residual claim on assets. After the issue, old and new equity together must sum to the total equity value in each state.",
+          "calculation": "One-year payoffs (after project):\n\nState 1: V_assets,new,1 = 220\nState 2: V_assets,new,1 = 280\nState 3: V_assets,new,1 = 340\nState 4: V_assets,new,1 = 400\n\nDiscounted values at t=0:\nV_assets,new,0 = 281.82 (computed above).\n\nTotal equity at t=0 is V_E,post = 311.82 (assets + 30 cash from new investors).\n\nOwnership:\n- New shareholders\u2019 claim today: C_raise = 30.\n- Fraction k = 30 / 311.82.\n- Old shareholders\u2019 claim today: 311.82 - 30 = 281.82 = V_assets,new,0.\n\nInterpretation: old shareholders keep all the asset value but give up a fraction k of it, because k of equity is owned by new investors. The state table makes it easy to see that all we are really doing is slicing the equity pie.",
+          "sanity_check": "In any state, the value of assets must equal the total value of all claims (debt + preferred + common). For a pure equity firm, assets = total equity = equity_old + equity_new in each state. If your state table violates basic balance sheet identity, fix that first."
+        },
+        {
+          "part": "E",
+          "prompt": "Compute wealth change for old shareholders and interpret the result.",
+          "reasoning": "Now that I have pre- and post-transaction values, I just compare. The key is to compare today-values, not one-year payoffs, and be clear about whose wealth I\u2019m measuring (old shareholders only).",
+          "calculation": "Wealth of old shareholders:\n- Before: W_old,before = V_E,old = 263.64.\n- After: W_old,after = (1 - k) * V_E,post.\n  = (1 - 0.0962) * 311.82 \u2248 0.9038 * 311.82 \u2248 281.82.\n\nWealth change:\n\u0394W_old = 281.82 - 263.64 = +18.18.\n\nInterpretation:\n- The project increases asset value by 18.18 (NPV_project = 281.82 - 263.64).\n- Old shareholders end up capturing that entire NPV here because the new equity issue is fairly priced at 30 (they give away C_raise = 30 and receive equity worth 30 in return).",
+          "sanity_check": "If the equity issue is correctly priced and there is no debt, then \u0394W_old should equal the project NPV. If you find old shareholders gaining or losing more than the project NPV, the equity issue is mispriced or you\u2019ve double-counted the cash raised."
+        },
+        {
+          "part": "F",
+          "prompt": "Connect to debt overhang / agency logic when there IS debt.",
+          "reasoning": "The Summit Logistics pattern is often used to illustrate debt overhang: situations where a positive NPV project is rejected because most of the benefit goes to existing debt holders, not equity. The mechanics are the same, but the asset payoff table now includes debt contracts and priority. Equity may refuse to issue new equity if the financing is zero NPV for them but positive NPV for creditors.",
+          "calculation": "Debt overhang logic (generic):\n1. Compute project NPV at the asset level: NPV_project > 0.\n2. Add debt to the state table with absolute priority:\n   - Debt gets min(promised, assets) in each state.\n   - Equity gets residual = assets - debt cash flow.\n3. Re-compute equity value with and without the project.\n4. If \u0394V_equity < 0 even though NPV_project > 0, equity holders will block the project (debt overhang). \n5. If equity also has to *issue* new equity to finance the project, you then layer in the A2 financing logic (k, C_raise, etc.) on top of the priority structure.",
+          "sanity_check": "In a classic A2A (Debt Overhang) question, you should see: (1) outstanding risky debt, (2) a positive NPV project, (3) a decision that depends on whether the old equity is willing to issue new equity or invest inside. If debtholders capture most of the project\u2019s value, equity will rationally refuse the project."
+        }
+      ],
+      "key_insights": [
+        "Multi-state project & financing problems always boil down to: (1) compute asset value with and without the project, (2) figure out who owns which slice of the equity pie before and after financing, and (3) compare old shareholders\u2019 wealth.",
+        "The fraction sold to new equity investors is not arbitrary: k = Cash_raised / V_E,post. This ensures the equity issue is zero-NPV given the market\u2019s beliefs.",
+        "When there is no debt and the equity issue is correctly priced, old shareholders\u2019 wealth change equals the project NPV.",
+        "Debt overhang arises when there is outstanding risky debt: positive NPV projects can be blocked because much of the benefit accrues to debtholders, not equity."
+      ],
+      "common_mistakes": [
+        "Using promised returns (like 9.4%) instead of expected returns when discounting risky multi-state payoffs.",
+        "Computing k = Cash_raised / V_assets,new,0 instead of k = Cash_raised / V_E,post (you must include the cash raised itself in the post-issue equity value).",
+        "Comparing a one-year equity payoff after the project to a today-value of equity before the project. All wealth comparisons must be in the same time units.",
+        "Ignoring the financing leg and assuming old shareholders automatically capture the full project NPV, even when they sell a large fraction of the firm to new investors."
+      ]
+    }
+  ],
+  "decision_trees": [
+    {
+      "id": "discount-rate-selection-core-tree",
+      "stuck_point": "I don\u2019t know what discount rate to use.",
+      "archetype": "A3-CAPM-AndDiscountRates",
+      "root_question": "What cash flows am I discounting?",
+      "branches": [
+        {
+          "condition": "I am valuing the ENTIRE FIRM (cash flows to all investors: debt + equity).",
+          "action": "Use the asset discount rate / WACC (r_A).",
+          "subquestions": [
+            {
+              "question": "Is the firm\u2019s leverage policy (D/E ratio) stable for the horizon I\u2019m valuing?",
+              "branches": [
+                {
+                  "condition": "YES, leverage is roughly stable.",
+                  "action": "Compute WACC using current market-value weights and target leverage:\nWACC = (E / (D + E)) * r_E + (D / (D + E)) * (1 - \u03c4) * r_D.",
+                  "notes": [
+                    "Use market values of debt and equity, not book values, for the weights.",
+                    "Use expected returns (from CAPM or other models), not coupon rates or yields, for r_E and r_D."
+                  ]
+                },
+                {
+                  "condition": "NO, leverage is changing dramatically (e.g., LBO, big recap).",
+                  "action": "Unlever to get an asset beta and re-lever for the appropriate leverage path.",
+                  "notes": [
+                    "Step 1: Estimate an asset beta from comparable firms or from the firm\u2019s current \u03b2_E and D/E.",
+                    "Step 2: Use r_A = r_f + \u03b2_A * (E[r_M] - r_f) to discount asset cash flows directly.",
+                    "Step 3: If needed, layer in tax shields separately using an appropriate discount rate for the tax shields."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "condition": "I am valuing EQUITY cash flows only (dividends + buybacks + net equity repurchases).",
+          "action": "Use the equity discount rate r_E.",
+          "subquestions": [
+            {
+              "question": "Is this for the firm\u2019s main equity, or a special security (e.g., preferred, convertible)?",
+              "branches": [
+                {
+                  "condition": "Common equity of the firm.",
+                  "action": "Use CAPM or another asset pricing model to compute r_E:\nr_E = r_f + \u03b2_E (E[r_M] - r_f).",
+                  "notes": [
+                    "Estimate \u03b2_E from a regression of stock excess returns on market excess returns.",
+                    "Sanity check \u03b2_E against business cyclicality: durable / luxury firms should have \u03b2_E > 1; groceries and staples often \u03b2_E < 1."
+                  ]
+                },
+                {
+                  "condition": "Preferred stock or other senior equity-like security.",
+                  "action": "Treat it like risky debt or a hybrid: estimate its \u03b2 from payoff structure, or infer from asset \u03b2 and remaining capital structure.",
+                  "notes": [
+                    "Preferred that sometimes misses dividends behaves like risky debt.",
+                    "Its \u03b2 will typically lie between \u03b2_D and \u03b2_E."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "condition": "I am valuing a PROJECT (capital budgeting).",
+          "action": "Use a project-specific asset discount rate based on the project\u2019s risk, not automatically the firm\u2019s WACC.",
+          "subquestions": [
+            {
+              "question": "Is the project\u2019s risk similar to the firm\u2019s existing assets?",
+              "branches": [
+                {
+                  "condition": "YES, project risk is similar.",
+                  "action": "Use the firm\u2019s asset discount rate / WACC as the project discount rate.",
+                  "notes": [
+                    "This is valid when the project is \"more of the same\" (same product line, customers, geography)."
+                  ]
+                },
+                {
+                  "condition": "NO, project risk is materially different (new industry, new country, different cyclicality).",
+                  "action": "Use a pure-play comparable to estimate a project-specific discount rate.",
+                  "notes": [
+                    "Step 1: Find a comparable firm whose operations match the project\u2019s risk.\nStep 2: Use their equity \u03b2 and capital structure to back out \u03b2_A,project.\nStep 3: Compute r_A,project via CAPM or similar model.\nStep 4 (optional): If financing is relevant and non-M&M, consider separate valuation of tax shields and financing side effects."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "condition": "I am valuing TAX SHIELDS or interest-related benefits.",
+          "action": "Use the expected return on the tax shield, which is often (but not always) close to the expected return on debt.",
+          "subquestions": [
+            {
+              "question": "Is the debt level fixed in nominal terms, and is the tax rate stable and not correlated with the market?",
+              "branches": [
+                {
+                  "condition": "YES, level of debt is fixed (like a bullet bond) and tax rate is stable.",
+                  "action": "Discount tax shields at the expected return on that debt: r_TS \u2248 r_D.",
+                  "notes": [
+                    "Classic UST-style formula: NPV_TS \u2248 \u03c4 * r_D * D / (r_D + p), when debt is risky with default probability p.",
+                    "If the debt is nearly risk-free, r_TS \u2248 r_f and you can discount at the risk-free rate as an approximation."
+                  ]
+                },
+                {
+                  "condition": "NO, the firm targets a constant debt ratio, so debt and tax shields move with asset value.",
+                  "action": "Tax shields inherit asset-like risk. Discount at r_TS \u2248 r_A.",
+                  "notes": [
+                    "When D/A is held constant, tax savings move one-for-one with asset value; this makes tax shields as risky as the assets.",
+                    "The value of tax shields becomes: NPV_TS \u2248 \u03c4 * r_D * D / (r_A - g_TS), where g_TS is the growth rate of expected tax shields net of default."
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "common_mistakes_library": [
+    {
+      "id": "mistake-coupon-vs-expected-return-on-debt",
+      "title": "Mistake: Using the Coupon Rate as the Expected Return on Debt",
+      "archetype": "A1-CapitalStructure",
+      "description": "Confusing the contractual coupon rate with the expected return on risky debt when computing discount rates or tax shields.",
+      "why_students_do_this": [
+        "The coupon rate is explicitly given in the problem (e.g., 'The bond has a 9.4% coupon'). It\u2019s easy to grab and use without thinking.",
+        "Many early time-value-of-money problems equate coupon rate with yield because they involve risk-free or par-priced bonds.",
+        "It feels intuitive that 'the bond earns 9.4%' if you see that number repeatedly, even though default risk is present."
+      ],
+      "why_it_is_wrong": [
+        "The coupon rate is a PROMISED return conditional on no default. It is not what investors expect to earn in expectation when default is possible.",
+        "The expected return on debt must probability-weight the returns in good states (no default) and bad states (default), often using:\n  E[r_D] = (1 - p) * r_promised + p * r_default.",
+        "If the bond trades below par or has a non-trivial probability of default, the expected return will be lower than the coupon rate even before thinking about \u03b2 and CAPM."
+      ],
+      "how_to_spot_it": [
+        "The problem explicitly mentions a default probability, recovery rate, or states a 'return in default'.",
+        "The bond is trading at a discount or premium to face value (price \u2260 face).",
+        "You are asked to compute tax shield value or debt \u03b2 and the solution requires an expected return, not a promised coupon."
+      ],
+      "correct_approach": [
+        "Step 1: Use the coupon and price to compute the promised yield to maturity (r_promised).",
+        "Step 2: Use the given default probability p and return in default r_default to compute:\n  E[r_D] = (1 - p) * r_promised + p * r_default.",
+        "Step 3: Use this E[r_D] when you need the expected return on debt\u2014for example, when discounting tax shields or applying CAPM to debt to find \u03b2_D.",
+        "Optional: If you need debt \u03b2, apply CAPM: E[r_D] = r_f + \u03b2_D (E[r_M] - r_f) and solve for \u03b2_D using your E[r_D]."
+      ]
+    }
+  ],
+  "conceptual_qa": [
+    {
+      "id": "qa-tax-shields-debt-rate",
+      "question": "Why do we usually discount tax shields at the debt rate rather than the equity rate?",
+      "topic": "Valuing Tax Shields",
+      "archetype": "A1-CapitalStructure",
+      "answer": [
+        "Tax shields arise because interest payments are tax-deductible: each dollar of interest paid saves \u03c4 dollars in corporate tax (where \u03c4 is the corporate tax rate).",
+        "These tax savings exist only as long as the firm is paying interest on outstanding debt and has positive taxable income to shield. That means tax shields are tied directly to the existence and risk of the debt, not to equity.",
+        "If the firm maintains a fixed nominal amount of debt (a bullet bond or a fixed amortization schedule) and the tax rate is stable and not strongly correlated with the market, then the risk of the tax shield is similar to the risk of the debt itself: the tax shield falls if the firm defaults (because interest isn\u2019t paid), and it is received when the debt is honored.",
+        "Under those conditions, the appropriate discount rate for the tax shield is the expected return on that debt, r_D, not the equity rate r_E. Intuitively, someone who buys the debt is implicitly also buying the associated tax shield stream attached to that debt\u2019s interest payments.",
+        "Formally, when debt is risky with default probability p, one classic approximation is:\n  NPV(TS) \u2248 \u03c4 * r_D * D / (r_D + p),\nwhich treats tax shields as a risky bond-like cash flow discounted at a debt-like rate adjusted for default.",
+        "However, if the firm targets a constant debt ratio (D/A fixed), then the level of debt and thus the tax shield fluctuate with asset values. In that case, the tax shield has asset-like risk and should be discounted at something closer to r_A, the asset discount rate, not r_D.",
+        "Key principle: match the discount rate to the risk of the cash flow, not to who 'likes' or 'benefits from' the cash flow. For tax shields, that risk is usually debt-like when D is fixed in nominal terms and tax policy is stable."
+      ]
+    }
+  ]
+}
