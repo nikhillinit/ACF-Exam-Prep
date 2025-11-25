@@ -1,4 +1,5 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -20,8 +21,8 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: [
-              ['@babel/preset-env', { targets: 'defaults' }],
-              ['@babel/preset-react', { runtime: 'automatic' }],
+              '@babel/preset-env',
+              ['@babel/preset-react', { runtime: 'automatic' }]
             ],
           },
         },
@@ -37,11 +38,21 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
 
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+      inject: 'body',
+    }),
+  ],
+
   devServer: {
-    static: path.resolve(__dirname, 'public'),
+    static: {
+      directory: path.resolve(__dirname, 'public'),
+    },
     port: 8080,
     historyApiFallback: true,
     hot: true,
     open: true,
+    allowedHosts: 'all',
   },
 };

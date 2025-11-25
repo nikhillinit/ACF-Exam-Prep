@@ -1,0 +1,124 @@
+{
+  "markdown_guides": [
+    {
+      "id": "acfq2-conceptual-guide",
+      "title": "ACF Q2 Conceptual Guide",
+      "filename": "ACFQ2ConceptualGuide.md",
+      "path": "/source-materials/ACFQ2ConceptualGuide.md",
+      "description": "Comprehensive conceptual guide with thematic toolkits for qualitative explanations",
+      "archetypes": ["A1", "A2", "A3", "A4"],
+      "topics": [
+        "Capital Structure",
+        "Tax Shields",
+        "Multi-State Valuation",
+        "CAPM and Beta",
+        "Discount Rates",
+        "Distress and Priority"
+      ],
+      "type": "conceptual_guide",
+      "recommended_for": "Understanding the 'why' behind formulas and approaches"
+    }
+  ],
+  "pdf_resources": [
+    {
+      "id": "mock-exam-1",
+      "title": "Mock Exam 1",
+      "filename": "MockExam1.pdf",
+      "path": "/source-materials/MockExam1.pdf",
+      "description": "Full-length practice exam with problems across all archetypes",
+      "archetypes": ["A1", "A2", "A3", "A4"],
+      "type": "mock_exam",
+      "difficulty": "exam_level",
+      "estimated_time_minutes": 180,
+      "recommended_for": "Full exam simulation and time management practice"
+    },
+    {
+      "id": "mock-exam-2",
+      "title": "Mock Exam 2",
+      "filename": "MockExam2.pdf",
+      "path": "/source-materials/MockExam2.pdf",
+      "description": "Additional practice exam with different problem sets",
+      "archetypes": ["A1", "A2", "A3", "A4"],
+      "type": "mock_exam",
+      "difficulty": "exam_level",
+      "estimated_time_minutes": 180,
+      "recommended_for": "Additional practice and pattern recognition"
+    }
+  ],
+  "json_data": [
+    {
+      "id": "guided-problem-solving",
+      "title": "Guided Problem Solving",
+      "filename": "guided_problem_solving.json",
+      "path": "/source-materials/guided_problem_solving.json",
+      "description": "Worked examples with step-by-step solutions, decision trees, and common mistakes",
+      "archetypes": ["A1", "A2", "A3", "A4"],
+      "type": "worked_examples",
+      "contains": {
+        "worked_examples": 10,
+        "decision_trees": 1,
+        "common_mistakes": 1,
+        "conceptual_qa": 1
+      },
+      "recommended_for": "Learning problem-solving patterns and avoiding common mistakes"
+    },
+    {
+      "id": "archetype-signals",
+      "title": "Archetype Recognition Signals",
+      "filename": "archetype-signals.json",
+      "path": "/source-materials/archetype-signals.json",
+      "description": "Keyword mappings for automatic archetype identification",
+      "archetypes": ["A1", "A2", "A3", "A4"],
+      "type": "recognition_data",
+      "recommended_for": "Automated problem classification and reconnaissance"
+    }
+  ],
+  "resource_categories": {
+    "conceptual_learning": {
+      "title": "Conceptual Learning",
+      "description": "Resources focused on understanding the 'why' behind concepts",
+      "resources": ["acfq2-conceptual-guide", "guided-problem-solving"]
+    },
+    "practice_problems": {
+      "title": "Practice Problems",
+      "description": "Worked examples and problem sets for hands-on practice",
+      "resources": ["guided-problem-solving", "mock-exam-1", "mock-exam-2"]
+    },
+    "exam_simulation": {
+      "title": "Exam Simulation",
+      "description": "Full-length mock exams for realistic exam practice",
+      "resources": ["mock-exam-1", "mock-exam-2"]
+    },
+    "quick_reference": {
+      "title": "Quick Reference",
+      "description": "Quick lookup for formulas, patterns, and common mistakes",
+      "resources": ["acfq2-conceptual-guide", "guided-problem-solving"]
+    }
+  },
+  "archetype_resources": {
+    "A1": {
+      "title": "Capital Structure & Tax Shields",
+      "markdown_guides": ["acfq2-conceptual-guide"],
+      "worked_examples": ["guided-problem-solving"],
+      "mock_exams": ["mock-exam-1", "mock-exam-2"]
+    },
+    "A2": {
+      "title": "Multi-State Project & Financing",
+      "markdown_guides": ["acfq2-conceptual-guide"],
+      "worked_examples": ["guided-problem-solving"],
+      "mock_exams": ["mock-exam-1", "mock-exam-2"]
+    },
+    "A3": {
+      "title": "CAPM, Beta & Discount Rates",
+      "markdown_guides": ["acfq2-conceptual-guide"],
+      "worked_examples": ["guided-problem-solving"],
+      "mock_exams": ["mock-exam-1", "mock-exam-2"]
+    },
+    "A4": {
+      "title": "Distress & Priority",
+      "markdown_guides": ["acfq2-conceptual-guide"],
+      "worked_examples": ["guided-problem-solving"],
+      "mock_exams": ["mock-exam-1", "mock-exam-2"]
+    }
+  }
+}

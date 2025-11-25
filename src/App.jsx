@@ -1,12 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import ReconView from './components/reconnaissance/ReconView';
 import ProblemViewer from './components/practice/ProblemViewer';
 import MasteryDashboard from './components/review/MasteryDashboard';
+import QuickAnalysisView from './components/QuickAnalysisView';
+
+// Resource system imports
+import ResourceBrowser from './components/resources/ResourceBrowser';
+
+// NEW: Problem Library imports
+import ProblemLibrary from './components/ProblemLibrary';
+import './components/ProblemLibrary.css';
+
 import './index.css';
 
 function App() {
   const [currentMode, setCurrentMode] = useState('recon');
+  
+  // Resource loader state
+  const [resourcesLoaded, setResourcesLoaded] = useState(false);
+
+  // Initialize resource loader on app start
+  useEffect(() => {
+    async function init() {
+      console.log('Initializing resources...');
+      // Simple initialization - just set to true
+      setResourcesLoaded(true);
+      console.log('✅ Resources ready');
+    }
+    init();
+  }, []);
+
+  // Resources view component (inline to handle loading state)
+  const ResourcesView = () => (
+    <div className="resources-container">
+      {resourcesLoaded ? (
+        <ResourceBrowser />
+      ) : (
+        <div className="loading-state">
+          <div className="spinner"></div>
+          <p>Loading resources...</p>
+        </div>
+      )}
+    </div>
+  );
 
   return (
     <Router>
@@ -14,14 +51,48 @@ function App() {
         <header className="app-header">
           <h1>ACF Final Exam Prep System</h1>
           <nav className="main-nav">
-            <Link to="/" className={currentMode === 'recon' ? 'active' : ''}>
-              Reconnaissance
+            <Link 
+              to="/" 
+              className={currentMode === 'recon' ? 'active' : ''}
+              onClick={() => setCurrentMode('recon')}
+            >
+              🔍 Reconnaissance
             </Link>
-            <Link to="/practice" className={currentMode === 'practice' ? 'active' : ''}>
-              Practice
+            <Link 
+              to="/practice" 
+              className={currentMode === 'practice' ? 'active' : ''}
+              onClick={() => setCurrentMode('practice')}
+            >
+              ✍️ Practice
             </Link>
-            <Link to="/review" className={currentMode === 'review' ? 'active' : ''}>
-              Review & Mastery
+            {/* NEW: Problem Library link */}
+            <Link 
+              to="/library" 
+              className={currentMode === 'library' ? 'active' : ''}
+              onClick={() => setCurrentMode('library')}
+            >
+              📖 Problem Library
+            </Link>
+            <Link 
+              to="/review" 
+              className={currentMode === 'review' ? 'active' : ''}
+              onClick={() => setCurrentMode('review')}
+            >
+              📊 Review & Mastery
+            </Link>
+            <Link 
+              to="/quick-analysis" 
+              className={currentMode === 'quick-analysis' ? 'active' : ''}
+              onClick={() => setCurrentMode('quick-analysis')}
+            >
+              ⚡ Quick Analysis
+            </Link>
+            <Link 
+              to="/resources" 
+              className={currentMode === 'resources' ? 'active' : ''}
+              onClick={() => setCurrentMode('resources')}
+            >
+              📚 Resources
             </Link>
           </nav>
         </header>
@@ -29,8 +100,13 @@ function App() {
         <main className="app-main">
           <Routes>
             <Route path="/" element={<ReconView />} />
-            <Route path="/practice" element={<ProblemViewer />} />
+            {/* FIXED: Practice route with wildcard to support /practice/A1-CapitalStructure */}
+            <Route path="/practice/*" element={<ProblemViewer />} />
+            {/* NEW: Problem Library route */}
+            <Route path="/library" element={<ProblemLibrary />} />
             <Route path="/review" element={<MasteryDashboard />} />
+            <Route path="/quick-analysis" element={<QuickAnalysisView />} />
+            <Route path="/resources" element={<ResourcesView />} />
           </Routes>
         </main>
 
