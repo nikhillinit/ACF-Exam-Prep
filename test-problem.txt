@@ -1,0 +1,5 @@
+Firm L issues a 1-year coupon bond with face value $100 and an 8% annual coupon. The bond currently trades at $96. There is a 10% probability the firm defaults at maturity. In default, investors receive $60 (recovery). The risk-free rate is 2% and the market risk premium is 6%.
+
+(a) Calculate the promised YTM on this bond.
+(b) Calculate the expected return on this bond.
+(c) Using CAPM, what is the bond's beta?

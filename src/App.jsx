@@ -12,6 +12,9 @@ import ResourceBrowser from './components/resources/ResourceBrowser';
 import ProblemLibrary from './components/ProblemLibrary';
 import './components/ProblemLibrary.css';
 
+// Archetype Guide imports
+import ArchetypeGuideViewer from './components/ArchetypeGuideViewer';
+
 import './index.css';
 
 function App() {
@@ -87,12 +90,19 @@ function App() {
             >
               ⚡ Quick Analysis
             </Link>
-            <Link 
-              to="/resources" 
+            <Link
+              to="/resources"
               className={currentMode === 'resources' ? 'active' : ''}
               onClick={() => setCurrentMode('resources')}
             >
               📚 Resources
+            </Link>
+            <Link
+              to="/archetype-guide"
+              className={currentMode === 'archetype-guide' ? 'active' : ''}
+              onClick={() => setCurrentMode('archetype-guide')}
+            >
+              📋 Archetype Guide
             </Link>
           </nav>
         </header>
@@ -107,6 +117,7 @@ function App() {
             <Route path="/review" element={<MasteryDashboard />} />
             <Route path="/quick-analysis" element={<QuickAnalysisView />} />
             <Route path="/resources" element={<ResourcesView />} />
+            <Route path="/archetype-guide" element={<ArchetypeGuideViewer />} />
           </Routes>
         </main>
 

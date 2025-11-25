@@ -32,7 +32,14 @@
       "Bash(npm run build:*)",
       "Skill(superpowers:requesting-code-review)",
       "Bash(git rev-parse:*)",
-      "Bash(git log:*)"
+      "Bash(git log:*)",
+      "Bash(curl:*)",
+      "Bash(npm run api:*)",
+      "Bash(timeout 3 bash:*)",
+      "Skill(superpowers:finishing-a-development-branch)",
+      "Bash(for id in A1 A2A A2B A3 A4 A5 A6 A7 A8 A9 A10)",
+      "Bash(do node src/cli/archetype-guide.js \"$id\" --output \"guides/$id-guide.md\")",
+      "Bash(done)"
     ],
     "deny": [],
     "ask": []
