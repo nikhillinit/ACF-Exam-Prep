@@ -25,7 +25,14 @@
       "Bash(npm test:*)",
       "Bash(dir \"C:\\Users\\nikhi\\ACF-Exam-Prep\\src\\data\" /b)",
       "Bash(npm start)",
-      "Bash(timeout 10 bash:*)"
+      "Bash(timeout 10 bash:*)",
+      "Bash(git remote:*)",
+      "Bash(npm install:*)",
+      "Bash(node demo-comparative-analysis.js:*)",
+      "Bash(npm run build:*)",
+      "Skill(superpowers:requesting-code-review)",
+      "Bash(git rev-parse:*)",
+      "Bash(git log:*)"
     ],
     "deny": [],
     "ask": []

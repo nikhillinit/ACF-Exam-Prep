@@ -5,6 +5,8 @@ import ArchetypeMapper from './ArchetypeMapper';
 import TimeAllocator from './TimeAllocator';
 import { scanForArchetypes } from '../../utils/archetypeScanner';
 import { detectDeviations } from '../../utils/deviationDetectionEngine';
+import { findClosestCompWithDivergenceAnalysis } from '../../utils/problemMatcher';
+import { getDeviationByCode } from '../../utils/deviationInjector';
 
 // Complete example problem with solution
 const EXAMPLE_PROBLEM = `HAL Corporation is considering issuing debt to finance a new project. The company is evaluating two debt structures:
@@ -76,6 +78,34 @@ const ReconView = () => {
   const [problemText, setProblemText] = useState(EXAMPLE_PROBLEM);
   const [scanResults, setScanResults] = useState(null);
   const [showWorkflow, setShowWorkflow] = useState(false);
+  const [compAnalysis, setCompAnalysis] = useState(null);
+  const [problemLibrary, setProblemLibrary] = useState([]);
+
+  // Load problem library for comparative analysis
+  useEffect(() => {
+    const loadProblemLibrary = async () => {
+      try {
+        const [guidedResponse, mockResponse] = await Promise.all([
+          fetch('/source-materials/guided_examples_v11.json'),
+          fetch('/source-materials/mock_questions_v11.json')
+        ]);
+
+        if (guidedResponse.ok && mockResponse.ok) {
+          const guidedData = await guidedResponse.json();
+          const mockData = await mockResponse.json();
+          const allProblems = [
+            ...(guidedData.worked_examples || []),
+            ...(mockData.worked_examples || [])
+          ];
+          setProblemLibrary(allProblems);
+        }
+      } catch (error) {
+        console.error('Failed to load problem library:', error);
+      }
+    };
+
+    loadProblemLibrary();
+  }, []);
 
   const handleScan = () => {
     if (!problemText.trim()) return;
@@ -97,6 +127,21 @@ const ReconView = () => {
 
     setScanResults(combinedResults);
     setShowWorkflow(true);
+
+    // NEW: Perform comparative analysis
+    if (problemLibrary.length > 0 && archetypeResults.archetypes.length > 0) {
+      // Create a problem object from the pasted text
+      const pastedProblem = {
+        id: 'pasted-problem',
+        problem_text: problemText,
+        archetype: archetypeResults.archetypes[0].code,
+        deviations: deviationResults.deviations || [],
+        keywords: archetypeResults.matchedKeywords || []
+      };
+
+      const analysis = findClosestCompWithDivergenceAnalysis(pastedProblem, problemLibrary);
+      setCompAnalysis(analysis);
+    }
   };
 
   // Auto-clear example and show hint
@@ -106,6 +151,7 @@ const ReconView = () => {
     if (scanResults) {
       setScanResults(null);
       setShowWorkflow(false);
+      setCompAnalysis(null);
     }
   };
 
@@ -161,14 +207,79 @@ const ReconView = () => {
       {scanResults && (
         <>
           <Scanner results={scanResults} />
-          
+
+          {/* Comparative Analysis Card */}
+          {compAnalysis && compAnalysis.hasComp && (
+            <div className="card" style={{ marginTop: '1.5rem', backgroundColor: 'rgba(6, 182, 212, 0.1)', borderColor: 'rgba(6, 182, 212, 0.3)' }}>
+              <h3 style={{ fontSize: '1.3rem', fontWeight: 'bold', color: '#06b6d4', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span>🔍</span>
+                <span>Similar Problem Found</span>
+              </h3>
+
+              <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', padding: '1rem', borderRadius: '0.5rem', marginBottom: '1rem' }}>
+                <h4 style={{ fontSize: '1.1rem', fontWeight: '600', color: '#67e8f9', marginBottom: '0.5rem' }}>
+                  Similar to: {compAnalysis.closestComp.title || compAnalysis.closestComp.id}
+                  <span style={{ marginLeft: '0.5rem', fontSize: '0.9rem', color: '#22d3ee' }}>
+                    ({Math.round(compAnalysis.similarityScore * 100)}% match)
+                  </span>
+                </h4>
+
+                {compAnalysis.divergenceAnalysis &&
+                 (compAnalysis.divergenceAnalysis.additionalDeviations.length > 0 ||
+                  compAnalysis.divergenceAnalysis.additionalConcepts.length > 0) && (
+                  <div style={{ marginTop: '1rem' }}>
+                    <p style={{ fontSize: '0.95rem', fontWeight: '600', color: '#67e8f9', marginBottom: '0.5rem' }}>
+                      Key differences from the comparable:
+                    </p>
+                    <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', color: '#cbd5e1' }}>
+                      {compAnalysis.divergenceAnalysis.additionalDeviations.map((dev, idx) => {
+                        const deviation = getDeviationByCode(dev);
+                        return (
+                          <li key={idx} style={{ marginBottom: '0.25rem', fontSize: '0.9rem' }}>
+                            Your problem adds: <strong style={{ color: '#fb923c' }}>{deviation?.name || dev}</strong>
+                          </li>
+                        );
+                      })}
+                      {compAnalysis.divergenceAnalysis.additionalConcepts.length > 0 && (
+                        <li style={{ marginBottom: '0.25rem', fontSize: '0.9rem' }}>
+                          Additional concepts: <strong style={{ color: '#c084fc' }}>
+                            {compAnalysis.divergenceAnalysis.additionalConcepts.slice(0, 3).join(', ')}
+                          </strong>
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              <p style={{ fontSize: '0.9rem', color: '#94a3b8', fontStyle: 'italic' }}>
+                💡 This problem is similar to an existing worked example. Study that example to understand the approach, then adapt it to handle the differences noted above.
+              </p>
+            </div>
+          )}
+
+          {compAnalysis && !compAnalysis.hasComp && (
+            <div className="card" style={{ marginTop: '1.5rem', backgroundColor: 'rgba(234, 179, 8, 0.1)', borderColor: 'rgba(234, 179, 8, 0.3)' }}>
+              <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#eab308', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span>⚠️</span>
+                <span>No Close Comparable Found</span>
+              </h3>
+              <p style={{ fontSize: '0.9rem', color: '#cbd5e1', marginBottom: '0.5rem' }}>
+                Best match: {Math.round(compAnalysis.similarityScore * 100)}% similar
+              </p>
+              <p style={{ fontSize: '0.9rem', color: '#94a3b8' }}>
+                Use the Archetype Guide below instead for this problem type.
+              </p>
+            </div>
+          )}
+
           {scanResults.isHybrid && (
             <HybridSequencer archetypes={scanResults.archetypes} />
           )}
-          
+
           <ArchetypeMapper archetypes={scanResults.archetypes} />
-          
-          <TimeAllocator 
+
+          <TimeAllocator
             archetypes={scanResults.archetypes}
             estimatedPoints={scanResults.estimatedPoints}
           />

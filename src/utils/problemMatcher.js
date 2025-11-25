@@ -7,6 +7,8 @@
  * - Keyword overlap (25% weight)
  */
 
+import { DEVIATION_DATABASE } from './deviationInjector.js';
+
 /**
  * Calculate Jaccard similarity between two sets
  * @param {Array} set1 - First set
@@ -497,11 +499,242 @@ export function batchFindSimilar(targetProblems, problemLibrary, limit = 5) {
   }));
 }
 
+// ========================================
+// COMPARATIVE DEVIATION ANALYSIS SYSTEM
+// ========================================
+
+/**
+ * Infer high-level approach from comp problem's archetype
+ * @param {Object} compProblem - Comparable problem
+ * @returns {string} High-level approach description
+ */
+export function inferCompApproach(compProblem) {
+  if (!compProblem) {
+    return 'Review the comparable problem and identify the key approach';
+  }
+
+  const archetype = extractArchetype(compProblem);
+
+  // Map archetypes to high-level approaches
+  const approachMap = {
+    'A1-CapitalStructure': 'Calculate expected returns on debt using survival probabilities, then use in valuation',
+    'A2-MultiState': 'Calculate equity and debt values in each state using max(0, V - D), then take expectations',
+    'A2B-AdverseSelection': 'Identify separating or pooling equilibrium, check incentive compatibility constraints',
+    'A3-CAPM': 'Calculate beta for the project or firm, use CAPM to find required return',
+    'A4-Payout': 'Compare dividend vs repurchase using tax implications and shareholder wealth effects',
+    'A6-Distress': 'Apply absolute priority rule waterfall: Senior → Junior → Equity',
+    'A10-Options': 'Use option pricing formulas or put-call parity to value the position'
+  };
+
+  // Try exact match first
+  if (approachMap[archetype]) {
+    return approachMap[archetype];
+  }
+
+  // Try tier match (e.g., A1, A2, A3)
+  const tier = getArchetypeTier(archetype);
+  for (const [key, value] of Object.entries(approachMap)) {
+    if (key.startsWith(tier)) {
+      return value;
+    }
+  }
+
+  // Generic fallback
+  return 'Follow the comparable problem\'s methodology and adapt to your specific case';
+}
+
+/**
+ * Generate adaptation guidance for divergences between target and comp
+ * @param {Object} params - Parameters object
+ * @param {Array<string>} params.additionalDeviations - Deviations in target, not in comp
+ * @param {Array<string>} params.missingDeviations - Deviations in comp, not in target
+ * @param {Array<string>} params.additionalConcepts - Keywords in target, not in comp
+ * @param {Object} params.targetProblem - Target problem
+ * @param {Object} params.compProblem - Comp problem
+ * @returns {Array<Object>} Array of adaptation guidance objects
+ */
+export function generateAdaptationGuidance({
+  additionalDeviations = [],
+  missingDeviations = [],
+  additionalConcepts = [],
+  targetProblem = {},
+  compProblem = {}
+}) {
+  const guidance = [];
+  const compApproach = inferCompApproach(compProblem);
+
+  // Process additional deviations (target more complex than comp)
+  additionalDeviations.forEach(deviationCode => {
+    const deviation = DEVIATION_DATABASE.find(d => d.code === deviationCode);
+    if (!deviation) return;
+
+    guidance.push({
+      type: 'additional_complexity',
+      code: deviation.code,
+      title: `Your problem adds: ${deviation.name}`,
+      description: `Unlike the comparable, your problem involves ${deviation.name.toLowerCase()}`,
+      adaptationSteps: [
+        `Start with comp's approach: ${compApproach}`,
+        `Then add: ${deviation.explanation}`,
+        ...(deviation.checkpoints ? deviation.checkpoints.slice(0, 2) : [])
+      ],
+      timeImpact: deviation.time_impact_minutes || 0,
+      severity: deviation.severity || 'medium'
+    });
+  });
+
+  // Process missing deviations (target simpler than comp)
+  missingDeviations.forEach(deviationCode => {
+    const deviation = DEVIATION_DATABASE.find(d => d.code === deviationCode);
+    if (!deviation) return;
+
+    guidance.push({
+      type: 'simplification',
+      code: deviation.code,
+      title: `Your problem is simpler: No ${deviation.name}`,
+      description: `The comparable has ${deviation.name.toLowerCase()}, but your problem doesn't need this`,
+      adaptationSteps: [
+        `Skip the comp's ${deviation.name.toLowerCase()} steps`,
+        'Use the standard approach instead',
+        'This simplifies the solution'
+      ],
+      timeImpact: -(deviation.time_impact_minutes || 0), // Negative time = saves time
+      severity: 'low'
+    });
+  });
+
+  // Process additional concepts (new keywords)
+  if (additionalConcepts.length > 0) {
+    // Group concepts into a single guidance item
+    const conceptList = additionalConcepts.slice(0, 3).join(', ');
+    guidance.push({
+      type: 'conceptual_extension',
+      code: 'CONCEPT-EXTENSION',
+      title: `Your problem involves: ${conceptList}`,
+      description: `Apply the comp's methodology, but incorporate these additional concepts`,
+      adaptationSteps: [
+        `Start with comp's approach: ${compApproach}`,
+        `Incorporate: ${conceptList}`,
+        'Ensure these concepts are properly integrated into the calculation'
+      ],
+      timeImpact: 1.5,
+      severity: 'medium'
+    });
+  }
+
+  // Sort by severity (critical > high > medium > low)
+  const severityOrder = { critical: 4, high: 3, medium: 2, low: 1 };
+  guidance.sort((a, b) => {
+    const severityA = severityOrder[a.severity] || 0;
+    const severityB = severityOrder[b.severity] || 0;
+    return severityB - severityA;
+  });
+
+  return guidance;
+}
+
+/**
+ * Find closest comparable with divergence analysis
+ * @param {Object} targetProblem - Problem to find comparable for
+ * @param {Array<Object>} problemLibrary - Library of problems
+ * @param {number} similarityThreshold - Minimum similarity score (default: 0.7)
+ * @returns {Object} Comparative analysis result
+ */
+export function findClosestCompWithDivergenceAnalysis(
+  targetProblem,
+  problemLibrary,
+  similarityThreshold = 0.7
+) {
+  // Handle edge cases
+  if (!targetProblem || !Array.isArray(problemLibrary) || problemLibrary.length === 0) {
+    return {
+      hasComp: false,
+      closestComp: null,
+      similarityScore: 0,
+      divergenceAnalysis: {
+        additionalDeviations: [],
+        missingDeviations: [],
+        additionalConcepts: [],
+        adaptationGuidance: []
+      }
+    };
+  }
+
+  // Find similar problems using existing function
+  const similarityResults = findSimilarProblems(targetProblem, problemLibrary, 1);
+
+  if (!similarityResults.similarProblems || similarityResults.similarProblems.length === 0) {
+    return {
+      hasComp: false,
+      closestComp: null,
+      similarityScore: 0,
+      divergenceAnalysis: {
+        additionalDeviations: [],
+        missingDeviations: [],
+        additionalConcepts: [],
+        adaptationGuidance: []
+      }
+    };
+  }
+
+  const topMatch = similarityResults.similarProblems[0];
+  const closestComp = topMatch.problem;
+  const similarityScore = topMatch.similarityScore;
+
+  // Check if similarity meets threshold
+  const hasComp = similarityScore >= similarityThreshold;
+
+  // Extract features for divergence analysis
+  const targetDeviations = extractDeviations(targetProblem);
+  const compDeviations = extractDeviations(closestComp);
+  const targetKeywords = extractKeywords(targetProblem);
+  const compKeywords = extractKeywords(closestComp);
+
+  // Identify divergences
+  const targetDeviationSet = new Set(targetDeviations);
+  const compDeviationSet = new Set(compDeviations);
+  const targetKeywordSet = new Set(targetKeywords);
+  const compKeywordSet = new Set(compKeywords);
+
+  // Additional deviations: in target but not in comp
+  const additionalDeviations = targetDeviations.filter(d => !compDeviationSet.has(d));
+
+  // Missing deviations: in comp but not in target (simplification)
+  const missingDeviations = compDeviations.filter(d => !targetDeviationSet.has(d));
+
+  // Additional concepts: keywords in target but not in comp
+  const additionalConcepts = targetKeywords.filter(k => !compKeywordSet.has(k));
+
+  // Generate adaptation guidance
+  const adaptationGuidance = hasComp ? generateAdaptationGuidance({
+    additionalDeviations,
+    missingDeviations,
+    additionalConcepts,
+    targetProblem,
+    compProblem: closestComp
+  }) : [];
+
+  return {
+    hasComp,
+    closestComp: hasComp ? closestComp : null,
+    similarityScore: parseFloat(similarityScore.toFixed(4)),
+    divergenceAnalysis: {
+      additionalDeviations,
+      missingDeviations,
+      additionalConcepts,
+      adaptationGuidance
+    }
+  };
+}
+
 export default {
   calculateSimilarity,
   findSimilarProblems,
   groupByDeviationPattern,
   findByDeviationPattern,
   getDeviationStatistics,
-  batchFindSimilar
+  batchFindSimilar,
+  findClosestCompWithDivergenceAnalysis,
+  generateAdaptationGuidance,
+  inferCompApproach
 };

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import './ProblemViewer.css';
+import { findClosestCompWithDivergenceAnalysis } from '../../utils/problemMatcher';
+import { getDeviationByCode } from '../../utils/deviationInjector';
 
 function ProblemViewer() {
   const { '*': pathParam } = useParams();
@@ -20,11 +22,23 @@ function ProblemViewer() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showSolution, setShowSolution] = useState(false);
+  const [compAnalysis, setCompAnalysis] = useState(null);
+  const [showGuidance, setShowGuidance] = useState(false);
 
   // Load problems on mount or when archetype changes
   useEffect(() => {
     loadProblems();
   }, [archetype]);
+
+  // Auto-compute comp analysis when problem changes
+  useEffect(() => {
+    if (problems.length > 0 && currentProblemIndex >= 0 && currentProblemIndex < problems.length) {
+      const currentProblem = problems[currentProblemIndex];
+      const analysis = findClosestCompWithDivergenceAnalysis(currentProblem, problems);
+      setCompAnalysis(analysis);
+      setShowGuidance(false); // Reset guidance when changing problems
+    }
+  }, [currentProblemIndex, problems]);
 
   async function loadProblems() {
     setLoading(true);
@@ -232,6 +246,135 @@ function ProblemViewer() {
                 <div className="part-text">{part.text}</div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Comparative Analysis Section (if not showing solution) */}
+        {!showSolution && compAnalysis && (
+          <div className="comp-analysis-section">
+            {/* Comp Summary Card */}
+            {compAnalysis.hasComp ? (
+              <div className="comp-summary-card bg-cyan-900/20 rounded-lg border border-cyan-500/30 p-6 mb-4">
+                <div className="flex items-start gap-3 mb-4">
+                  <span className="text-2xl">🔍</span>
+                  <div className="flex-1">
+                    <h4 className="text-lg font-bold text-cyan-400 mb-2">
+                      Similar to: {compAnalysis.closestComp.title || compAnalysis.closestComp.id}
+                      <span className="ml-2 text-sm font-normal text-cyan-300">
+                        ({Math.round(compAnalysis.similarityScore * 100)}% match)
+                      </span>
+                    </h4>
+                    {compAnalysis.divergenceAnalysis &&
+                     (compAnalysis.divergenceAnalysis.additionalDeviations.length > 0 ||
+                      compAnalysis.divergenceAnalysis.additionalConcepts.length > 0) && (
+                      <div className="mt-3">
+                        <p className="text-sm font-semibold text-cyan-300 mb-2">Key differences:</p>
+                        <ul className="space-y-1">
+                          {compAnalysis.divergenceAnalysis.additionalDeviations.map((dev, idx) => {
+                            const deviation = getDeviationByCode(dev);
+                            return (
+                              <li key={idx} className="text-sm text-slate-300">
+                                • Your problem adds: <strong className="text-orange-400">{deviation?.name || dev}</strong>
+                              </li>
+                            );
+                          })}
+                          {compAnalysis.divergenceAnalysis.additionalConcepts.length > 0 && (
+                            <li className="text-sm text-slate-300">
+                              • Additional concepts: <strong className="text-purple-400">
+                                {compAnalysis.divergenceAnalysis.additionalConcepts.slice(0, 3).join(', ')}
+                              </strong>
+                            </li>
+                          )}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="flex gap-3 mt-4">
+                  <button
+                    onClick={() => setShowGuidance(!showGuidance)}
+                    className="px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white rounded-lg transition-all text-sm font-semibold"
+                  >
+                    {showGuidance ? 'Hide Guidance' : 'View Adaptive Guidance'}
+                  </button>
+                  <button
+                    onClick={toggleSolution}
+                    className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-all text-sm font-semibold"
+                  >
+                    Show Solution
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="comp-no-match bg-yellow-900/20 rounded-lg border border-yellow-500/30 p-6 mb-4">
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl">⚠️</span>
+                  <div>
+                    <h4 className="text-lg font-bold text-yellow-400 mb-2">
+                      No close comparable found
+                    </h4>
+                    <p className="text-sm text-slate-300 mb-2">
+                      Best match: {Math.round(compAnalysis.similarityScore * 100)}% similar
+                    </p>
+                    <p className="text-sm text-slate-400">
+                      Use the Archetype Guide instead for this problem type.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Adaptive Guidance Panel */}
+            {showGuidance && compAnalysis.hasComp && compAnalysis.divergenceAnalysis && (
+              <div className="adaptive-guidance bg-orange-900/20 rounded-lg border border-orange-500/30 p-6 mb-4">
+                <h4 className="text-lg font-bold text-orange-400 mb-4">
+                  📋 How to Adapt from the Comparable:
+                </h4>
+                <div className="space-y-4">
+                  {compAnalysis.divergenceAnalysis.adaptationGuidance.map((guidance, idx) => (
+                    <div key={idx} className={`guidance-item p-4 rounded-lg border ${
+                      guidance.severity === 'critical' ? 'bg-red-900/20 border-red-500/30' :
+                      guidance.severity === 'high' ? 'bg-orange-900/20 border-orange-500/30' :
+                      'bg-yellow-900/20 border-yellow-500/30'
+                    }`}>
+                      <div className="flex items-start justify-between mb-2">
+                        <h5 className={`font-bold ${
+                          guidance.severity === 'critical' ? 'text-red-400' :
+                          guidance.severity === 'high' ? 'text-orange-400' :
+                          'text-yellow-400'
+                        }`}>
+                          {guidance.severity === 'critical' && '🚨 '}
+                          {guidance.severity === 'high' && '⚠️ '}
+                          {guidance.title}
+                        </h5>
+                        {guidance.timeImpact > 0 && (
+                          <span className="text-xs text-slate-400">
+                            ⏱️ Adds ~{guidance.timeImpact} minutes
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-slate-300 mb-3">{guidance.description}</p>
+                      <details className="text-sm">
+                        <summary className="cursor-pointer text-cyan-400 font-semibold mb-2">
+                          ▸ Show adaptation steps
+                        </summary>
+                        <ol className="list-decimal list-inside space-y-1 ml-4 text-slate-300">
+                          {guidance.adaptationSteps.map((step, stepIdx) => (
+                            <li key={stepIdx}>{step}</li>
+                          ))}
+                        </ol>
+                      </details>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  onClick={toggleSolution}
+                  className="w-full mt-4 px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-all text-sm font-semibold"
+                >
+                  Still stuck? Show Full Solution
+                </button>
+              </div>
+            )}
           </div>
         )}
 

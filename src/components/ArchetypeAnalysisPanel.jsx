@@ -144,6 +144,81 @@ const ArchetypeAnalysisPanel = ({
           </div>
         )}
 
+        {/* Why This Match? - Collapsible Section */}
+        {matchedKeywords.length > 0 && confidence >= 50 && (
+          <details className="mt-4 pt-4 border-t border-slate-700">
+            <summary className="cursor-pointer text-sm font-semibold text-cyan-400 hover:text-cyan-300 transition-colors">
+              🔍 Why This Match? (Click to expand)
+            </summary>
+            <div className="mt-3 space-y-3">
+              <div className="bg-slate-800/50 rounded-lg p-4">
+                <h4 className="text-xs font-bold text-slate-300 mb-2 uppercase tracking-wide">
+                  Match Breakdown
+                </h4>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-slate-400">Confidence Score:</span>
+                    <span className={`text-sm font-bold ${
+                      confidence >= 70 ? 'text-green-400' :
+                      confidence >= 50 ? 'text-yellow-400' :
+                      'text-orange-400'
+                    }`}>
+                      {confidence}%
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-slate-400">Matched Keywords:</span>
+                    <span className="text-sm font-semibold text-blue-400">
+                      {matchedKeywords.length} found
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-slate-800/50 rounded-lg p-4">
+                <h4 className="text-xs font-bold text-slate-300 mb-2 uppercase tracking-wide">
+                  Signal Contributions
+                </h4>
+                <div className="space-y-2">
+                  {matchedKeywords.slice(0, 5).map((keyword, idx) => (
+                    <div key={idx} className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                      <span className="text-xs text-slate-300 font-mono">{keyword}</span>
+                      <span className="text-xs text-slate-500">→ High relevance signal</span>
+                    </div>
+                  ))}
+                  {matchedKeywords.length > 5 && (
+                    <p className="text-xs text-slate-500 italic mt-2">
+                      + {matchedKeywords.length - 5} more keywords detected
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {alternativeArchetypes && alternativeArchetypes.length > 0 && (
+                <div className="bg-yellow-900/20 rounded-lg p-4 border border-yellow-500/30">
+                  <h4 className="text-xs font-bold text-yellow-400 mb-2 uppercase tracking-wide">
+                    ⚠️ Possible Alternatives
+                  </h4>
+                  <p className="text-xs text-slate-400 mb-2">
+                    These archetypes also matched but with lower confidence:
+                  </p>
+                  <div className="space-y-1">
+                    {alternativeArchetypes.slice(0, 3).map((alt, idx) => (
+                      <div key={idx} className="flex items-center justify-between text-xs">
+                        <span className="text-slate-300">{alt.archetype}</span>
+                        <span className="text-slate-500">
+                          {alt.matchCount} {alt.matchCount === 1 ? 'match' : 'matches'}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </details>
+        )}
+
         {/* Alternative Archetypes */}
         {alternativeArchetypes && alternativeArchetypes.length > 0 && (
           <div className="mt-4 pt-4 border-t border-slate-700">
