@@ -27,17 +27,8 @@ const MAX_CACHE_SIZE = 100;
 const loadDeviationRegistry = () => {
   if (!deviationRegistry) {
     try {
-      // Try different paths for Webpack vs Node.js
-      try {
-        deviationRegistry = require('../data/deviation-registry.json');
-      } catch (e1) {
-        // Fallback for Node.js execution
-        const path = require('path');
-        const fs = require('fs');
-        const registryPath = path.join(__dirname, '../data/deviation-registry.json');
-        const data = fs.readFileSync(registryPath, 'utf8');
-        deviationRegistry = JSON.parse(data);
-      }
+      // Browser-compatible import
+      deviationRegistry = require('../data/deviation-registry.json');
     } catch (error) {
       console.warn('deviation-registry.json not found, using empty registry');
       deviationRegistry = { deviations: [] };

@@ -3,6 +3,7 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import './ProblemViewer.css';
 import { findClosestCompWithDivergenceAnalysis } from '../../utils/problemMatcher';
 import { getDeviationByCode } from '../../utils/deviationInjector';
+import { useAnalyticalAgent } from '../../hooks/useAnalyticalAgent';
 
 function ProblemViewer() {
   const { '*': pathParam } = useParams();
@@ -24,6 +25,19 @@ function ProblemViewer() {
   const [showSolution, setShowSolution] = useState(false);
   const [compAnalysis, setCompAnalysis] = useState(null);
   const [showGuidance, setShowGuidance] = useState(false);
+  const [showAnalysis, setShowAnalysis] = useState(false);
+
+  // Analytical agent hook
+  const {
+    analysis: agentAnalysis,
+    loading: analyzingProblem,
+    analyzeProblem: runAnalysis
+  } = useAnalyticalAgent({
+    enableCache: true,
+    includeCalculations: true,
+    includeExamples: true,
+    includeDeviations: true
+  });
 
   // Load problems on mount or when archetype changes
   useEffect(() => {
@@ -106,6 +120,19 @@ function ProblemViewer() {
 
   function toggleSolution() {
     setShowSolution(!showSolution);
+  }
+
+  async function analyzeProblemWithAgent() {
+    if (!currentProblem) return;
+
+    // Construct full problem text for analysis
+    const problemText = [
+      currentProblem.problem_intro || currentProblem.problem_statement || currentProblem.problem_text,
+      currentProblem.problem_parts?.map(part => `Part ${part.part_id}: ${part.text}`).join('\n\n')
+    ].filter(Boolean).join('\n\n');
+
+    setShowAnalysis(true);
+    await runAnalysis(problemText);
   }
 
   // Render loading state
@@ -298,6 +325,13 @@ function ProblemViewer() {
                     {showGuidance ? 'Hide Guidance' : 'View Adaptive Guidance'}
                   </button>
                   <button
+                    onClick={analyzeProblemWithAgent}
+                    disabled={analyzingProblem}
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-all text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {analyzingProblem ? '⏳ Analyzing...' : '🤖 Analyze with Agent'}
+                  </button>
+                  <button
                     onClick={toggleSolution}
                     className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-all text-sm font-semibold"
                   >
@@ -373,6 +407,117 @@ function ProblemViewer() {
                 >
                   Still stuck? Show Full Solution
                 </button>
+              </div>
+            )}
+
+            {/* Analytical Agent Analysis Panel */}
+            {showAnalysis && agentAnalysis && (
+              <div className="agent-analysis bg-blue-900/20 rounded-lg border border-blue-500/30 p-6 mb-4">
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-lg font-bold text-blue-400">
+                    🤖 Analytical Agent Report
+                  </h4>
+                  <button
+                    onClick={() => setShowAnalysis(false)}
+                    className="text-slate-400 hover:text-white text-sm"
+                  >
+                    ✕ Close
+                  </button>
+                </div>
+
+                {/* Archetype Detection */}
+                <div className="agent-section mb-4">
+                  <h5 className="font-bold text-cyan-400 mb-2">🎯 Detected Archetype</h5>
+                  <div className="bg-slate-800/50 rounded p-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-2xl font-bold text-cyan-300">
+                        {agentAnalysis.analysis?.archetypes?.primary?.id || 'Unknown'}
+                      </span>
+                      <span className="text-sm text-slate-400">
+                        {Math.round(agentAnalysis.confidence || 0)}% confidence
+                      </span>
+                    </div>
+                    <p className="text-sm text-slate-300">
+                      {agentAnalysis.analysis?.archetypes?.primary?.archetype?.name}
+                    </p>
+                    {agentAnalysis.analysis?.archetypes?.isHybrid && (
+                      <div className="mt-2 text-sm text-orange-400">
+                        🔀 Hybrid: {agentAnalysis.analysis.archetypes.hybridCombination}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Deviations */}
+                {agentAnalysis.analysis?.deviations?.deviations?.length > 0 && (
+                  <div className="agent-section mb-4">
+                    <h5 className="font-bold text-orange-400 mb-2">
+                      ⚠️ Deviations ({agentAnalysis.analysis.deviations.total})
+                    </h5>
+                    <div className="space-y-2">
+                      {agentAnalysis.analysis.deviations.deviations.slice(0, 3).map((dev, idx) => (
+                        <div key={idx} className="bg-slate-800/50 rounded p-3">
+                          <div className="flex items-start justify-between mb-1">
+                            <span className="font-bold text-orange-300 text-sm">{dev.name}</span>
+                            <span className={`text-xs px-2 py-1 rounded ${
+                              dev.severity === 'HIGH' ? 'bg-red-900/50 text-red-300' :
+                              dev.severity === 'MEDIUM' ? 'bg-orange-900/50 text-orange-300' :
+                              'bg-yellow-900/50 text-yellow-300'
+                            }`}>
+                              {dev.severity}
+                            </span>
+                          </div>
+                          <p className="text-xs text-slate-400">{dev.description}</p>
+                          {dev.timeImpact > 0 && (
+                            <span className="text-xs text-slate-500">⏱️ +{dev.timeImpact} min</span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Solution Workflow */}
+                {agentAnalysis.approach?.workflow && (
+                  <div className="agent-section mb-4">
+                    <h5 className="font-bold text-purple-400 mb-2">
+                      📋 5-Step Workflow ({agentAnalysis.approach.timeAllocation?.recommended || 0} min)
+                    </h5>
+                    <div className="space-y-2">
+                      {Object.entries(agentAnalysis.approach.workflow).map(([key, step], idx) => (
+                        <details key={key} className="bg-slate-800/50 rounded">
+                          <summary className="cursor-pointer p-3 text-sm font-semibold text-purple-300">
+                            Step {idx + 1}: {step.action} <span className="text-xs text-slate-500">({step.time})</span>
+                          </summary>
+                          <ul className="px-6 pb-3 text-xs text-slate-400 space-y-1">
+                            {step.checklist.map((item, i) => (
+                              <li key={i}>• {item}</li>
+                            ))}
+                          </ul>
+                        </details>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Resources */}
+                {agentAnalysis.approach?.resources && (
+                  <div className="agent-section">
+                    <h5 className="font-bold text-green-400 mb-2">📚 Resources</h5>
+                    <div className="bg-slate-800/50 rounded p-3 text-sm">
+                      {agentAnalysis.approach.resources.excelTab && (
+                        <div className="text-green-300">
+                          📊 Excel: {agentAnalysis.approach.resources.excelTab}
+                        </div>
+                      )}
+                      {agentAnalysis.approach.resources.playbookSlides?.length > 0 && (
+                        <div className="text-green-300 mt-1">
+                          📖 Slides: {agentAnalysis.approach.resources.playbookSlides.join(', ')}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>

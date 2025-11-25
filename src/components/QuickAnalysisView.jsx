@@ -1,50 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { detectArchetype, extractQuestionSection } from '../utils/staticGuidance';
+import { useAnalyticalAgent } from '../hooks/useAnalyticalAgent';
 import './QuickAnalysisView.css';
-
-// Deviation detection keywords (based on ACF Deviation Cookbook)
-// Keep this separate as it's specific to detecting problem variations
-const DEVIATION_KEYWORDS = {
-  'priority': ['senior', 'junior', 'subordinated', 'waterfall', 'seniority', 'secured', 'unsecured', 'claim priority'],
-  'perpetual': ['perpetual', 'perpetuity', 'forever', 'infinite horizon', 'no maturity'],
-  'amortizing': ['amortizing', 'amortization', 'principal payment', 'scheduled repayment'],
-  'callable': ['callable', 'call option', 'call provision', 'early redemption'],
-  'convertible': ['convertible', 'conversion', 'convert to equity'],
-  'floating-rate': ['floating rate', 'variable rate', 'LIBOR', 'adjustable rate'],
-  'multi-period': ['multi-period', 'multiple periods', 'several years', 'staged investment'],
-  'growth': ['growing', 'growth rate', 'escalating', 'increasing cash flows'],
-  'real-options': ['real option', 'option to expand', 'option to abandon', 'flexibility value'],
-  'asymmetric-info': ['asymmetric information', 'private information', 'signaling', 'adverse selection', 'high type', 'low type']
-};
-
-/**
- * Detect deviations from standard problem types
- */
-function detectDeviations(problemText) {
-  const text = problemText.toLowerCase();
-  const detectedDeviations = [];
-  
-  Object.entries(DEVIATION_KEYWORDS).forEach(([deviation, keywords]) => {
-    const matchedKeywords = keywords.filter(keyword => 
-      text.includes(keyword.toLowerCase())
-    );
-    if (matchedKeywords.length > 0) {
-      detectedDeviations.push({
-        type: deviation,
-        keywords: matchedKeywords
-      });
-    }
-  });
-  
-  return detectedDeviations;
-}
 
 function QuickAnalysisView() {
   const navigate = useNavigate();
   const [problemText, setProblemText] = useState('');
-  const [analysis, setAnalysis] = useState(null);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+  // Use the analytical agent hook
+  const { analysis, loading: isAnalyzing, error, analyzeProblem: runAnalysis } = useAnalyticalAgent({
+    enableCache: true,
+    includeCalculations: true,
+    includeExamples: true,
+    includeDeviations: true
+  });
 
   // Updated example to demonstrate signaling detection
   const exampleProblem = `Helios Solar Corp has private information about its future profitability. The company knows it is either a "high type" firm (worth $150M) or a "low type" firm (worth $80M). The market cannot distinguish between the two types.
@@ -64,44 +33,17 @@ C. Under what conditions would a separating equilibrium exist?`;
 
   const loadExample = () => {
     setProblemText(exampleProblem);
-    setAnalysis(null);
   };
 
-  const analyzeProblem = () => {
+  const analyzeProblem = async () => {
     if (!problemText.trim()) return;
-
-    setIsAnalyzing(true);
-
-    // Simulate slight delay for UX
-    setTimeout(() => {
-      // Use the weighted detection from staticGuidance.js
-      const detectionResult = detectArchetype(problemText);
-      
-      // Detect deviations separately
-      const deviations = detectDeviations(problemText);
-
-      // Extract question section for display
-      const questionSection = extractQuestionSection(problemText);
-
-      setAnalysis({
-        archetype: detectionResult.archetype,
-        confidence: detectionResult.confidence,
-        keywords: detectionResult.matchedKeywords || [],
-        weightedScore: detectionResult.weightedScore,
-        patternMatch: detectionResult.patternMatch,
-        deviations: deviations,
-        alternatives: detectionResult.alternativeArchetypes || [],
-        guide: detectionResult.guidance,
-        questionSection: questionSection
-      });
-
-      setIsAnalyzing(false);
-    }, 500);
+    await runAnalysis(problemText);
   };
 
   const handleGuidedPractice = () => {
-    if (analysis && analysis.archetype !== 'Unknown') {
-      navigate(`/practice/${analysis.archetype}?mode=instant`);
+    if (analysis && analysis.analysis?.archetypes?.primary) {
+      const archetypeId = analysis.analysis.archetypes.primary.id;
+      navigate(`/practice/${archetypeId}?mode=instant`);
     }
   };
 
@@ -167,73 +109,107 @@ Or try: 'Helios Corp has private information about its type. Should it pay a div
             <div className="card-header">
               <h2>🎯 Detected Archetype</h2>
               <div className="confidence-badge">
-                {analysis.confidence}% confidence
-                {analysis.patternMatch && <span className="pattern-badge">📌 Pattern Match</span>}
+                {Math.round(analysis.confidence || 0)}% confidence
+                {analysis.analysis?.archetypes?.isHybrid && <span className="pattern-badge">🔀 Hybrid Problem</span>}
               </div>
             </div>
             <div className="archetype-result">
               <div className="archetype-badge-large">
-                {analysis.archetype}
+                {analysis.analysis?.archetypes?.primary?.id || 'Unknown'}
+              </div>
+              <div className="archetype-name">
+                {analysis.analysis?.archetypes?.primary?.archetype?.name || 'Unknown Archetype'}
               </div>
               <div className="confidence-meter">
                 <div className="confidence-bar">
-                  <div 
+                  <div
                     className="confidence-fill"
-                    style={{ width: `${analysis.confidence}%` }}
+                    style={{ width: `${Math.round(analysis.confidence || 0)}%` }}
                   />
                 </div>
               </div>
-              {analysis.weightedScore && (
+              {analysis.analysis?.archetypes?.primary?.rawScore && (
                 <div className="score-display">
-                  Weighted Score: <strong>{analysis.weightedScore}</strong>
+                  Weighted Score: <strong>{analysis.analysis.archetypes.primary.rawScore.toFixed(2)}</strong>
                 </div>
               )}
             </div>
-            {analysis.keywords.length > 0 && (
+            {analysis.analysis?.archetypes?.primary?.matchedKeywords?.length > 0 && (
               <div className="keywords-section">
-                <h4>Detected Keywords:</h4>
+                <h4>Detected Keywords (with weights):</h4>
                 <div className="keywords-list">
-                  {analysis.keywords.map((keyword, index) => (
-                    <span key={index} className="keyword-tag">{keyword}</span>
-                  ))}
-                </div>
-              </div>
-            )}
-            {analysis.alternatives && analysis.alternatives.length > 0 && (
-              <div className="alternatives-section">
-                <h4>Alternative Archetypes:</h4>
-                <div className="alternatives-list">
-                  {analysis.alternatives.map((alt, index) => (
-                    <span key={index} className="alt-tag">
-                      {alt.archetype} (score: {alt.score || alt.matchCount})
+                  {analysis.analysis.archetypes.primary.matchedKeywords.slice(0, 8).map((kw, index) => (
+                    <span key={index} className="keyword-tag">
+                      {kw.keyword} <small>({kw.weight}x)</small>
                     </span>
                   ))}
                 </div>
               </div>
             )}
+            {analysis.analysis?.archetypes?.secondary?.length > 0 && (
+              <div className="alternatives-section">
+                <h4>Alternative Archetypes:</h4>
+                <div className="alternatives-list">
+                  {analysis.analysis.archetypes.secondary.map((alt, index) => (
+                    <span key={index} className="alt-tag">
+                      {alt.id} ({Math.round(alt.confidence)}%)
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+            {analysis.analysis?.archetypes?.isHybrid && (
+              <div className="hybrid-alert">
+                <strong>🔀 Hybrid Problem Detected:</strong> {analysis.analysis.archetypes.hybridCombination}
+                {analysis.approach?.hybridHandling && (
+                  <p className="hybrid-guidance">{analysis.approach.hybridHandling.solvingSequence}</p>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Deviation Warnings */}
-          {analysis.deviations && analysis.deviations.length > 0 && (
+          {analysis.analysis?.deviations?.deviations?.length > 0 && (
             <div className="result-card deviation-card">
               <div className="card-header deviation-header">
                 <h2>⚠️ ACF Deviations Detected</h2>
-                <span className="deviation-count">{analysis.deviations.length} deviation(s)</span>
+                <span className="deviation-count">{analysis.analysis.deviations.total} deviation(s)</span>
+                {analysis.analysis.deviations.totalTimeImpact > 0 && (
+                  <span className="time-impact">+{analysis.analysis.deviations.totalTimeImpact} min</span>
+                )}
               </div>
               <div className="deviation-content">
                 <p className="deviation-intro">
                   This problem contains deviations from standard ACF approaches. Pay special attention to these aspects:
                 </p>
                 <div className="deviation-items">
-                  {analysis.deviations.map((deviation, index) => (
+                  {analysis.analysis.deviations.deviations.map((deviation, index) => (
                     <div key={index} className="deviation-item-card">
-                      <div className="deviation-type">
-                        <span className="deviation-icon">▸</span>
-                        <strong>{deviation.type.toUpperCase().replace(/-/g, ' ')}</strong>
+                      <div className="deviation-header-row">
+                        <div className="deviation-type">
+                          <span className="deviation-icon">▸</span>
+                          <strong>{deviation.name}</strong>
+                        </div>
+                        <span className={`severity-badge severity-${deviation.severity.toLowerCase()}`}>
+                          {deviation.severity}
+                        </span>
                       </div>
-                      <div className="deviation-keywords">
-                        Triggers: {deviation.keywords.join(', ')}
-                      </div>
+                      <div className="deviation-description">{deviation.description}</div>
+                      {deviation.matchedTriggers.length > 0 && (
+                        <div className="deviation-keywords">
+                          Triggers: {deviation.matchedTriggers.join(', ')}
+                        </div>
+                      )}
+                      {deviation.timeImpact > 0 && (
+                        <div className="deviation-time">
+                          Time impact: +{deviation.timeImpact} minutes
+                        </div>
+                      )}
+                      {deviation.guidance && (
+                        <div className="deviation-guidance">
+                          <strong>Guidance:</strong> {deviation.guidance}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -244,22 +220,58 @@ Or try: 'Helios Corp has private information about its type. Should it pay a div
             </div>
           )}
 
-          {/* Quick Guide */}
-          {analysis.guide && (
-            <div className="result-card guide-card">
+          {/* Solution Workflow */}
+          {analysis.approach?.workflow && (
+            <div className="result-card workflow-card">
               <div className="card-header">
-                <h2>📚 Quick Guide</h2>
+                <h2>📋 5-Step Solution Workflow</h2>
+                {analysis.approach?.timeAllocation && (
+                  <span className="time-badge">
+                    {analysis.approach.timeAllocation.recommended} min recommended
+                  </span>
+                )}
               </div>
-              <div className="guide-content">
-                <pre className="guide-text">
-                  {analysis.guide.quickGuide}
-                </pre>
-                
-                {analysis.guide.formulas && (
+              <div className="workflow-content">
+                {Object.entries(analysis.approach.workflow).map(([key, step], index) => (
+                  <div key={key} className="workflow-step">
+                    <div className="step-header">
+                      <span className="step-number">{index + 1}</span>
+                      <h4>{step.action}</h4>
+                      <span className="step-time">{step.time}</span>
+                    </div>
+                    <ul className="step-checklist">
+                      {step.checklist.map((item, i) => (
+                        <li key={i}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Calculations & Formulas */}
+          {analysis.calculations && (
+            <div className="result-card calculations-card">
+              <div className="card-header">
+                <h2>🧮 Calculation Approach</h2>
+              </div>
+              <div className="calculations-content">
+                {analysis.calculations.steps && (
+                  <div className="calc-steps">
+                    <h4>Step-by-Step:</h4>
+                    <ol className="steps-list">
+                      {analysis.calculations.steps.map((step, index) => (
+                        <li key={index}>{step}</li>
+                      ))}
+                    </ol>
+                  </div>
+                )}
+                {analysis.calculations.formulas && (
                   <div className="formulas-section">
                     <h4>Key Formulas:</h4>
                     <ul className="formulas-list">
-                      {analysis.guide.formulas.map((formula, index) => (
+                      {analysis.calculations.formulas.map((formula, index) => (
                         <li key={index} className="formula-item">
                           <code>{formula}</code>
                         </li>
@@ -267,41 +279,106 @@ Or try: 'Helios Corp has private information about its type. Should it pay a div
                     </ul>
                   </div>
                 )}
-                
-                {analysis.guide.excelTab && (
-                  <div className="excel-tab-info">
-                    <strong>📊 Excel Tab:</strong> {analysis.guide.excelTab}
+              </div>
+            </div>
+          )}
+
+          {/* Resources */}
+          {analysis.approach?.resources && (
+            <div className="result-card resources-card">
+              <div className="card-header">
+                <h2>📚 Resources</h2>
+              </div>
+              <div className="resources-content">
+                {analysis.approach.resources.excelTab && (
+                  <div className="resource-item">
+                    <strong>📊 Excel Tab:</strong> {analysis.approach.resources.excelTab}
+                  </div>
+                )}
+                {analysis.approach.resources.playbookSlides?.length > 0 && (
+                  <div className="resource-item">
+                    <strong>📖 Playbook Slides:</strong> {analysis.approach.resources.playbookSlides.join(', ')}
                   </div>
                 )}
               </div>
             </div>
           )}
 
+          {/* Similar Examples */}
+          {analysis.similarExamples?.length > 0 && (
+            <div className="result-card examples-card">
+              <div className="card-header">
+                <h2>💡 Similar Examples</h2>
+                <span className="examples-count">{analysis.similarExamples.length} found</span>
+              </div>
+              <div className="examples-content">
+                {analysis.similarExamples.map((example, index) => (
+                  <div key={index} className="example-item">
+                    <h4>Example {index + 1}</h4>
+                    <p className="example-text">{example.problemText}</p>
+                    {example.keyInsights?.length > 0 && (
+                      <div className="example-insights">
+                        <strong>Key Insights:</strong>
+                        <ul>
+                          {example.keyInsights.map((insight, i) => (
+                            <li key={i}>{insight}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Action Buttons */}
           <div className="result-actions">
-            <button 
-              className="btn-primary btn-large" 
+            <button
+              className="btn-primary btn-large"
               onClick={handleGuidedPractice}
-              disabled={analysis.archetype === 'Unknown'}
+              disabled={!analysis.analysis?.archetypes?.primary}
             >
               ⚡ Start Guided Practice
             </button>
             <button className="btn-secondary btn-large" onClick={() => navigate('/library')}>
               📚 Browse Problem Library
             </button>
+            <button className="btn-secondary btn-large" onClick={analyzeProblem}>
+              🔄 Re-analyze
+            </button>
           </div>
         </div>
       )}
 
+      {/* Error Display */}
+      {error && (
+        <div className="qa-error">
+          <div className="error-icon">⚠️</div>
+          <h3>Analysis Error</h3>
+          <p>{error}</p>
+          <button className="btn-secondary" onClick={analyzeProblem}>
+            Try Again
+          </button>
+        </div>
+      )}
+
       {/* Empty State */}
-      {!analysis && !isAnalyzing && (
+      {!analysis && !isAnalyzing && !error && (
         <div className="qa-empty-state">
           <div className="empty-icon">🔍</div>
-          <h3>Ready to analyze</h3>
-          <p>Paste a problem above and click "Analyze Problem" to get started</p>
+          <h3>Ready to analyze with the Analytical Agent</h3>
+          <p>Paste a problem above and click "Analyze Problem" to get comprehensive analysis including:</p>
+          <ul className="empty-features">
+            <li>✓ Multi-archetype detection with confidence scoring</li>
+            <li>✓ Sophisticated deviation detection from registry</li>
+            <li>✓ 5-step solution workflows with time allocation</li>
+            <li>✓ Calculation steps and formulas</li>
+            <li>✓ Similar worked examples</li>
+            <li>✓ Hybrid problem handling</li>
+          </ul>
           <p className="empty-hint">
-            <strong>Tip:</strong> Try the "Load Signaling Example" button to see how the improved 
-            detection correctly identifies dividend/signaling problems!
+            <strong>💡 Tip:</strong> Results are automatically cached for 24 hours for faster access!
           </p>
         </div>
       )}
