@@ -4,49 +4,111 @@
     "default": ["A1", "A4"],
     "coupon": ["A1"],
     "YTM": ["A1"],
+    "yield to maturity": ["A1"],
     "tax shield": ["A1"],
     "amortizing": ["A1"],
     "recovery": ["A1", "A4"],
+    "expected return on debt": ["A1"],
+    "promised yield": ["A1"],
     "multi-state": ["A2A", "A2B"],
     "existing debt": ["A2A"],
     "underinvestment": ["A2A"],
     "wealth transfer": ["A2A", "A2B", "A4"],
-    "asymmetric information": ["A2B"],
+    "debt overhang": ["A2A"],
+    "asymmetric information": ["A2B", "A5"],
+    "information asymmetry": ["A2B", "A5"],
     "equity issue": ["A2B"],
     "pecking order": ["A2B"],
     "Myers-Majluf": ["A2B"],
+    "signaling": ["A2B", "A5"],
+    "signal": ["A2B", "A5"],
+    "high type": ["A2B"],
+    "low type": ["A2B"],
+    "pooling": ["A2B"],
+    "separating": ["A2B"],
+    "mimic": ["A2B"],
+    "adverse selection": ["A2B"],
+    "private information": ["A2B"],
     "beta": ["A3"],
     "unlever": ["A3"],
     "relever": ["A3"],
     "discount rate": ["A3"],
     "WACC": ["A3"],
     "cost of capital": ["A3"],
+    "cost of equity": ["A3"],
+    "CAPM": ["A3"],
+    "market risk premium": ["A3"],
     "senior": ["A4"],
     "junior": ["A4"],
     "waterfall": ["A4"],
     "priority": ["A4"],
     "bankruptcy": ["A4"],
+    "absolute priority": ["A4"],
     "dividend": ["A5"],
     "repurchase": ["A5"],
+    "buyback": ["A5"],
     "payout": ["A5"],
+    "payout policy": ["A5"],
+    "dividend policy": ["A5"],
+    "special dividend": ["A5"],
+    "retain earnings": ["A5"],
+    "distribution": ["A5"],
+    "announce dividend": ["A5"],
     "hedge": ["A6"],
     "derivatives": ["A6"],
     "futures": ["A6"],
     "collar": ["A6"],
     "cap": ["A6"],
     "floor": ["A6"],
+    "swap": ["A6"],
     "P/E": ["A7"],
     "EV/EBITDA": ["A7"],
     "comparable": ["A7"],
     "option to expand": ["A8"],
     "option to abandon": ["A8"],
+    "option to wait": ["A8"],
     "real option": ["A8"],
+    "flexibility": ["A8"],
     "diversification": ["A9"],
     "correlation": ["A9"],
     "call option": ["A10"],
     "put option": ["A10"],
     "strike price": ["A10"],
     "volatility": ["A10"]
+  },
+  "keywordWeights": {
+    "debt": 1,
+    "equity": 1,
+    "WACC": 1,
+    "value": 1,
+    "default": 2,
+    "coupon": 2,
+    "beta": 2,
+    "tax shield": 2,
+    "dividend": 3,
+    "repurchase": 3,
+    "buyback": 3,
+    "payout": 3,
+    "senior": 3,
+    "junior": 3,
+    "waterfall": 3,
+    "real option": 3,
+    "option to expand": 3,
+    "option to abandon": 3,
+    "debt overhang": 3,
+    "signaling": 4,
+    "signal": 4,
+    "asymmetric information": 4,
+    "information asymmetry": 4,
+    "high type": 4,
+    "low type": 4,
+    "pooling": 4,
+    "separating": 4,
+    "mimic": 4,
+    "pecking order": 4,
+    "Myers-Majluf": 4,
+    "adverse selection": 4,
+    "absolute priority": 4
   },
   "strongSignals": [
     {
@@ -55,14 +117,39 @@
       "confidence": 0.95
     },
     {
+      "keywords": ["expected return on debt", "tax shield"],
+      "archetype": "A1",
+      "confidence": 0.90
+    },
+    {
       "keywords": ["multi-state", "existing debt"],
       "archetype": "A2A",
       "confidence": 0.90
     },
     {
+      "keywords": ["debt overhang", "underinvestment"],
+      "archetype": "A2A",
+      "confidence": 0.95
+    },
+    {
       "keywords": ["asymmetric information", "equity issue"],
       "archetype": "A2B",
       "confidence": 0.90
+    },
+    {
+      "keywords": ["high type", "low type"],
+      "archetype": "A2B",
+      "confidence": 0.95
+    },
+    {
+      "keywords": ["signaling", "mimic"],
+      "archetype": "A2B",
+      "confidence": 0.95
+    },
+    {
+      "keywords": ["pooling", "separating"],
+      "archetype": "A2B",
+      "confidence": 0.95
     },
     {
       "keywords": ["beta", "unlever", "WACC"],
@@ -80,9 +167,29 @@
       "confidence": 0.90
     },
     {
+      "keywords": ["dividend", "signaling"],
+      "archetype": "A5",
+      "confidence": 0.95
+    },
+    {
+      "keywords": ["payout", "signal"],
+      "archetype": "A5",
+      "confidence": 0.90
+    },
+    {
       "keywords": ["hedge", "collar", "cap"],
       "archetype": "A6",
       "confidence": 0.90
+    },
+    {
+      "keywords": ["option to expand", "flexibility"],
+      "archetype": "A8",
+      "confidence": 0.90
+    },
+    {
+      "keywords": ["real option", "option to abandon"],
+      "archetype": "A8",
+      "confidence": 0.95
     }
   ],
   "hybridIndicators": [
@@ -91,6 +198,8 @@
     "multi-tranche",
     "Consider both",
     "requires two steps",
-    "first...then"
+    "first...then",
+    "signaling and payout",
+    "dividend and information"
   ]
 }

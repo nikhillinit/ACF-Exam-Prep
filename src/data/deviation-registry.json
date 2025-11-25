@@ -1,0 +1,455 @@
+{
+  "metadata": {
+    "schema_version": "1.0",
+    "description": "Comprehensive registry of common deviations from standard approaches in ACF exam problems",
+    "total_deviations": 9,
+    "last_updated": "2025-11-25"
+  },
+  "deviations": [
+    {
+      "code": "DEV-1.1.1",
+      "name": "Hazard Rate Default Modeling",
+      "category": "Default Modeling",
+      "description": "Using constant hazard rate (conditional default probability) instead of cumulative default probabilities",
+      "detection_triggers": [
+        "annual default probability",
+        "constant hazard rate",
+        "probability of default each year",
+        "conditional default",
+        "survival probability",
+        "hazard rate model"
+      ],
+      "detection_patterns": [
+        "/(annual|yearly)\\s+default\\s+probability/i",
+        "/hazard\\s+rate/i",
+        "/conditional\\s+default/i",
+        "/survival\\s+probability/i",
+        "/probability\\s+of\\s+default\\s+(each|per)\\s+year/i"
+      ],
+      "standard_approach": "Calculate expected cash flows using simple weighted average of default and no-default scenarios, treating default probability as cumulative",
+      "deviation_approach": "Use hazard rate model where survival probability decreases exponentially: Survival(t) = (1-h)^t, and expected value accounts for conditional probabilities each period",
+      "time_impact_minutes": 3.5,
+      "related_archetypes": [
+        "A1",
+        "B1"
+      ],
+      "checkpoints": [
+        "Survival probability DECREASES each year as (1-h)^t",
+        "Default can only happen ONCE - adjust expected values accordingly",
+        "Recovery value should be discounted from the default period",
+        "Tax shields are lost after default occurs"
+      ],
+      "common_errors": [
+        "Treating hazard rate as cumulative probability",
+        "Double-counting default scenarios across multiple periods",
+        "Forgetting to reduce survival probability each period",
+        "Not accounting for recovery timing"
+      ],
+      "formula_hints": [
+        "P(survive to year t) = (1 - h)^t",
+        "P(default in year t | survived to t-1) = h",
+        "E[CF_t] = P(survive to t) × CF_no_default + P(default in t) × Recovery"
+      ]
+    },
+    {
+      "code": "DEV-1.2.1",
+      "name": "Amortizing Debt Structure",
+      "category": "Debt Structuring",
+      "description": "Computing cash flows and tax shields for amortizing debt rather than bullet/balloon payment debt",
+      "detection_triggers": [
+        "amortizing",
+        "equal annual payments",
+        "principal repayment schedule",
+        "declining principal balance",
+        "amortization schedule"
+      ],
+      "detection_patterns": [
+        "/amortiz(ing|ation)/i",
+        "/equal\\s+annual\\s+payments/i",
+        "/principal\\s+(repayment|reduction)\\s+schedule/i",
+        "/declining\\s+(principal|balance)/i"
+      ],
+      "standard_approach": "Calculate tax shields assuming entire principal is repaid at maturity (bullet payment), with constant interest payments",
+      "deviation_approach": "Build amortization schedule where principal decreases each period, interest payments decline, but total debt service may be constant. Tax shields decrease over time as interest portion decreases",
+      "time_impact_minutes": 4.0,
+      "related_archetypes": [
+        "A1",
+        "A3"
+      ],
+      "checkpoints": [
+        "Total debt service = Interest + Principal repayment",
+        "Interest portion DECREASES each period as principal declines",
+        "Tax shield = Interest × Tax rate (declining over time)",
+        "Principal repayments are NOT tax deductible",
+        "Verify that sum of principal repayments equals initial debt amount"
+      ],
+      "common_errors": [
+        "Using constant interest payments instead of declining",
+        "Treating principal repayments as tax deductible",
+        "Not reducing principal balance after each payment",
+        "Computing PV of tax shields with wrong timing"
+      ],
+      "formula_hints": [
+        "For equal payments: PMT = D₀ × [r(1+r)^n] / [(1+r)^n - 1]",
+        "Interest_t = r × Principal_t-1",
+        "Principal_payment_t = PMT - Interest_t",
+        "Tax_shield_t = Interest_t × τ_c"
+      ]
+    },
+    {
+      "code": "DEV-2.1.1",
+      "name": "Debt Overhang Problem",
+      "category": "Agency Costs",
+      "description": "Analyzing equity's incentive to reject positive-NPV projects when benefits accrue primarily to debt holders",
+      "detection_triggers": [
+        "debt overhang",
+        "underinvestment",
+        "existing debt",
+        "equity refuses to invest",
+        "risky debt outstanding",
+        "transfer to creditors"
+      ],
+      "detection_patterns": [
+        "/debt\\s+overhang/i",
+        "/underinvestment/i",
+        "/equity\\s+(refuses|rejects)\\s+to\\s+invest/i",
+        "/(old|existing)\\s+debt(holders)?/i",
+        "/transfer\\s+to\\s+(creditors|debtholders)/i"
+      ],
+      "standard_approach": "Evaluate project NPV from the firm's perspective (total value created)",
+      "deviation_approach": "Compare equity's payoff with vs without the project, recognizing that equity may rationally reject positive-NPV projects if benefits primarily reduce debt risk rather than increase equity value",
+      "time_impact_minutes": 5.0,
+      "related_archetypes": [
+        "A2",
+        "A2A"
+      ],
+      "checkpoints": [
+        "Calculate firm NPV first (should be positive)",
+        "Model equity as call option on assets with strike = face value of debt",
+        "Compute equity value in each state WITH and WITHOUT project",
+        "Show that equity's incremental value can be negative even when firm NPV is positive",
+        "Quantify how much value transfers from equity to debt"
+      ],
+      "common_errors": [
+        "Concluding project should be taken because firm NPV > 0",
+        "Forgetting that equity contribution increases asset value",
+        "Not modeling state-contingent payoffs correctly",
+        "Ignoring that debt becomes safer when assets increase"
+      ],
+      "formula_hints": [
+        "Equity_payoff = max(Assets - Face_value_debt, 0)",
+        "ΔEquity_value = E[Equity_with_project] - E[Equity_without] - Investment",
+        "Value_transfer = Firm_NPV - ΔEquity_value"
+      ]
+    },
+    {
+      "code": "DEV-2.2.1",
+      "name": "Asset Substitution Problem",
+      "category": "Agency Costs",
+      "description": "Analyzing equity's incentive to increase asset risk, transferring value from debt to equity",
+      "detection_triggers": [
+        "asset substitution",
+        "risk shifting",
+        "increase project risk",
+        "swap for riskier",
+        "equity gains from volatility"
+      ],
+      "detection_patterns": [
+        "/asset\\s+substitution/i",
+        "/risk\\s+shift(ing)?/i",
+        "/(increase|raise|boost)\\s+(project\\s+)?risk/i",
+        "/swap\\s+for\\s+riskier/i",
+        "/volatility\\s+(benefit|transfer)/i"
+      ],
+      "standard_approach": "Choose project with highest expected NPV",
+      "deviation_approach": "Recognize equity's option-like payoff makes increased volatility valuable to equity holders, potentially causing selection of negative-NPV but high-variance projects that transfer value from debt",
+      "time_impact_minutes": 4.5,
+      "related_archetypes": [
+        "A2",
+        "A2B"
+      ],
+      "checkpoints": [
+        "Calculate equity and debt values under both low-risk and high-risk scenarios",
+        "Show that equity value increases with volatility despite lower firm value",
+        "Quantify value transfer from debt to equity",
+        "Verify that increased volatility raises equity value by increasing upside while downside is capped at zero"
+      ],
+      "common_errors": [
+        "Choosing project based solely on expected firm value",
+        "Not recognizing equity's option convexity",
+        "Forgetting that debt holders bear downside risk",
+        "Incorrectly computing state-contingent payoffs"
+      ],
+      "formula_hints": [
+        "Equity = max(V - D, 0) → increases with volatility of V",
+        "Debt = min(V, F) → decreases with volatility of V",
+        "Risk_shift_gain = Equity_risky - Equity_safe"
+      ]
+    },
+    {
+      "code": "DEV-3.1.1",
+      "name": "Recursive State Valuation",
+      "category": "Dynamic Programming",
+      "description": "Using backward induction to value multi-period problems with path-dependent decisions",
+      "detection_triggers": [
+        "multi-stage",
+        "sequential investment",
+        "option to expand",
+        "option to abandon",
+        "decision tree",
+        "backward induction"
+      ],
+      "detection_patterns": [
+        "/multi[- ]stage/i",
+        "/sequential\\s+investment/i",
+        "/option\\s+to\\s+(expand|abandon|wait)/i",
+        "/decision\\s+tree/i",
+        "/backward\\s+induction/i",
+        "/stage\\s+\\d+/i"
+      ],
+      "standard_approach": "Calculate NPV using forward-looking discounted cash flows",
+      "deviation_approach": "Work backwards from final period, at each node deciding whether to continue or stop, using continuation values from subsequent nodes to make current decisions",
+      "time_impact_minutes": 6.0,
+      "related_archetypes": [
+        "A2",
+        "A2A",
+        "C1"
+      ],
+      "checkpoints": [
+        "Start from terminal nodes with known payoffs",
+        "Work backward, computing expected continuation value at each node",
+        "At each decision node, compare value of continuing vs stopping",
+        "Verify that early-stage decisions account for optimal later decisions",
+        "Check that probabilities and discount factors are applied correctly at each stage"
+      ],
+      "common_errors": [
+        "Working forward instead of backward",
+        "Not accounting for optimal future decisions in current valuation",
+        "Mixing up discount periods",
+        "Using wrong state probabilities",
+        "Forgetting to compare continuation vs abandonment values"
+      ],
+      "formula_hints": [
+        "V_t(state) = max(Abandon_value, Continue_value)",
+        "Continue_value = (Investment_t) + E[V_t+1] / (1+r)",
+        "Work backward: V_T → V_T-1 → ... → V_0"
+      ]
+    },
+    {
+      "code": "DEV-4.1.1",
+      "name": "Adjusted Beta for Leverage Changes",
+      "category": "Cost of Capital",
+      "description": "Unlevering and relevering beta when comparing firms or projects with different capital structures",
+      "detection_triggers": [
+        "unlever beta",
+        "relever beta",
+        "asset beta",
+        "different leverage",
+        "comparable firm",
+        "capital structure adjustment"
+      ],
+      "detection_patterns": [
+        "/(un)?lever(ed|ing)?\\s+beta/i",
+        "/asset\\s+beta/i",
+        "/different\\s+(leverage|capital\\s+structure)/i",
+        "/comparable\\s+firm/i",
+        "/β[_]?[AE]/i"
+      ],
+      "standard_approach": "Use observed equity beta directly for discount rate calculations",
+      "deviation_approach": "Unlever comparable firm's beta to get asset beta, then relever at target capital structure: β_E = β_A × [1 + (1-τ)×(D/E)]",
+      "time_impact_minutes": 3.0,
+      "related_archetypes": [
+        "A1",
+        "B2"
+      ],
+      "checkpoints": [
+        "First unlever: β_A = β_E / [1 + (1-τ)×(D/E)]",
+        "Then relever at target structure: β_E_new = β_A × [1 + (1-τ)×(D/E)_target]",
+        "Verify β_A is between β_D and β_E",
+        "Check that higher leverage increases β_E",
+        "Use consistent tax rate and D/E ratios"
+      ],
+      "common_errors": [
+        "Using equity beta without adjusting for leverage differences",
+        "Forgetting (1-τ) tax adjustment in formula",
+        "Mixing up D/E and D/V ratios",
+        "Using book values instead of market values",
+        "Assuming debt beta is zero when it's not"
+      ],
+      "formula_hints": [
+        "β_A = (E/V)×β_E + (D/V)×β_D",
+        "β_E = β_A + (β_A - β_D)×(1-τ)×(D/E)",
+        "For risk-free debt: β_E = β_A × [1 + (1-τ)×(D/E)]"
+      ]
+    },
+    {
+      "code": "DEV-4.2.1",
+      "name": "APV vs WACC Approach",
+      "category": "Valuation Method",
+      "description": "Using Adjusted Present Value (APV) method instead of WACC when leverage is changing or non-standard",
+      "detection_triggers": [
+        "adjusted present value",
+        "APV",
+        "changing leverage",
+        "non-constant debt",
+        "value of tax shield",
+        "unlevered value"
+      ],
+      "detection_patterns": [
+        "/APV/i",
+        "/adjusted\\s+present\\s+value/i",
+        "/changing\\s+(leverage|debt)/i",
+        "/non[- ]constant\\s+debt/i",
+        "/(separate|value)\\s+(of\\s+)?tax\\s+shield/i",
+        "/unlevered\\s+(firm\\s+)?value/i"
+      ],
+      "standard_approach": "Discount all cash flows at WACC assuming constant leverage",
+      "deviation_approach": "Separate valuation into unlevered firm value (discount at r_A) plus present value of financing side effects (mainly tax shields)",
+      "time_impact_minutes": 4.0,
+      "related_archetypes": [
+        "A1",
+        "A3"
+      ],
+      "checkpoints": [
+        "Calculate unlevered FCF (before interest) discounted at r_A",
+        "Separately value tax shields from interest deductions",
+        "For fixed debt: discount tax shields at r_D",
+        "For constant leverage: discount tax shields at r_A",
+        "Sum: Levered_value = Unlevered_value + PV(tax_shields) - PV(costs)",
+        "Verify this matches WACC approach when leverage is constant"
+      ],
+      "common_errors": [
+        "Discounting tax shields at wrong rate",
+        "Not adjusting discount rate when leverage changes",
+        "Including interest in FCF calculation for APV",
+        "Forgetting other financing effects (issuance costs, distress)"
+      ],
+      "formula_hints": [
+        "V_L = V_U + PV(tax shields) - PV(distress costs)",
+        "V_U = Σ [FCF_t / (1+r_A)^t]",
+        "For perpetuity: PV(tax shields) = τ_c × D (if r_D = r_A)"
+      ]
+    },
+    {
+      "code": "DEV-5.1.1",
+      "name": "Real Options Valuation",
+      "category": "Real Options",
+      "description": "Valuing flexibility (option to wait, expand, abandon) using option pricing techniques rather than standard NPV",
+      "detection_triggers": [
+        "option to wait",
+        "option to expand",
+        "option to abandon",
+        "flexibility value",
+        "real option",
+        "Black-Scholes",
+        "binomial model"
+      ],
+      "detection_patterns": [
+        "/option\\s+to\\s+(wait|expand|abandon|delay)/i",
+        "/flexibility\\s+value/i",
+        "/real\\s+option/i",
+        "/Black[- ]Scholes/i",
+        "/binomial\\s+(tree|model)/i",
+        "/exercise\\s+price/i"
+      ],
+      "standard_approach": "Calculate NPV using expected cash flows; accept if NPV > 0",
+      "deviation_approach": "Value embedded options using binomial tree or Black-Scholes, recognizing that flexibility to adapt to future information has positive value beyond base NPV",
+      "time_impact_minutes": 7.0,
+      "related_archetypes": [
+        "C1",
+        "C2"
+      ],
+      "checkpoints": [
+        "Identify option type (call/put, American/European)",
+        "Define underlying asset (project value), strike (investment cost), maturity",
+        "Build binomial tree with up/down factors or use B-S formula",
+        "Calculate option value working backward through tree",
+        "Add option value to base NPV for total project value",
+        "Verify that option value is never negative"
+      ],
+      "common_errors": [
+        "Using simple NPV when significant flexibility exists",
+        "Not recognizing option characteristics of investment",
+        "Incorrect volatility or discount rate assumptions",
+        "Forgetting that waiting has a cost (lost cash flows)",
+        "Not accounting for competitive threats during waiting period"
+      ],
+      "formula_hints": [
+        "Call option: Value increases with volatility and time to maturity",
+        "Put option (abandon): Valuable when downside risk is high",
+        "American options allow early exercise - check at each node",
+        "Risk-neutral probability: q = (e^(r×Δt) - d) / (u - d)"
+      ]
+    },
+    {
+      "code": "DEV-6.1.1",
+      "name": "Free Cash Flow Adjustments",
+      "category": "Cash Flow Analysis",
+      "description": "Properly calculating Free Cash Flow to Firm (FCFF) from accounting statements with non-cash charges, working capital, and CapEx",
+      "detection_triggers": [
+        "free cash flow",
+        "FCFF",
+        "working capital",
+        "capital expenditure",
+        "CapEx",
+        "non-cash charges",
+        "depreciation",
+        "change in NWC"
+      ],
+      "detection_patterns": [
+        "/free\\s+cash\\s+flow/i",
+        "/FCF(F|E)?/i",
+        "/working\\s+capital/i",
+        "/ΔNW?C/i",
+        "/cap(ital)?\\s+ex(p|penditure)/i",
+        "/non[- ]cash\\s+charge/i",
+        "/add\\s+back\\s+depreciation/i"
+      ],
+      "standard_approach": "Use net income or EBITDA as proxy for cash flow",
+      "deviation_approach": "Calculate FCFF = NOPAT + Depreciation - CapEx - ΔNWC, properly adjusting for non-cash items and investments required to sustain/grow the business",
+      "time_impact_minutes": 3.5,
+      "related_archetypes": [
+        "B1",
+        "B2"
+      ],
+      "checkpoints": [
+        "Start with EBIT(1-τ) = NOPAT, not Net Income",
+        "Add back depreciation (non-cash charge)",
+        "Subtract CapEx (cash outflow for investments)",
+        "Subtract increase in NWC (cash tied up)",
+        "Verify FCFF is what's available to all capital providers",
+        "Check that growth companies have lower FCF due to investments"
+      ],
+      "common_errors": [
+        "Using Net Income instead of NOPAT for FCFF",
+        "Forgetting to add back depreciation",
+        "Ignoring working capital changes",
+        "Treating all capital expenditures as maintenance CapEx",
+        "Not adjusting for one-time items"
+      ],
+      "formula_hints": [
+        "FCFF = EBIT(1-τ) + Depreciation - CapEx - ΔNWC",
+        "FCFF = CFO + Interest(1-τ) - CapEx",
+        "ΔNWC = (Current_Assets - Cash) - (Current_Liabilities - Debt)",
+        "For perpetuity: FCFF = NOPAT × (1 - g/ROIC)"
+      ]
+    }
+  ],
+  "usage_notes": {
+    "detection": "Use both detection_triggers (keyword matching) and detection_patterns (regex) to identify when a deviation applies",
+    "prioritization": "When multiple deviations detected, prioritize by: (1) explicitly mentioned in problem, (2) highest time_impact, (3) most related_archetypes matches",
+    "time_management": "Sum time_impact_minutes for all detected deviations to estimate additional time needed beyond base archetype time",
+    "checkpoints": "Display relevant checkpoints to user as step-by-step verification guide",
+    "formula_hints": "Show formula hints in panel to help user recall key equations for the deviation"
+  },
+  "categories": {
+    "Default Modeling": "Deviations in modeling credit risk and default scenarios",
+    "Debt Structuring": "Non-standard debt payment structures",
+    "Agency Costs": "Problems involving conflicts between equity and debt holders",
+    "Dynamic Programming": "Multi-period problems requiring backward induction",
+    "Cost of Capital": "Adjustments to discount rates for leverage or comparables",
+    "Valuation Method": "Using alternative valuation approaches (APV vs WACC)",
+    "Real Options": "Valuing flexibility and embedded options",
+    "Cash Flow Analysis": "Proper construction of free cash flows from accounting data"
+  }
+}

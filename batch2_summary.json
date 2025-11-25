@@ -1,0 +1,111 @@
+{
+  "batch_info": {
+    "batch_number": 2,
+    "batch_range": "Problems 57-112",
+    "array_indices": "56-111",
+    "processing_date": "2025-11-25",
+    "processing_time_seconds": 0.04
+  },
+  "files": {
+    "input": "public/source-materials/guided_examples_v11.json",
+    "output": "public/source-materials/batch2_enriched.json",
+    "report": "batch2_processing_report.md",
+    "script": "process_batch2.js"
+  },
+  "statistics": {
+    "processed": 56,
+    "withDeviations": 9,
+    "withMultipleDeviations": 6,
+    "totalTimeImpact": 65.5,
+    "averageTimeImpactPerProblem": 1.2,
+    "deviationRate": 0.161
+  },
+  "severity_distribution": {
+    "critical": 0,
+    "high": 28,
+    "medium": 0,
+    "low": 1,
+    "total": 29
+  },
+  "deviation_codes": {
+    "DEV-1.2.2": {
+      "name": "Tax Shields Lost in Default",
+      "occurrences": 6,
+      "severity": "high",
+      "timeImpactMinutes": 2.0,
+      "totalTimeImpact": 12.0
+    },
+    "DEV-1.3.1": {
+      "name": "Promised Yield vs Expected Return",
+      "occurrences": 5,
+      "severity": "high",
+      "timeImpactMinutes": 2.0,
+      "totalTimeImpact": 10.0
+    },
+    "DEV-3.1.1": {
+      "name": "Levered vs Unlevered Beta",
+      "occurrences": 1,
+      "severity": "high",
+      "timeImpactMinutes": 2.5,
+      "totalTimeImpact": 2.5
+    },
+    "DEV-3.3.1": {
+      "name": "Project vs Firm Discount Rate",
+      "occurrences": 1,
+      "severity": "high",
+      "timeImpactMinutes": 4.0,
+      "totalTimeImpact": 4.0
+    },
+    "DEV-1.4.1": {
+      "name": "Amortizing Debt Principal Schedule",
+      "occurrences": 1,
+      "severity": "high",
+      "timeImpactMinutes": 3.0,
+      "totalTimeImpact": 3.0
+    },
+    "DEV-1.1.2": {
+      "name": "Binary Default - Weighted Average Method",
+      "occurrences": 1,
+      "severity": "low",
+      "timeImpactMinutes": 0,
+      "totalTimeImpact": 0
+    }
+  },
+  "archetype_breakdown": {
+    "A1-CapitalStructure": {
+      "problemsWithDeviations": "7-8",
+      "topDeviations": ["DEV-1.2.2", "DEV-1.3.1", "DEV-1.4.1"],
+      "percentage": 0.778
+    },
+    "A3-CAPM": {
+      "problemsWithDeviations": "1-2",
+      "topDeviations": ["DEV-3.1.1", "DEV-3.3.1"],
+      "percentage": 0.222
+    }
+  },
+  "key_insights": [
+    "73% of deviations are from A1-CapitalStructure archetype",
+    "96.6% of detected deviations are HIGH severity",
+    "Tax shield complexity (DEV-1.2.2) is the most common trap (6 occurrences)",
+    "Yield vs Return confusion (DEV-1.3.1) is the second most common (5 occurrences)",
+    "66.7% of problems with deviations have multiple deviations"
+  ],
+  "quality_metrics": {
+    "detectionRate": 0.161,
+    "multipleDeviationRate": 0.667,
+    "highSeverityRate": 0.966,
+    "totalStepsWithAlerts": 29,
+    "uniqueDeviationCodes": 6
+  },
+  "recommendations": [
+    "Master tax shield calculations with default risk",
+    "Distinguish between promised yield and expected return",
+    "Practice CAPM beta levering/unlevering mechanics",
+    "Focus on A1-CapitalStructure problems for deviation practice"
+  ],
+  "next_steps": {
+    "batch3": "Process problems 113-168 (indices 112-167)",
+    "batch4": "Process problems 169-224 (indices 168-223)",
+    "finalMerge": "Combine all 4 batches into guided_examples_v12.json"
+  }
+}

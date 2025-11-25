@@ -1,0 +1,78 @@
+{
+  "id": "a1-hazard-rate-example",
+  "problem_text": "Firm XYZ has issued a 3-year bond with 5% annual coupon and face value $100. The bond trades at $95. There is a 5% hazard rate per year (probability of default in any given year). In default, recovery is $40. Calculate the expected return on debt.",
+  "archetype": "A1-CapitalStructure",
+  "solution_steps": [
+    {
+      "part": "Step 1 - Reconnaissance",
+      "prompt": "What kind of problem is this?",
+      "reasoning": "The problem involves a multi-year bond with hazard rate default and recovery. We need to calculate expected return on debt.",
+      "calculation": "Keywords: bond, hazard rate, expected return on debt → A1 (Capital Structure)",
+      "sanity_check": "Multi-year bond with default risk signals A1 archetype"
+    },
+    {
+      "part": "Step 2 - Calculate Survival Probabilities",
+      "prompt": "What is the survival probability over time?",
+      "reasoning": "With a hazard rate of 5% per year, the survival probability decreases each year according to the formula S(t) = (1 - h)^t.",
+      "calculation": "Year 1: S(1) = (1 - 0.05)^1 = 0.95 = 95%\nYear 2: S(2) = (1 - 0.05)^2 = 0.9025 = 90.25%\nYear 3: S(3) = (1 - 0.05)^3 = 0.857375 = 85.74%",
+      "sanity_check": "Survival probability decreases over time, which makes sense",
+      "deviation_alert": {
+        "code": "DEV-1.1.1",
+        "name": "Hazard Rate Default - IRR Method",
+        "warning": "⚠️ DEV-1.1.1 applies here - use IRR of expected cash flows, not weighted average",
+        "explanation": "With hazard rate default models, survival probability DECREASES each year. The correct approach is to calculate expected cash flows for each period (weighted by survival probability), then find the IRR of those cash flows. DO NOT take a weighted average of the no-default return and default return.",
+        "checkpoints": [
+          "Survival DECREASES each year: S(t) = (1-h)^t",
+          "Calculate expected CF for EACH period",
+          "Use IRR/XIRR on the expected cash flow stream",
+          "DO NOT use: p_survive × r_good + p_default × r_bad"
+        ],
+        "time_impact_minutes": 3.5,
+        "severity": "critical"
+      },
+      "all_deviations": ["DEV-1.1.1"]
+    },
+    {
+      "part": "Step 3 - Calculate Expected Cash Flows",
+      "prompt": "What are the expected cash flows each year?",
+      "reasoning": "Each year, the bondholder receives either the coupon (if no default) or the recovery value (if default). We weight these by survival and default probabilities.",
+      "calculation": "Year 1:\n  P(survive to Year 1) = 0.95\n  P(default in Year 1) = 0.05\n  E[CF₁] = 0.95 × 5 + 0.05 × 40 = 4.75 + 2.00 = 6.75\n\nYear 2:\n  P(survive to Year 2) = 0.9025\n  P(default in Year 2) = 0.95 - 0.9025 = 0.0475\n  E[CF₂] = 0.9025 × 5 + 0.0475 × 40 = 4.51 + 1.90 = 6.41\n\nYear 3:\n  P(survive to Year 3) = 0.857375\n  P(default in Year 3) = 0.9025 - 0.857375 = 0.045125\n  E[CF₃] = 0.857375 × 105 + 0.045125 × 40 = 90.02 + 1.81 = 91.83",
+      "sanity_check": "Expected cash flows are less than promised cash flows due to default risk"
+    },
+    {
+      "part": "Step 4 - Calculate IRR",
+      "prompt": "What is the IRR of the expected cash flow stream?",
+      "reasoning": "Now we have a complete cash flow stream: invest 95 today, receive 6.75, 6.41, and 91.83 over 3 years. The IRR is the expected return on debt.",
+      "calculation": "CF₀ = -95\nCF₁ = 6.75\nCF₂ = 6.41\nCF₃ = 91.83\n\nUsing IRR formula or Excel:\nE[r_D] = IRR(-95, 6.75, 6.41, 91.83) ≈ 4.2%",
+      "sanity_check": "Expected return (4.2%) is less than promised yield (5/95 + (100-95)/(95×3) ≈ 7%), which makes sense due to default risk. It's also above zero, indicating positive return despite default risk."
+    },
+    {
+      "part": "Step 5 - Interpretation",
+      "prompt": "What does this expected return tell us?",
+      "reasoning": "The expected return of 4.2% incorporates the default risk. This is the rate bondholders actually expect to earn, accounting for the possibility of default and recovery.",
+      "calculation": "Promised coupon: 5%\nPromised YTM: ~7%\nExpected return: 4.2%\n\nDifference of ~3% is the default risk premium bondholders are giving up.",
+      "sanity_check": "If we had incorrectly used weighted average method, we would have gotten a very different (and wrong) answer"
+    }
+  ],
+  "key_insights": [
+    "Hazard rate models require IRR method, not weighted average",
+    "Survival probability compounds multiplicatively over time",
+    "Expected return is significantly lower than promised yield due to default risk"
+  ],
+  "common_mistakes": [
+    "Using weighted average formula for multi-period hazard rate",
+    "Not calculating expected cash flows for each period separately",
+    "Confusing survival probability with no-default probability in each period"
+  ],
+  "deviation_summary": {
+    "total_deviations": 1,
+    "deviation_codes": ["DEV-1.1.1"],
+    "total_time_impact_minutes": 3.5,
+    "severity_distribution": {
+      "critical": 1,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    }
+  }
+}
